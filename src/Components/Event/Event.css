@@ -1,0 +1,132 @@
+.event-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.event-back {
+    width: fit-content;
+    display: flex;
+    margin-bottom: 7px;
+    background-color: rgb(242, 242, 242);
+    box-shadow: 2px 2px 5px rgb(30 30 30 / 10%);
+    padding: 7px 10px;
+    border-radius: 13px;
+    font-size: 13px;
+    align-items: center;
+    color: rgb(162 161 161);
+    cursor: pointer;
+}
+
+.event-back span {
+    margin-left: 5px;
+}
+
+.event-main-container {
+    display: flex;
+    width: 100%;
+    height: 95%;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.event-left {
+    width: 45%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.7);
+    border-radius: 13px;
+    box-shadow: 7px 4px 20px rgb(30 30 30 / 28%);
+}
+
+.event-right {
+    width: 50%;
+}
+
+.event-right-container {
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.event-info:not(:last-child) {
+    margin-bottom: 20px;
+}
+
+.event-host {
+    color: rgb(37, 138, 95);
+    font-weight: 600;
+}
+
+.event-people {
+    background-color: rgb(242, 242, 242);
+    width: fit-content;
+    padding: 7px 15px;
+    border-radius: 15px;
+    box-shadow: 2px 2px 5px rgb(30 30 30 / 10%);
+    display: flex;
+    align-items: flex-end;
+}
+
+.event-people span {
+    color: rgb(170 170 170);
+    font-weight: 600;
+}
+
+
+.event-desc {
+    color: rgb(162 161 161);
+}
+
+.event-desc p {
+    font-weight: 600;
+    margin-bottom: 7px;
+    color: black;
+}
+
+.event-more-images {
+    font-weight: 600;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.event-more-images span {
+    margin-bottom: 10px;
+}
+
+.event-more-images-container {
+    display: flex;
+    overflow: scroll;
+    padding: 10px 5px;
+}
+
+.event-more-img {
+    min-width: 100px;
+    height: 65px;
+    border-radius: 13px;
+    background: rgba(255, 255, 255, 0.7);
+    box-shadow: 4px 4px 10px rgb(30 30 30 / 20%);
+    cursor: pointer;
+}
+
+.event-more-img-selected {
+    position: relative;
+}
+
+.event-more-img-selected::before {
+    content: "";
+    position: absolute;
+    width: 107%;
+    height: 114%;
+    left: -5px;
+    top: -5px;
+    border-radius: 13px;
+    z-index: -100;
+    border: 1px solid rgb(37 138 95/30%);
+}
+
+.event-more-img:not(:last-child) {
+    margin-right: 10px;
+}
