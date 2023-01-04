@@ -10,31 +10,72 @@ import {
   SportsVolleyballRounded,
 } from "@mui/icons-material";
 import React from "react";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useDataLayerValue } from "../../Datalayer/DataLayer";
 import "./sidebar.css";
 // import { BsChat, BsChatDots, BsHouse } from "react-icons/bs";
 // import { BiUser } from "react-icons/bi";
 // import { MdOutlineDarkMode, MdSportsTennis } from "react-icons/md";
 
 function Sidebar() {
+  const [selectedOption, setSelectedOption] = useState(0);
+  const sidebarOptions = [
+    {
+      name: "Home",
+      logo: <HomeRounded sx={{ fontSize: "30px" }} />,
+      path: "/",
+    },
+    {
+      name: "Registered sports",
+      logo: <SportsTennis sx={{ fontSize: "30px" }} />,
+      path: "/registered-events",
+    },
+    {
+      name: "Chat",
+      logo: <ChatRounded sx={{ fontSize: "30px" }} />,
+      path: "/chat",
+    },
+    {
+      name: "Profile",
+      logo: <PersonRounded sx={{ fontSize: "30px" }} />,
+      path: "/profile",
+    },
+  ];
+  const navigate = useNavigate();
+  const [{ halfHomeContainer }, dispatch] = useDataLayerValue();
   return (
     <div className="sidebar">
       <div className="sidebar-container">
-        <div className="logo">
+        <div className="logo" onClick={() => navigate("/")}>
           <SportsVolleyballRounded id="logo-pic" sx={{ fontSize: "30px" }} />
         </div>
         <div className="sidebar-options">
-          <div className="sidebar-op sidebar-selected">
-            <HomeRounded sx={{ fontSize: "30px" }} />
-          </div>
-          <div className="sidebar-op">
-            <SportsTennis sx={{ fontSize: "30px" }} />
-          </div>
-          <div className="sidebar-op">
-            <ChatRounded sx={{ fontSize: "30px" }} />
-          </div>
-          <div className="sidebar-op">
-            <PersonRounded sx={{ fontSize: "30px" }} />
-          </div>
+          {sidebarOptions?.map((op, i) => (
+            <div
+              key={i}
+              className={`sidebar-op ${
+                selectedOption === i && "sidebar-selected"
+              }`}
+              onClick={() => {
+                setSelectedOption(i);
+                navigate(op.path);
+                if (i === 0) {
+                  dispatch({
+                    type: "SET_HALF_OPEN_CONTAINER",
+                    halfHomeContainer: true,
+                  });
+                } else {
+                  dispatch({
+                    type: "SET_HALF_OPEN_CONTAINER",
+                    halfHomeContainer: false,
+                  });
+                }
+              }}
+            >
+              {op?.logo}
+            </div>
+          ))}
         </div>
         <div className="sidebar-dark">
           <ContrastRounded size={26} />

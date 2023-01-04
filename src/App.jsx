@@ -8,6 +8,7 @@ import HomeDock from "./Components/Home/HomeDock";
 import Event from "./Components/Event/Event";
 import img1 from "./Common resources/img1.jpg"
 import img2 from "./Common resources/img2.png"
+import Profile from "./Components/Profile/Profile";
 
 function App() {
 
@@ -48,6 +49,8 @@ function App() {
           <Route path="/" element={<Home eventList={eventList} />} >
             <Route index element={<EventListing eventList={eventList} />} />
             <Route path="event/:id" element={<Event eventList={eventList} />} />
+            <Route path="profile" element={<Profile />} />
+            <Route path="*" element={<EventListing eventList={eventList} />} />
           </Route>
         </Routes>
       </Router>

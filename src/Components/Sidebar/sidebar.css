@@ -28,12 +28,7 @@
 }
 
 #logo-pic {
-    transition: all 250ms;
     cursor: pointer;
-}
-
-.logo:hover #logo-pic {
-    transform: rotate(360deg);
 }
 
 .sidebar-op {

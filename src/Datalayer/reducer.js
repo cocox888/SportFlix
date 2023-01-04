@@ -14,11 +14,16 @@ const reducer = (state, action) => {
       return {
         ...state,
         focusMapToCenter: action.focusMapToCenter,
-      }; 
+      };
     case "SET_EVENT_SELECTED":
       return {
         ...state,
         selectedEvent: action.selectedEvent,
+      };
+    case "SET_HALF_OPEN_CONTAINER":
+      return {
+        ...state,
+        halfHomeContainer: action.halfHomeContainer,
       };
     default:
       return state;
