@@ -43,7 +43,7 @@ function Sidebar() {
     },
   ];
   const navigate = useNavigate();
-  const [{ halfHomeContainer }, dispatch] = useDataLayerValue();
+  const [dispatch] = useDataLayerValue();
   return (
     <div className="sidebar">
       <div className="sidebar-container">
@@ -60,17 +60,6 @@ function Sidebar() {
               onClick={() => {
                 setSelectedOption(i);
                 navigate(op.path);
-                if (i === 0) {
-                  dispatch({
-                    type: "SET_HALF_OPEN_CONTAINER",
-                    halfHomeContainer: true,
-                  });
-                } else {
-                  dispatch({
-                    type: "SET_HALF_OPEN_CONTAINER",
-                    halfHomeContainer: false,
-                  });
-                }
               }}
             >
               {op?.logo}

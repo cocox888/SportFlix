@@ -9,13 +9,8 @@ import "./EventListing.css";
 import { useDataLayerValue } from "../../Datalayer/DataLayer";
 
 function EventListing({ eventList }) {
-  const [{ halfHomeContainer }, dispatch] = useDataLayerValue();
-  useEffect(() => {
-    dispatch({
-      type: "SET_HALF_OPEN_CONTAINER",
-      halfHomeContainer: true,
-    });
-  }, []);
+  const [dispatch] = useDataLayerValue();
+
   return (
     <div className="event-listing">
       <div className="event-listing-controller">

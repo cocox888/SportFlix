@@ -14,8 +14,7 @@ import Sidebar from "../Sidebar/Sidebar";
 import { Outlet, Route, Routes } from "react-router-dom";
 import Event from "../Event/Event";
 function Home({ eventList }) {
-  const [{ focusMapToCenter, loggedIn, halfHomeContainer }, dispatch] =
-    useDataLayerValue();
+  const [{ focusMapToCenter, loggedIn }, dispatch] = useDataLayerValue();
 
   // Function to handle login
   const login = () => {
@@ -35,45 +34,38 @@ function Home({ eventList }) {
   return (
     <>
       <Sidebar />
-      {halfHomeContainer && (
-        <div
-          className="user-location"
-          onClick={() => {
-            dispatch({
-              type: "SET_FOCUS_MAP_TO_CENTER",
-              focusMapToCenter: true,
-            });
-          }}
-        >
-          <MyLocationRoundedIcon sx={{ fontSize: "20px" }} />
-        </div>
-      )}
-      {halfHomeContainer && (
-        <div className="home-login-container">
-          {!loggedIn ? (
-            <div className="home-login-loggedOut-container">
-              <button onClick={() => login()}>Login</button>
-              <button>Signup</button>
-            </div>
-          ) : (
-            <div className="home-login-loggedIn-container">
-              <PowerSettingsNewRounded
-                sx={{ color: "red", margin: "5px", cursor: "pointer" }}
-                onClick={() => logout()}
-              />
-            </div>
-          )}
-        </div>
-      )}
+      <div
+        className="user-location"
+        onClick={() => {
+          dispatch({
+            type: "SET_FOCUS_MAP_TO_CENTER",
+            focusMapToCenter: true,
+          });
+        }}
+      >
+        <MyLocationRoundedIcon sx={{ fontSize: "20px" }} />
+      </div>
+
+      <div className="home-login-container">
+        {!loggedIn ? (
+          <div className="home-login-loggedOut-container">
+            <button onClick={() => login()}>Login</button>
+            <button>Signup</button>
+          </div>
+        ) : (
+          <div className="home-login-loggedIn-container">
+            <PowerSettingsNewRounded
+              sx={{ color: "red", margin: "5px", cursor: "pointer" }}
+              onClick={() => logout()}
+            />
+          </div>
+        )}
+      </div>
       <div className="Home">
         <div className="home-map">
           <MapWrapper eventList={eventList} />
         </div>
-        <div
-          className={`home-container && ${
-            halfHomeContainer && "home-container-half"
-          }`}
-        >
+        <div className={`home-container`}>
           <Outlet />
         </div>
       </div>

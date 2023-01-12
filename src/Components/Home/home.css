@@ -8,8 +8,8 @@
 }
 
 .home-container {
-    height: 83%;
-    width: 90%;
+    height: 88%;
+    width: 51% !important;
     background-color: white;
     border-radius: 15px;
     box-shadow: 1px 3px 30px rgb(167 191 218 / 45%);
@@ -21,9 +21,7 @@
     z-index: 400000000;
 }
 
-.home-container-half {
-    width: 51% !important;
-}
+
 
 
 .home-login-container {

@@ -10,8 +10,7 @@ function Event({ eventList }) {
   const urlParams = useParams();
   const navigate = useNavigate();
   const [imageSelected, setImageSelected] = useState(0);
-  const [{ focusMapToCenter, halfHomeContainer }, dispatch] =
-    useDataLayerValue();
+  const [{ focusMapToCenter }, dispatch] = useDataLayerValue();
   const [eventInfo, setEventInfo] = useState({});
   useEffect(() => {
     const eventId = urlParams.id;
@@ -19,20 +18,13 @@ function Event({ eventList }) {
     setEventInfo(selectedEvent[0]);
   }, [urlParams]);
 
-  useEffect(() => {
-    dispatch({
-      type: "SET_HALF_OPEN_CONTAINER",
-      halfHomeContainer: true,
-    });
-  }, []);
-
   return (
     <div className="event-container">
       <div
         className="event-back"
         onClick={() => {
           navigate("/");
-          dispatch({ type: "SET_FOCUS_MAP_TO_CENTER", focusMapToCenter: true });
+          // dispatch({ type: "SET_FOCUS_MAP_TO_CENTER", focusMapToCenter: true });
         }}
       >
         <ArrowBack sx={{ color: "rgb(162 161 161)", fontSize: "17px" }} />{" "}

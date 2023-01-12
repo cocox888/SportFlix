@@ -1,7 +1,7 @@
 export const initialState = {
   user: null,
   allignMap: false,
-  loggedIn: false
+  loggedIn: false,
 };
 const reducer = (state, action) => {
   switch (action.type) {
@@ -19,11 +19,6 @@ const reducer = (state, action) => {
       return {
         ...state,
         selectedEvent: action.selectedEvent,
-      };
-    case "SET_HALF_OPEN_CONTAINER":
-      return {
-        ...state,
-        halfHomeContainer: action.halfHomeContainer,
       };
     default:
       return state;
