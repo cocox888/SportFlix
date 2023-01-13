@@ -5,6 +5,7 @@ import { useDataLayerValue } from "../../Datalayer/DataLayer";
 import "./Event.css";
 import img1 from "../../Common resources/img1.jpg";
 import img2 from "../../Common resources/img2.png";
+import { Button } from "@mui/material";
 
 function Event({ eventList }) {
   const urlParams = useParams();
@@ -31,19 +32,30 @@ function Event({ eventList }) {
         <span>Back</span>
       </div>
       <div className="event-main-container">
-        <img className="event-left" src={img1}></img>
-        <div className="event-right">
-          <div className="event-right-container">
-            <div className="event-info event-host">
-              Hosted by {eventInfo?.host}
+        <div className="event-top">
+          <img className="event-main-img" src={img1}></img>
+          <div className="event-info event-more-images">
+            <div className="event-more-images-container">
+              <img
+                className="event-more-img event-more-img-selected"
+                src={img1}
+              ></img>
+              <img className="event-more-img" src={img2}></img>
             </div>
+          </div>
+          <div className="event-info event-host">
+            Hosted by {eventInfo?.host}
+          </div>
+          <div className="event-top-container">
             <div className="event-info event-location">
               <h3>{eventInfo?.location}</h3>
             </div>
-            <div className="event-info event-date">{eventInfo?.date}</div>
-            <div className="event-info event-people">
-              <PeopleAltRounded sx={{ marginRight: "3px" }} />
-              <span>10</span>
+            <div className="event-info-date-participants">
+              <div className="event-info event-date">{eventInfo?.date}</div>
+              <div className="event-info event-people">
+                <PeopleAltRounded sx={{ marginRight: "3px" }} />
+                <span>10</span>
+              </div>
             </div>
 
             <div className="event-info event-desc">
@@ -52,16 +64,9 @@ function Event({ eventList }) {
               vero a magnam similique. Voluptates, quibusdam!
             </div>
 
-            <div className="event-info event-more-images">
-              <span>More Images</span>
-              <div className="event-more-images-container">
-                <img
-                  className="event-more-img event-more-img-selected"
-                  src={img1}
-                ></img>
-                <img className="event-more-img" src={img2}></img>
-              </div>
-            </div>
+            <Button variant="contained" className="event-join-btn">
+              Join
+            </Button>
           </div>
         </div>
       </div>

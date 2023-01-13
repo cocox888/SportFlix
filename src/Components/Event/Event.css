@@ -3,6 +3,7 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    text-align: left;
 }
 
 .event-back {
@@ -20,8 +21,7 @@
     cursor: pointer;
 }
 
-.event-back:hover
-{
+.event-back:hover {
     background-color: rgb(222, 222, 222);
 }
 
@@ -35,34 +35,40 @@
     height: 95%;
     justify-content: space-between;
     flex-wrap: wrap;
+    overflow: scroll;
+    padding-right: 30px;
 }
 
-.event-left {
-    width: 45%;
-    height: 100%;
-    background: rgba(255, 255, 255, 0.7);
-    border-radius: 13px;
-    box-shadow: 7px 4px 20px rgb(30 30 30 / 28%);
+
+.event-top {
+    width: 100%;
+    margin-top: 10px;
+    margin-left: 5px;
 }
 
-.event-right {
-    width: 50%;
-}
-
-.event-right-container {
+.event-top-container {
     text-align: left;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 }
 
+.event-main-img {
+    width: 100%;
+    border-radius: 13px;
+    box-shadow: 7px 4px 20px rgb(30 30 30 / 28%);
+}
+
+
 .event-info:not(:last-child) {
-    margin-bottom: 20px;
+    margin-top: 10px;
 }
 
 .event-host {
     color: rgb(37, 138, 95);
     font-weight: 600;
+    text-align: left;
+    /* margin-top: 20px !important; */
 }
 
 .event-people {
@@ -83,6 +89,7 @@
 
 .event-desc {
     color: rgb(162 161 161);
+    margin-bottom: 20px;
 }
 
 .event-desc p {
@@ -135,4 +142,19 @@
 
 .event-more-img:not(:last-child) {
     margin-right: 10px;
+}
+
+.event-info-date-participants {
+    display: flex;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.event-info-date-participants .event-info:first-child {
+    margin-right: 20px;
+}
+
+.event-join-btn {
+    width: fit-content;
+    margin-top: 10px;
 }
