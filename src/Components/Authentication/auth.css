@@ -1,0 +1,82 @@
+.login {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-container {
+    width: 50%;
+    height: 70%;
+    padding: 10px;
+}
+
+.login-main-container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    padding: 10px;
+    justify-content: center;
+}
+
+.login-heading {
+    margin-bottom: 20px;
+}
+
+.google-login-container {
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 5px;
+    border: 1px solid black;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    cursor: pointer;
+}
+
+.google-login-container img {
+    width: 20px;
+    margin-right: 5px;
+}
+
+.login-partition {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-partition div {
+    height: 1px;
+    width: 50%;
+    background-color: rgba(0, 0, 0, 0.15);
+}
+
+.login-partition span {
+    margin: 0 5px;
+}
+
+.auth-input {
+    width: 100%;
+    margin-top: 10px !important;
+}
+
+.login-credential-more {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 25px;
+    padding: 0 8px;
+}
+
+.login-credential-more .forgot-password {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.login-main-container .login-button {
+    width: 100%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}

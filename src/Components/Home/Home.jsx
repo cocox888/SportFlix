@@ -11,17 +11,22 @@ import MapWrapper from "./MapWrapper/MapWrapper";
 import { useDataLayerValue } from "../../Datalayer/DataLayer";
 import EventListing from "../EventListing/EventListing";
 import Sidebar from "../Sidebar/Sidebar";
-import { Outlet, Route, Routes } from "react-router-dom";
+import { Outlet, Route, Routes, useNavigate } from "react-router-dom";
 import Event from "../Event/Event";
 function Home({ eventList }) {
   const [{ focusMapToCenter, loggedIn }, dispatch] = useDataLayerValue();
 
+  const navigate = useNavigate();
   // Function to handle login
   const login = () => {
-    dispatch({
-      type: "SET_LOGIN_STATUS",
-      loggedIn: true,
-    });
+    navigate("login");
+    // dispatch({
+    //   type: "SET_LOGIN_STATUS",
+    //   loggedIn: true,
+    // });
+  };
+  const signup = () => {
+    navigate("signup");
   };
   // Function to handle logout
   const logout = () => {
@@ -50,7 +55,7 @@ function Home({ eventList }) {
         {!loggedIn ? (
           <div className="home-login-loggedOut-container">
             <button onClick={() => login()}>Login</button>
-            <button>Signup</button>
+            <button onClick={() => signup()}>Signup</button>
           </div>
         ) : (
           <div className="home-login-loggedIn-container">
