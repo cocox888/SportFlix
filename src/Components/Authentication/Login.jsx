@@ -3,7 +3,9 @@ import "./auth.css";
 import Google from "../../Common resources/google.png";
 import { Button, FormControlLabel, FormGroup, TextField } from "@mui/material";
 import { CheckBox } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
 function Login() {
+  const navigate = useNavigate();
   return (
     <div className="login">
       <div className="login-container">
@@ -61,7 +63,12 @@ function Login() {
             <Button className="login-button" variant="contained">
               Login
             </Button>
-            <span className="signup-route">
+            <span
+              className="signup-route"
+              onClick={() => {
+                navigate("/signup");
+              }}
+            >
               Don't have an account?{" "}
               <span style={{ textDecoration: "underline", cursor: "pointer" }}>
                 {" "}

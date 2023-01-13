@@ -1,6 +1,8 @@
 .Card {
-    min-height: 88%;
+    height: 25vw;
     width: 45%;
+    min-height: 277px;
+    min-width: 250px;
     margin-bottom: 7%;
     box-shadow: 7px 4px 20px rgb(30 30 30 / 18%);
     border-radius: 8px;
@@ -8,6 +10,8 @@
     transition: all 350ms;
     display: flex;
     flex-direction: column;
+    overflow: hidden;
+    justify-content: center;
 }
 
 .Card:hover {

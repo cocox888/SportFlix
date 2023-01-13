@@ -80,3 +80,9 @@
     margin-top: 20px;
     margin-bottom: 20px;
 }
+
+.login-main-container .signup-button {
+    width: 100%;
+    margin-top: 40px;
+    margin-bottom: 20px;
+}

@@ -3,12 +3,10 @@ import "./auth.css";
 import Google from "../../Common resources/google.png";
 import { Button, FormControlLabel, FormGroup, TextField } from "@mui/material";
 import { CheckBox } from "@mui/icons-material";
-// import { BaseAdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { DatePicker } from "@material-ui/pickers";
-
-// import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-// import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 function Signup() {
+  const navigate = useNavigate();
   return (
     <div className="login">
       <div className="login-container">
@@ -28,6 +26,7 @@ function Signup() {
               variant="standard"
               type="text"
             />
+
             <TextField
               className="auth-input"
               label="Email"
@@ -46,35 +45,20 @@ function Signup() {
               variant="standard"
               type="password"
             />
-            <div className="login-credential-more">
-              <div className="save-login">
-                <FormGroup>
-                  <FormControlLabel
-                    control={
-                      <CheckBox
-                        sx={{
-                          fontSize: "19px",
-                          color: "rgb(69,106,242)",
-                          "&.Mui-checked": {
-                            color: "rgb(69,106,242)",
-                          },
-                        }}
-                      />
-                    }
-                    label="Remember me"
-                  />
-                </FormGroup>
-              </div>
-              <span className="forgot-password">Forgot password</span>
-            </div>
-            <Button className="login-button" variant="contained">
-              Login
+
+            <Button className="signup-button" variant="contained">
+              Signup
             </Button>
-            <span className="signup-route">
-              Don't have an account?{" "}
+            <span
+              className="login-route"
+              onClick={() => {
+                navigate("/login");
+              }}
+            >
+              Already have an account?{" "}
               <span style={{ textDecoration: "underline", cursor: "pointer" }}>
                 {" "}
-                Signup for free
+                Login
               </span>
             </span>
           </div>
