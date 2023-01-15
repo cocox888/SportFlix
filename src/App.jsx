@@ -11,6 +11,10 @@ import img2 from "./Common resources/img2.png";
 import Profile from "./Components/Profile/Profile";
 import Login from "./Components/Authentication/Login";
 import Signup from "./Components/Authentication/Signup";
+import { Backdrop, CircularProgress } from "@mui/material";
+import Loader from "./Components/Loader/Loader";
+import { useDataLayerValue } from "./Datalayer/DataLayer";
+import Error from "./Response/Error";
 
 function App() {
   const eventList = [
@@ -42,20 +46,36 @@ function App() {
       peopleJoined: 10,
     },
   ];
+  const [{ loading }] = useDataLayerValue();
   return (
     <div className="App">
-      <Router>
-        <Routes>
-          <Route path="/" element={<Home eventList={eventList} />}>
-            <Route index element={<EventListing eventList={eventList} />} />
-            <Route path="event/:id" element={<Event eventList={eventList} />} />
-            <Route path="profile" element={<Profile />} />
-            <Route path="login" element={<Login />} />
-            <Route path="signup" element={<Signup />} />
-            <Route path="*" element={<EventListing eventList={eventList} />} />
-          </Route>
-        </Routes>
-      </Router>
+      <div className="main-app-dock">
+        <Router>
+          <Routes>
+            <Route path="/" element={<Home eventList={eventList} />}>
+              <Route index element={<EventListing eventList={eventList} />} />
+              <Route
+                path="event/:id"
+                element={<Event eventList={eventList} />}
+              />
+              <Route path="profile" element={<Profile />} />
+              <Route path="login" element={<Login />} />
+              <Route path="signup" element={<Signup />} />
+              <Route
+                path="*"
+                element={<EventListing eventList={eventList} />}
+              />
+            </Route>
+          </Routes>
+        </Router>
+      </div>
+      <Backdrop sx={{ color: "#fff", zIndex: "5000000000" }} open={loading}>
+        {/* <CircularProgress color="inherit" /> */}
+        <Loader />
+      </Backdrop>
+
+      {/* Response (i.e. Error and success messages) */}
+      <Error />
     </div>
   );
 }

@@ -1,0 +1,28 @@
+.error {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgb(230, 75, 89);
+    box-shadow: 1px 1px 30px rgba(230, 75, 89, 0.32);
+    backdrop-filter: blur(2px);
+    padding: 10px 30px;
+    z-index: 500000000;
+    color: white;
+    border-radius: 13px;
+    transition: all 250ms;
+}
+
+.success {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgb(57, 175, 114);
+    backdrop-filter: blur(2px);
+    padding: 10px 30px;
+    z-index: 500000000;
+    color: white;
+    border-radius: 13px;
+    transition: all 250ms;
+}

@@ -2,9 +2,15 @@ export const initialState = {
   user: null,
   allignMap: false,
   loggedIn: false,
+  loading: false,
 };
 const reducer = (state, action) => {
   switch (action.type) {
+    case "SET_LOADING":
+      return {
+        ...state,
+        loading: action.loading,
+      };
     case "SET_LOGIN_STATUS":
       return {
         ...state,

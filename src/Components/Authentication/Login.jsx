@@ -1,11 +1,39 @@
-import React from "react";
+import React, { useState } from "react";
 import "./auth.css";
 import Google from "../../Common resources/google.png";
 import { Button, FormControlLabel, FormGroup, TextField } from "@mui/material";
 import { CheckBox } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
+import { Api } from "../../Api/Axios";
+import { useDataLayerValue } from "../../Datalayer/DataLayer";
 function Login() {
   const navigate = useNavigate();
+  const [loginCredentials, setLoginCredentials] = useState({});
+  const [{ loggedIn }, dispatch] = useDataLayerValue();
+  // Function to handle change values
+
+  const changeCredentials = ({ id, value }) => {
+    setLoginCredentials((prevState) => ({ ...prevState, [id]: value }));
+  };
+
+  // Function to login
+  const loginFunction = async () => {
+    dispatch({ type: "SET_LOADING", loading: true });
+    await Api.post("/auth/login", loginCredentials)
+      .then((res) => {
+        // console.log(res.data);
+        localStorage.setItem("AUTH_TOKEN", res.data?.token);
+        dispatch({ type: "SET_LOGIN_STATUS", loggedIn: true });
+        navigate("/");
+      })
+      .catch((err) => {
+        localStorage.removeItem("AUTH_TOKEN");
+        dispatch({ type: "SET_LOGIN_STATUS", loggedIn: false });
+        // console.log(err.response.data.message);
+      });
+    dispatch({ type: "SET_LOADING", loading: false });
+  };
+
   return (
     <div className="login">
       <div className="login-container">
@@ -26,18 +54,31 @@ function Login() {
             <span>or</span>
             <div></div>
           </div>
-          <div className="login-credential-container">
+          <form
+            className="login-credential-container"
+            onSubmit={(e) => e.preventDefault()}
+          >
             <TextField
               className="auth-input"
               label="Email"
               variant="standard"
               type="email"
+              id="email"
+              required
+              onChange={(e) => {
+                changeCredentials(e.target);
+              }}
             />
             <TextField
               className="auth-input"
               label="Password"
               variant="standard"
               type="password"
+              id="password"
+              required
+              onChange={(e) => {
+                changeCredentials(e.target);
+              }}
             />
             <div className="login-credential-more">
               <div className="save-login">
@@ -60,7 +101,12 @@ function Login() {
               </div>
               <span className="forgot-password">Forgot password</span>
             </div>
-            <Button className="login-button" variant="contained">
+            <Button
+              className="login-button"
+              variant="contained"
+              onClick={() => loginFunction()}
+              type="submit"
+            >
               Login
             </Button>
             <span
@@ -75,7 +121,7 @@ function Login() {
                 Signup for free
               </span>
             </span>
-          </div>
+          </form>
         </div>
       </div>
     </div>

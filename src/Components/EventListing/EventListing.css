@@ -114,6 +114,7 @@
     flex: 80%;
     display: flex;
     flex-wrap: wrap;
+    gap: 20px;
     justify-content: space-between;
     overflow: scroll;
     height: 100%;
@@ -126,4 +127,19 @@
     padding: 10px;
     border-radius: 8px;
     border: 1px solid #C4C4C4;
+}
+
+
+/* responsiveness */
+
+@media only screen and (max-width: 1127px) {
+    .event-listing-bottom {
+        justify-content: center;
+    }
+
+    .event-listing-bottom .Card {
+        /* width: 80% !important; */
+        /* height: 100%; */
+        /* max-width: unset !important; */
+    }
 }

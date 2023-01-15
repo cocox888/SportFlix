@@ -1,6 +1,9 @@
 .App {
-  text-align: center;
   height: 100vh;
   width: 100vw;
+}
+
+.main-app-dock {
+  text-align: center;
   display: flex;
 }
