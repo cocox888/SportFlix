@@ -5,8 +5,58 @@ import { Button, FormControlLabel, FormGroup, TextField } from "@mui/material";
 import { CheckBox } from "@mui/icons-material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDataLayerValue } from "../../Datalayer/DataLayer";
+import { Api } from "../../Api/Axios";
 function Signup() {
   const navigate = useNavigate();
+  const [signupData, setSignupData] = useState({});
+  const [{ loggedIn }, dispatch] = useDataLayerValue();
+
+  const changeCredentials = ({ id, value }) => {
+    setSignupData((prevState) => ({ ...prevState, [id]: value }));
+  };
+  const signupFunction = async () => {
+    if (signupData?.password === signupData?.confirmPassword) {
+      dispatch({ type: "SET_LOADING", loading: true });
+      const credentials = {
+        name: signupData.name,
+        email: signupData.email,
+        password: signupData.password,
+      };
+      await Api.post("/auth/signup", credentials)
+        .then((res) => {
+          // console.log(res.data);
+          localStorage.setItem("AUTH_TOKEN", res.data?.token);
+          dispatch({ type: "SET_LOGIN_STATUS", loggedIn: true });
+          dispatch({
+            type: "SET_RESPONSE_DATA",
+            responseData: { message: res.data?.message, type: "success" },
+          });
+
+          navigate("/");
+        })
+        .catch((err) => {
+          localStorage.removeItem("AUTH_TOKEN");
+          dispatch({ type: "SET_LOGIN_STATUS", loggedIn: false });
+          dispatch({
+            type: "SET_RESPONSE_DATA",
+            responseData: {
+              message: err?.response?.data?.message,
+              type: "error",
+            },
+          });
+        });
+      dispatch({ type: "SET_LOADING", loading: false });
+    } else {
+      dispatch({
+        type: "SET_RESPONSE_DATA",
+        responseData: {
+          message: "Passwords did not match",
+          type: "error",
+        },
+      });
+    }
+  };
   return (
     <div className="login">
       <div className="login-container">
@@ -25,6 +75,10 @@ function Signup() {
               label="Name"
               variant="standard"
               type="text"
+              id="name"
+              onChange={(e) => {
+                changeCredentials(e.target);
+              }}
             />
 
             <TextField
@@ -32,21 +86,37 @@ function Signup() {
               label="Email"
               variant="standard"
               type="email"
+              id="email"
+              onChange={(e) => {
+                changeCredentials(e.target);
+              }}
             />
             <TextField
               className="auth-input"
               label="Password"
               variant="standard"
               type="password"
+              id="password"
+              onChange={(e) => {
+                changeCredentials(e.target);
+              }}
             />
             <TextField
               className="auth-input"
               label="Confirm password"
               variant="standard"
               type="password"
+              id="confirmPassword"
+              onChange={(e) => {
+                changeCredentials(e.target);
+              }}
             />
 
-            <Button className="signup-button" variant="contained">
+            <Button
+              className="signup-button"
+              variant="contained"
+              onClick={() => signupFunction()}
+            >
               Signup
             </Button>
             <span

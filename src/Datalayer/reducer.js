@@ -1,8 +1,9 @@
 export const initialState = {
-  user: null,
+  userData: null,
   allignMap: false,
   loggedIn: false,
   loading: false,
+  responseData: null,
 };
 const reducer = (state, action) => {
   switch (action.type) {
@@ -16,6 +17,11 @@ const reducer = (state, action) => {
         ...state,
         loggedIn: action.loggedIn,
       };
+    case "SET_USER_DATA":
+      return {
+        ...state,
+        userData: action.userData,
+      };
     case "SET_FOCUS_MAP_TO_CENTER":
       return {
         ...state,
@@ -25,6 +31,11 @@ const reducer = (state, action) => {
       return {
         ...state,
         selectedEvent: action.selectedEvent,
+      };
+    case "SET_RESPONSE_DATA":
+      return {
+        ...state,
+        responseData: action.responseData,
       };
     default:
       return state;

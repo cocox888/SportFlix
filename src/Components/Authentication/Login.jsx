@@ -9,7 +9,7 @@ import { useDataLayerValue } from "../../Datalayer/DataLayer";
 function Login() {
   const navigate = useNavigate();
   const [loginCredentials, setLoginCredentials] = useState({});
-  const [{ loggedIn }, dispatch] = useDataLayerValue();
+  const [{ loggedIn, responseData }, dispatch] = useDataLayerValue();
   // Function to handle change values
 
   const changeCredentials = ({ id, value }) => {
@@ -24,12 +24,23 @@ function Login() {
         // console.log(res.data);
         localStorage.setItem("AUTH_TOKEN", res.data?.token);
         dispatch({ type: "SET_LOGIN_STATUS", loggedIn: true });
+        dispatch({
+          type: "SET_RESPONSE_DATA",
+          responseData: { message: res.data?.message, type: "success" },
+        });
+
         navigate("/");
       })
       .catch((err) => {
         localStorage.removeItem("AUTH_TOKEN");
         dispatch({ type: "SET_LOGIN_STATUS", loggedIn: false });
-        // console.log(err.response.data.message);
+        dispatch({
+          type: "SET_RESPONSE_DATA",
+          responseData: {
+            message: err?.response?.data?.message,
+            type: "error",
+          },
+        });
       });
     dispatch({ type: "SET_LOADING", loading: false });
   };

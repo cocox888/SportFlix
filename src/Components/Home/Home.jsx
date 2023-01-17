@@ -31,8 +31,21 @@ function Home({ eventList }) {
   // Function to handle logout
   const logout = () => {
     dispatch({
+      type: "SET_LOADING",
+      loading: true,
+    });
+    localStorage.removeItem("AUTH_TOKEN");
+    dispatch({
       type: "SET_LOGIN_STATUS",
       loggedIn: false,
+    });
+    dispatch({
+      type: "SET_USER_DATA",
+      loggedIn: {},
+    });
+    dispatch({
+      type: "SET_LOADING",
+      loading: false,
     });
   };
 

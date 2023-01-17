@@ -3,9 +3,9 @@
     bottom: 40px;
     left: 50%;
     transform: translateX(-50%);
-    background-color: rgb(230, 75, 89);
+    background-color: rgba(230, 75, 89, 0.85);
     box-shadow: 1px 1px 30px rgba(230, 75, 89, 0.32);
-    backdrop-filter: blur(2px);
+    /* backdrop-filter: blur(2px); */
     padding: 10px 30px;
     z-index: 500000000;
     color: white;
@@ -18,11 +18,39 @@
     bottom: 40px;
     left: 50%;
     transform: translateX(-50%);
-    background-color: rgb(57, 175, 114);
+    background-color: rgba(57, 175, 114, 0.85);
     backdrop-filter: blur(2px);
     padding: 10px 30px;
     z-index: 500000000;
     color: white;
     border-radius: 13px;
-    transition: all 250ms;
+    transition: all 300ms;
+    animation: appear_prompt 300ms;
+}
+
+@keyframes appear_prompt {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+
+}
+
+.disappear-prompt {
+    transition: all 300ms;
+    animation: disappear_prompt_animation 300ms;
+}
+
+@keyframes disappear_prompt_animation {
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+
 }

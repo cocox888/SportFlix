@@ -14,7 +14,10 @@ import Signup from "./Components/Authentication/Signup";
 import { Backdrop, CircularProgress } from "@mui/material";
 import Loader from "./Components/Loader/Loader";
 import { useDataLayerValue } from "./Datalayer/DataLayer";
-import Error from "./Response/Error";
+import Response from "./Response/Response";
+import { useEffect } from "react";
+import { Api } from "./Api/Axios";
+import ProtectedRoute from "./Utils/ProtectedRoute";
 
 function App() {
   const eventList = [
@@ -46,7 +49,54 @@ function App() {
       peopleJoined: 10,
     },
   ];
-  const [{ loading }] = useDataLayerValue();
+  const [{ loading, responseData, userData }, dispatch] = useDataLayerValue();
+
+  const loginOnReload = async () => {
+    dispatch({
+      type: "SET_LOADING",
+      loading: true,
+    });
+    const token = localStorage.getItem("AUTH_TOKEN");
+    if (token) {
+      await Api.get("/auth/getUser")
+        .then((res) => {
+          console.log(res.data.data);
+          dispatch({
+            type: "SET_USER_DATA",
+            userData: res.data.data,
+          });
+          dispatch({
+            type: "SET_LOGIN_STATUS",
+            loggedIn: true,
+          });
+        })
+        .catch((err) => {
+          localStorage.removeItem("AUTH_TOKEN");
+          dispatch({
+            type: "SET_LOGIN_STATUS",
+            loggedIn: false,
+          });
+          dispatch({
+            type: "SET_USER_DATA",
+            loggedIn: {},
+          });
+        });
+    } else {
+      dispatch({
+        type: "SET_LOGIN_STATUS",
+        loggedIn: false,
+      });
+    }
+    dispatch({
+      type: "SET_LOADING",
+      loading: false,
+    });
+  };
+
+  useEffect(() => {
+    loginOnReload();
+  }, []);
+
   return (
     <div className="App">
       <div className="main-app-dock">
@@ -58,13 +108,15 @@ function App() {
                 path="event/:id"
                 element={<Event eventList={eventList} />}
               />
-              <Route path="profile" element={<Profile />} />
               <Route path="login" element={<Login />} />
               <Route path="signup" element={<Signup />} />
               <Route
                 path="*"
                 element={<EventListing eventList={eventList} />}
               />
+              <Route element={<ProtectedRoute />}>
+                <Route path="profile" element={<Profile />} />
+              </Route>
             </Route>
           </Routes>
         </Router>
@@ -75,7 +127,7 @@ function App() {
       </Backdrop>
 
       {/* Response (i.e. Error and success messages) */}
-      <Error />
+      {responseData && <Response />}
     </div>
   );
 }

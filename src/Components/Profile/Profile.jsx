@@ -4,9 +4,35 @@ import {
   ModeEditRounded,
 } from "@mui/icons-material";
 import React from "react";
+import { useNavigate } from "react-router-dom";
+import { useDataLayerValue } from "../../Datalayer/DataLayer";
 import "./Profile.css";
 
 function Profile() {
+  const [{ loading, loggedIn, userData }, dispatch] = useDataLayerValue();
+  const navigate = useNavigate();
+
+  const logoutFunc = () => {
+    dispatch({
+      type: "SET_LOADING",
+      loading: true,
+    });
+    localStorage.removeItem("AUTH_TOKEN");
+    dispatch({
+      type: "SET_LOGIN_STATUS",
+      loggedIn: false,
+    });
+    dispatch({
+      type: "SET_USER_DATA",
+      loggedIn: {},
+    });
+    dispatch({
+      type: "SET_LOADING",
+      loading: false,
+    });
+    navigate("/");
+  };
+
   return (
     <div className="profile">
       <div className="profile-container">
@@ -74,7 +100,12 @@ function Profile() {
             </div>
           </div>
 
-          <div className="profile-logout">
+          <div
+            className="profile-logout"
+            onClick={() => {
+              logoutFunc();
+            }}
+          >
             <span>Sign out</span>
           </div>
         </div>
