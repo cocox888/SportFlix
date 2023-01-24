@@ -28,26 +28,6 @@ function Home({ eventList }) {
   const signup = () => {
     navigate("signup");
   };
-  // Function to handle logout
-  const logout = () => {
-    dispatch({
-      type: "SET_LOADING",
-      loading: true,
-    });
-    localStorage.removeItem("AUTH_TOKEN");
-    dispatch({
-      type: "SET_LOGIN_STATUS",
-      loggedIn: false,
-    });
-    dispatch({
-      type: "SET_USER_DATA",
-      loggedIn: {},
-    });
-    dispatch({
-      type: "SET_LOADING",
-      loading: false,
-    });
-  };
 
   return (
     <>
@@ -65,17 +45,10 @@ function Home({ eventList }) {
       </div>
 
       <div className="home-login-container">
-        {!loggedIn ? (
+        {!loggedIn && (
           <div className="home-login-loggedOut-container">
             <button onClick={() => login()}>Login</button>
             <button onClick={() => signup()}>Signup</button>
-          </div>
-        ) : (
-          <div className="home-login-loggedIn-container">
-            <PowerSettingsNewRounded
-              sx={{ color: "red", margin: "5px", cursor: "pointer" }}
-              onClick={() => logout()}
-            />
           </div>
         )}
       </div>

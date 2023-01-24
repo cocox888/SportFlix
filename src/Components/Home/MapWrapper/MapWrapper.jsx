@@ -3,9 +3,12 @@ import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import { Icon } from "leaflet";
 import { useDataLayerValue } from "../../../Datalayer/DataLayer";
 import { useNavigate, useParams } from "react-router-dom";
+import EsriLeafletGeoSearch from "react-esri-leaflet/plugins/EsriLeafletGeoSearch";
+import "./mapwrapper.css";
 
 function MapWrapper({ eventList }) {
   const [userLocation, setUserLocation] = useState([0, 0]);
+  const [enableSearch, setEnableSearch] = useState(true);
   const [zoom, setZoom] = useState(2);
   const userLocationIcon = new Icon({
     iconUrl: require("./Resources/person.png"),
@@ -110,6 +113,19 @@ function MapWrapper({ eventList }) {
           <Popup>{event?.location}</Popup>
         </Marker>
       ))}
+      {enableSearch && (
+        <EsriLeafletGeoSearch
+          providers={{
+            arcgisOnlineProvider: {
+              token:
+                "AAPK4e5268d5d850408b94a64cbe8466bc4dk5R_BZxaWXqoAnelAqQrdktOZli7YGY2HkwsHit-n532mZiJa4U0-7Q4fg4EZom-",
+              label: "ArcGIS Online Results",
+              maxResults: 10,
+            },
+          }}
+          position="topright"
+        />
+      )}
     </MapContainer>
   );
 }

@@ -1,0 +1,49 @@
+.leaflet-control-container .leaflet-top {
+    position: absolute;
+    top: 35px;
+    right: 20px;
+}
+
+.geocoder-control {
+    width: 300px;
+}
+
+.geocoder-control-suggestions {
+    background-color: white;
+    text-align: left;
+}
+
+.leaflet-touch .leaflet-control-layers,
+.leaflet-touch .leaflet-bar {
+    width: 100%;
+    padding: 5px 10px;
+    border-radius: 8px;
+    box-shadow: 1px 3px 30px rgb(167 191 218 / 45%);
+    border: none;
+    outline: none;
+}
+
+
+.geocoder-control-suggestions ul {
+    list-style: none;
+}
+
+.geocoder-control-suggestions ul li {
+    cursor: pointer;
+    border-radius: 8px;
+    padding: 2px;
+
+}
+
+.geocoder-control-suggestions ul li:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.search-location-container {
+    display: none;
+    overflow: hidden;
+}
+
+.show-search-location-container {
+    display: unset;
+}

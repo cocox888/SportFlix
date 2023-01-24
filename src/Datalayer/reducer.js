@@ -37,6 +37,11 @@ const reducer = (state, action) => {
         ...state,
         responseData: action.responseData,
       };
+    case "SET_LOCATION_SEARCH":
+      return {
+        ...state,
+        locationSearchRef: action.locationSearchRef,
+      };
     default:
       return state;
   }
