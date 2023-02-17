@@ -16,6 +16,7 @@ function MapWrapper({ eventList }) {
     iconAnchor: [28, 10],
     popupAnchor: [0, -10],
   });
+
   const defaultSportIcon = new Icon({
     iconUrl: require("./Resources/default.png"),
     iconSize: [35, 35],
@@ -113,7 +114,7 @@ function MapWrapper({ eventList }) {
           <Popup>{event?.location}</Popup>
         </Marker>
       ))}
-      {enableSearch && (
+      {/* {enableSearch && (
         <EsriLeafletGeoSearch
           providers={{
             arcgisOnlineProvider: {
@@ -125,7 +126,7 @@ function MapWrapper({ eventList }) {
           }}
           position="topright"
         />
-      )}
+      )} */}
     </MapContainer>
   );
 }

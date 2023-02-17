@@ -1,0 +1,75 @@
+.add-event-form {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.add-event-back button {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    border: none;
+    background-color: rgb(239, 239, 239);
+    box-shadow: 2px 2px 5px rgb(30 30 30 / 10%);
+    padding: 7px 10px;
+    border-radius: 13px;
+    font-size: 13px;
+    align-items: center;
+    color: rgb(162 161 161);
+    cursor: pointer;
+    transition: all 250ms;
+}
+
+.add-event-back button:hover {
+    background-color: rgb(232 232 232);
+}
+
+.add-event-form-container {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    height: 100%;
+}
+
+.add-event-form-main-container {
+    padding: 20px 0;
+    display: flex;
+    justify-content: space-between;
+    text-align: left;
+    width: 100%;
+    height: 100%;
+}
+
+.add-event-form-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: left;
+    width: 40%;
+}
+
+.add-event-input-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    text-align: left;
+}
+
+.add-event-form-heading {
+    margin-bottom: 20px;
+}
+
+.add-event-input-field {
+    margin: 10px 0 !important;
+}
+
+.add-event-form-btn {
+    margin-top: 20px !important;
+    width: fit-content;
+}
+
+.add-event-form-right {
+    display: flex;
+    width: 55%;
+    height: 100%;
+}

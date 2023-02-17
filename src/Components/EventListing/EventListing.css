@@ -4,6 +4,7 @@
     flex-direction: column;
     width: 100%;
     overflow: hidden;
+    position: relative;
 }
 
 .event-listing-top {
@@ -128,6 +129,22 @@
     border-radius: 8px;
     border: 1px solid #C4C4C4;
 }
+
+.event-add-btn-container {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
+.event-add-btn-container button {
+    background-color: #456AF2;
+    border-radius: 10px;
+    color: white;
+    box-shadow: 1px 1px 8px #456af2;
+    padding: 10px;
+    border: none;
+}
+
 
 
 /* responsiveness */

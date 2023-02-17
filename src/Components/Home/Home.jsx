@@ -11,11 +11,18 @@ import MapWrapper from "./MapWrapper/MapWrapper";
 import { useDataLayerValue } from "../../Datalayer/DataLayer";
 import EventListing from "../EventListing/EventListing";
 import Sidebar from "../Sidebar/Sidebar";
-import { Outlet, Route, Routes, useNavigate } from "react-router-dom";
+import {
+  Outlet,
+  Route,
+  Routes,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
 import Event from "../Event/Event";
+import { useEffect } from "react";
+import { useState } from "react";
 function Home({ eventList }) {
   const [{ focusMapToCenter, loggedIn }, dispatch] = useDataLayerValue();
-
   const navigate = useNavigate();
   // Function to handle login
   const login = () => {

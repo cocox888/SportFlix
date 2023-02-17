@@ -18,6 +18,7 @@ import Response from "./Response/Response";
 import { useEffect } from "react";
 import { Api } from "./Api/Axios";
 import ProtectedRoute from "./Utils/ProtectedRoute";
+import AddEventForm from "./Components/Add Event Form/AddEventForm";
 
 function App() {
   const eventList = [
@@ -78,7 +79,7 @@ function App() {
           });
           dispatch({
             type: "SET_USER_DATA",
-            loggedIn: {},
+            userData: {},
           });
         });
     } else {
@@ -110,13 +111,14 @@ function App() {
               />
               <Route path="login" element={<Login />} />
               <Route path="signup" element={<Signup />} />
+              <Route path="add-event" element={<AddEventForm />} />
+              <Route element={<ProtectedRoute />}>
+                <Route path="profile" element={<Profile />} />
+              </Route>
               <Route
                 path="*"
                 element={<EventListing eventList={eventList} />}
               />
-              <Route element={<ProtectedRoute />}>
-                <Route path="profile" element={<Profile />} />
-              </Route>
             </Route>
           </Routes>
         </Router>

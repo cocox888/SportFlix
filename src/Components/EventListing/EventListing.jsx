@@ -2,17 +2,29 @@ import React, { useEffect } from "react";
 import IconButton from "@mui/material/IconButton";
 import SearchIcon from "@mui/icons-material/Search";
 import TextField from "@mui/material/TextField";
-import { FormControl, MenuItem, Select, InputLabel } from "@mui/material";
+import {
+  FormControl,
+  MenuItem,
+  Select,
+  InputLabel,
+  Button,
+} from "@mui/material";
 import { Cancel } from "@mui/icons-material";
 import Card from "../ResultCard/Card";
 import "./EventListing.css";
 import { useDataLayerValue } from "../../Datalayer/DataLayer";
+import { useNavigate } from "react-router-dom";
 
 function EventListing({ eventList }) {
   const [dispatch] = useDataLayerValue();
-
+  const navigate = useNavigate();
   return (
     <div className="event-listing">
+      <div className="event-add-btn-container">
+        <Button variant="contained" onClick={() => navigate("add-event")}>
+          Add Event
+        </Button>
+      </div>
       <div className="event-listing-controller">
         <div className="event-listing-top">
           <div className="searchbar">

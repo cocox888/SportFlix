@@ -1,0 +1,56 @@
+.add-event-map-container {
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 1px 3px 15px rgb(167 191 218 / 45%);
+    overflow: hidden;
+}
+
+.add-event-map-container .leaflet-container {
+    width: 100%;
+    /* min-height: 500px;
+    max-height: 500px; */
+    height: 100%;
+}
+
+.leaflet-control-container .leaflet-top {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+}
+
+.geocoder-control {
+    width: 200px;
+}
+
+.geocoder-control-suggestions {
+    background-color: white;
+    text-align: left;
+}
+
+.leaflet-touch .leaflet-control-layers,
+.leaflet-touch .leaflet-bar {
+    width: 100%;
+    padding: 5px 10px;
+    border-radius: 8px;
+    box-shadow: 1px 3px 30px rgb(167 191 218 / 45%);
+    border: none;
+    outline: none;
+}
+
+
+.geocoder-control-suggestions ul {
+    list-style: none;
+}
+
+.geocoder-control-suggestions ul li {
+    cursor: pointer;
+    border-radius: 8px;
+    padding: 2px;
+
+}
+
+.geocoder-control-suggestions ul li:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+}
