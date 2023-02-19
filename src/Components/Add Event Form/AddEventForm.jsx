@@ -25,11 +25,12 @@ function AddEventForm() {
     e.preventDefault();
     const eventDataToPush = {
       host: userData?.name,
+      participants: [userData?._id],
       ...eventDetails,
       ...eventDetails.location,
     };
     dispatch({ type: "SET_LOADING", loading: true });
-    await Api.post("/events/addEvent", eventDataToPush)
+    await Api.post("/events/add-event", eventDataToPush)
       .then((res) => {
         dispatch({
           type: "SET_RESPONSE_DATA",

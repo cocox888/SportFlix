@@ -30,7 +30,7 @@ function MapWrapper({ eventList }) {
   // getting user's location
   useEffect(() => {
     navigator.geolocation.getCurrentPosition((pos) => {
-      console.log("pos");
+      console.log(pos);
       if (pos) {
         setUserLocation([pos.coords.latitude, pos.coords.longitude]);
       }
@@ -80,8 +80,13 @@ function MapWrapper({ eventList }) {
   useEffect(() => {
     const { id } = urlParams;
     if (id) {
-      const targetEvent = eventList.filter((event) => event.id === id);
-      const targetCoordinates = targetEvent[0].coordinates;
+      const targetEvent = eventList.filter((event) => event._id === id);
+      const targetCoordinates = [
+        targetEvent[0].latitude,
+        targetEvent[0].longitude,
+      ];
+      console.log(targetCoordinates);
+
       focusMapToLocation(targetCoordinates, false);
     }
   }, [urlParams]);
@@ -99,14 +104,14 @@ function MapWrapper({ eventList }) {
         <Marker
           eventHandlers={{
             click: () => {
-              navigate(`/event/${event.id}`);
+              navigate(`/event/${event?._id}`);
             },
           }}
-          key={event.id}
-          position={event?.coordinates}
+          key={event?._id}
+          position={[event?.latitude, event?.longitude]}
           icon={
             new Icon({
-              iconUrl: require(`./Resources/${event?.type}.png`),
+              iconUrl: require(`./Resources/${event?.type.toLowerCase()}.png`),
               iconSize: [35, 35],
             })
           }
@@ -114,19 +119,6 @@ function MapWrapper({ eventList }) {
           <Popup>{event?.location}</Popup>
         </Marker>
       ))}
-      {/* {enableSearch && (
-        <EsriLeafletGeoSearch
-          providers={{
-            arcgisOnlineProvider: {
-              token:
-                "AAPK4e5268d5d850408b94a64cbe8466bc4dk5R_BZxaWXqoAnelAqQrdktOZli7YGY2HkwsHit-n532mZiJa4U0-7Q4fg4EZom-",
-              label: "ArcGIS Online Results",
-              maxResults: 10,
-            },
-          }}
-          position="topright"
-        />
-      )} */}
     </MapContainer>
   );
 }

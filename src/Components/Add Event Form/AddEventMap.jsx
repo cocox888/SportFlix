@@ -3,6 +3,8 @@ import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import { Icon } from "leaflet";
 import EsriLeafletGeoSearch from "react-esri-leaflet/plugins/EsriLeafletGeoSearch";
 import "./addEventMap.css";
+// import Map from "mapmyindia-react";
+// import MapmyIndia from "mapmyindia-react";
 
 function AddEventMap({ setEventLocationData }) {
   const [userLocation, setUserLocation] = useState([0, 0]);
@@ -79,7 +81,7 @@ function AddEventMap({ setEventLocationData }) {
             arcgisOnlineProvider: {
               token: apiKey,
               label: "ArcGIS Online Results",
-              maxResults: 10,
+              maxResults: 20,
             },
           }}
           position="topright"

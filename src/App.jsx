@@ -15,42 +15,18 @@ import { Backdrop, CircularProgress } from "@mui/material";
 import Loader from "./Components/Loader/Loader";
 import { useDataLayerValue } from "./Datalayer/DataLayer";
 import Response from "./Response/Response";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Api } from "./Api/Axios";
 import ProtectedRoute from "./Utils/ProtectedRoute";
 import AddEventForm from "./Components/Add Event Form/AddEventForm";
+import axios from "axios";
 
 function App() {
-  const eventList = [
-    {
-      id: "event1",
-      host: "Ayanabha Misra",
-      type: "cricket",
-      location: "DSA Stadium, South Baluchar, Malda, West Bengal",
-      coordinates: [24.997936889216756, 88.14851917039425],
-      date: "24th Dec",
-      peopleJoined: 10,
-    },
-    {
-      id: "event2",
-      host: "Ayanabha Misra",
-      type: "football",
-      location: "Brindabani Maidan",
-      coordinates: [24.99761222867918, 88.14528246392283],
-      date: "24th Dec",
-      peopleJoined: 10,
-    },
-    {
-      id: "event3",
-      host: "Ayanabha Misra",
-      type: "badminton",
-      location: "Malda College Ground",
-      coordinates: [25.00175881167985, 88.13757176967077],
-      date: "24th Dec",
-      peopleJoined: 10,
-    },
-  ];
+  const [eventList, setEventList] = useState([]);
+
   const [{ loading, responseData, userData }, dispatch] = useDataLayerValue();
+
+  // Function to login on reload
 
   const loginOnReload = async () => {
     dispatch({
@@ -94,8 +70,84 @@ function App() {
     });
   };
 
+  // Function to login on reload ends here
+
+  // Functions to get event list
+  const getCoords = async () => {
+    const pos = await new Promise((resolve, reject) => {
+      navigator.geolocation.getCurrentPosition(resolve, reject);
+    });
+
+    return {
+      lng: pos.coords.longitude,
+      lat: pos.coords.latitude,
+    };
+  };
+
+  const getUserLocation = async () => {
+    const coords = await getCoords();
+    let userLocationTemp;
+    // const mapmyindia_api_key = "ca542509ed95785a4aa26e095a72fb2e";
+    await axios
+      .get(
+        `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=20.296059&longitude=85.824539`
+      )
+      .then((res) => {
+        userLocationTemp = res.data;
+      })
+      .catch((err) => {
+        dispatch({
+          type: "SET_RESPONSE_DATA",
+          responseData: {
+            message: "Something went wrong ... please try reloading",
+            type: "error",
+          },
+        });
+      });
+    console.log(userLocationTemp);
+    return userLocationTemp;
+  };
+
+  const getEventList = async () => {
+    dispatch({
+      type: "SET_LOADING",
+      loading: true,
+    });
+    const userLocation = await getUserLocation();
+    console.log(userLocation);
+
+    await Api.get("/events/get-events-from-city", {
+      params: { city: userLocation?.city },
+    })
+      .then((res) => {
+        let unsortedEvents = res.data.events;
+        unsortedEvents.sort(
+          (e1, e2) => new Date(e1.date).getTime() - new Date(e2.date).getTime()
+        );
+        console.log(unsortedEvents);
+        setEventList(unsortedEvents);
+      })
+      .catch((err) => {
+        dispatch({
+          type: "SET_RESPONSE_DATA",
+          responseData: {
+            message: "Something went wrong ... please try reloading",
+            type: "error",
+          },
+        });
+      });
+
+    dispatch({
+      type: "SET_LOADING",
+      loading: false,
+    });
+  };
+
+  // Functions to get event list ends here
+
   useEffect(() => {
     loginOnReload();
+    getEventList();
   }, []);
 
   return (

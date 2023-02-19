@@ -5,18 +5,42 @@ import {
   SportsCricket,
   SportsCricketRounded,
 } from "@mui/icons-material";
-import React from "react";
+import React, { useEffect } from "react";
 import "./card.css";
 import notFound from "./img.jpg";
-import { useNavigate } from "react-router-dom"
-import img1 from "../../Common resources/img1.jpg"
+import { useNavigate } from "react-router-dom";
+import img1 from "../../Common resources/img1.jpg";
 
 function Card({ event }) {
-
   const navigate = useNavigate();
   const selectEvent = () => {
-    navigate(`/event/${event.id}`)
-  }
+    navigate(`/event/${event._id}`);
+  };
+  const changeDateFormat = (rawDate) => {
+    const d = new Date(rawDate);
+    const months = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ];
+    const month = months[d.getMonth()];
+    const date = d.getDate();
+    return `${month} ${date}`;
+  };
+
+  useEffect(() => {
+    console.log(event);
+    console.log("first");
+  }, []);
 
   return (
     <div className="Card" onClick={() => selectEvent()}>
@@ -39,9 +63,12 @@ function Card({ event }) {
             </div>
           </div>
           <div className="card-bottom">
-            <span>{event?.date}</span>
+            <span>{changeDateFormat(event?.date)}</span>
             <span>{event?.type}</span>
-            <span>{<PeopleAltRounded sx={{ marginRight: "10px" }} />} {event?.peopleJoined}</span>
+            <span>
+              {<PeopleAltRounded sx={{ marginRight: "10px" }} />}{" "}
+              {event?.peopleJoined}
+            </span>
           </div>
         </div>
       </div>

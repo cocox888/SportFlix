@@ -14,10 +14,15 @@ import Card from "../ResultCard/Card";
 import "./EventListing.css";
 import { useDataLayerValue } from "../../Datalayer/DataLayer";
 import { useNavigate } from "react-router-dom";
+import L from "leaflet";
+import { useState } from "react";
 
 function EventListing({ eventList }) {
-  const [dispatch] = useDataLayerValue();
+  const [{ loading }, dispatch] = useDataLayerValue();
+  const [userCoordinates, setUserCoordinates] = useState([0, 0]);
+  const [userLocation, setUserLocation] = useState();
   const navigate = useNavigate();
+
   return (
     <div className="event-listing">
       <div className="event-add-btn-container">
@@ -36,22 +41,7 @@ function EventListing({ eventList }) {
           </div>
           <div className="filter-box">
             <div className="filter-box-container">
-              <div className="filter-container">
-                <div className="filter-dr-down">
-                  <select name="select-location" id="select-location">
-                    <option value="">Location</option>
-                    <option value="patia">Patia</option>
-                    <option value="Chandrasekharpur">Chandrasekharpur</option>
-                  </select>
-                </div>
-                <div className="filter-dr-down">
-                  <select name="select-location" id="select-location">
-                    <option value="">Game</option>
-                    <option value="patia">Cricket</option>
-                    <option value="Chandrasekharpur">Badminton</option>
-                  </select>
-                </div>
-              </div>
+              <div className="filter-container"></div>
 
               <div className="selected-filter">
                 <div className="selected-filter-field">
@@ -70,7 +60,7 @@ function EventListing({ eventList }) {
         </div>
         <div className="event-listing-mid">
           <div className="result-count">
-            <h2>453</h2> <span>Results found</span>
+            <h2>20</h2> <span>Results from Bhubaneswar</span>
           </div>
           <div className="event-listing-sort">
             <FormControl fullWidth>
