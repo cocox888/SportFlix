@@ -84,48 +84,26 @@ function App() {
     };
   };
 
-  const getUserLocation = async () => {
-    const coords = await getCoords();
-    let userLocationTemp;
-    // const mapmyindia_api_key = "ca542509ed95785a4aa26e095a72fb2e";
-    await axios
-      .get(
-        `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=20.296059&longitude=85.824539`
-      )
-      .then((res) => {
-        userLocationTemp = res.data;
-      })
-      .catch((err) => {
-        dispatch({
-          type: "SET_RESPONSE_DATA",
-          responseData: {
-            message: "Something went wrong ... please try reloading",
-            type: "error",
-          },
-        });
-      });
-    console.log(userLocationTemp);
-    return userLocationTemp;
-  };
-
   const getEventList = async () => {
     dispatch({
       type: "SET_LOADING",
       loading: true,
     });
-    const userLocation = await getUserLocation();
-    console.log(userLocation);
+    const userCoords = await getCoords();
+    console.log(userCoords);
 
-    await Api.get("/events/get-events-from-city", {
-      params: { city: userLocation?.city },
+    await Api.get("/events/get-nearest-events", {
+      params: { lat: userCoords.lat, lng: userCoords.lng },
     })
       .then((res) => {
-        let unsortedEvents = res.data.events;
-        unsortedEvents.sort(
+        let events = res.data;
+        let unsortedNearestEvents = res.data?.nearestEvents;
+        unsortedNearestEvents.sort(
           (e1, e2) => new Date(e1.date).getTime() - new Date(e2.date).getTime()
         );
-        console.log(unsortedEvents);
-        setEventList(unsortedEvents);
+        res.data.nearestEvents = unsortedNearestEvents;
+        console.log(res.data);
+        setEventList(events);
       })
       .catch((err) => {
         dispatch({
@@ -155,11 +133,14 @@ function App() {
       <div className="main-app-dock">
         <Router>
           <Routes>
-            <Route path="/" element={<Home eventList={eventList} />}>
-              <Route index element={<EventListing eventList={eventList} />} />
+            <Route path="/" element={<Home eventList={eventList?.allEvents} />}>
+              <Route
+                index
+                element={<EventListing eventList={eventList?.nearestEvents} />}
+              />
               <Route
                 path="event/:id"
-                element={<Event eventList={eventList} />}
+                element={<Event eventList={eventList?.allEvents} />}
               />
               <Route path="login" element={<Login />} />
               <Route path="signup" element={<Signup />} />
@@ -169,7 +150,7 @@ function App() {
               </Route>
               <Route
                 path="*"
-                element={<EventListing eventList={eventList} />}
+                element={<EventListing eventList={eventList?.nearestEvents} />}
               />
             </Route>
           </Routes>

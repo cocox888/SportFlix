@@ -64,11 +64,12 @@ function AddEventMap({ setEventLocationData }) {
   }, [userLocation]);
   const apiKey =
     "AAPK4e5268d5d850408b94a64cbe8466bc4dk5R_BZxaWXqoAnelAqQrdktOZli7YGY2HkwsHit-n532mZiJa4U0-7Q4fg4EZom-";
+  const locationiq_api_key = "pk.a42110b5c004d27c9e2d214f36d0c698";
   return (
     <div className="add-event-map-container">
       <MapContainer center={userLocation} zoom={zoom} ref={mapRef}>
         <TileLayer
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          url={`https://{s}-tiles.locationiq.com/v2/obk/r/{z}/{x}/{y}.png?key=${locationiq_api_key}`}
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright" target="__blank">OpenStreetMap</a> contributors'
         />
         {markerLocation && (

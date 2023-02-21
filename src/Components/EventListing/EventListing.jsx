@@ -60,7 +60,7 @@ function EventListing({ eventList }) {
         </div>
         <div className="event-listing-mid">
           <div className="result-count">
-            <h2>20</h2> <span>Results from Bhubaneswar</span>
+            <h2>{eventList?.length}</h2> <span>Events near you</span>
           </div>
           <div className="event-listing-sort">
             <FormControl fullWidth>

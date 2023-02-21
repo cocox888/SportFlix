@@ -100,7 +100,7 @@ function MapWrapper({ eventList }) {
       <Marker position={userLocation} icon={userLocationIcon}>
         <Popup>Your location</Popup>
       </Marker>
-      {eventList.map((event) => (
+      {eventList?.map((event) => (
         <Marker
           eventHandlers={{
             click: () => {
