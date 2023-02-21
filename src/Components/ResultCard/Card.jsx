@@ -67,7 +67,7 @@ function Card({ event }) {
             <span>{event?.type}</span>
             <span>
               {<PeopleAltRounded sx={{ marginRight: "10px" }} />}{" "}
-              {event?.peopleJoined}
+              {event?.participants?.length}
             </span>
           </div>
         </div>

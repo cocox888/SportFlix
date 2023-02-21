@@ -7,6 +7,7 @@ import { Api } from "../../Api/Axios";
 import { useDataLayerValue } from "../../Datalayer/DataLayer";
 import "./addEvent.css";
 import AddEventMap from "./AddEventMap";
+
 function AddEventForm() {
   const [{ userData }, dispatch] = useDataLayerValue();
   const [eventDetails, setEventDetails] = useState({});
@@ -14,6 +15,7 @@ function AddEventForm() {
 
   const setEventLocationData = (data) => {
     setEventDetails((prevState) => ({ ...prevState, location: data }));
+    console.log(data);
   };
 
   const changeEventData = (e) => {
