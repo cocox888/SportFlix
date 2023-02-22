@@ -104,6 +104,10 @@ function App() {
         res.data.nearestEvents = unsortedNearestEvents;
         console.log(res.data);
         setEventList(events);
+        dispatch({
+          type: "SET_EVENT_LIST",
+          eventList: events,
+        });
       })
       .catch((err) => {
         dispatch({

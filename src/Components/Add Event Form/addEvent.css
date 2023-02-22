@@ -53,6 +53,15 @@
     flex-direction: column;
     justify-content: flex-start;
     text-align: left;
+    height: 95%;
+}
+
+.add-event-form-fields {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    text-align: left;
+    overflow: scroll;
 }
 
 .add-event-form-heading {

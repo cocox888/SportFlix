@@ -79,6 +79,8 @@
     box-shadow: 2px 2px 5px rgb(30 30 30 / 10%);
     display: flex;
     align-items: flex-end;
+    margin-right: 10px;
+    margin-top: 10px;
 }
 
 .event-people span {
@@ -146,8 +148,9 @@
 
 .event-info-date-participants {
     display: flex;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    /* margin-top: 10px; */
+    /* margin-bottom: 10px; */
+    align-items: center;
 }
 
 .event-info-date-participants .event-info:first-child {

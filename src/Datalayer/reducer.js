@@ -4,7 +4,21 @@ export const initialState = {
   loggedIn: false,
   loading: false,
   responseData: null,
+  eventList: [],
 };
+
+const moveMapToLocation = (id, eventList, focusMapToLocation) => {
+  if (id) {
+    const targetEvent = eventList.filter((event) => event._id === id);
+    const targetCoordinates = [
+      targetEvent[0].latitude,
+      targetEvent[0].longitude,
+    ];
+    console.log(targetCoordinates);
+    focusMapToLocation(targetCoordinates);
+  }
+};
+
 const reducer = (state, action) => {
   switch (action.type) {
     case "SET_LOADING":
@@ -42,6 +56,23 @@ const reducer = (state, action) => {
         ...state,
         locationSearchRef: action.locationSearchRef,
       };
+    case "SET_EVENT_LIST":
+      return {
+        ...state,
+        eventList: action.eventList,
+      };
+    case "SET_FOCUS_MAP_TO_LOCATION_FUNCTION":
+      return {
+        ...state,
+        focusMapToLocation: action.focusMapToLocation,
+      };
+    case "FLY_TO_LOCATION":
+      moveMapToLocation(
+        action.id,
+        state?.eventList?.allEvents,
+        state?.focusMapToLocation
+      );
+
     default:
       return state;
   }

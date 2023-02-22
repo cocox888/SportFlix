@@ -69,69 +69,81 @@ function AddEventForm() {
               }}
               className="add-event-input-form"
             >
-              <h3 className="add-event-form-heading">Add Event Details</h3>
-              <TextField
-                label="Host Name"
-                value={userData?.name}
-                variant="filled"
-                className="add-event-input-field"
-                InputProps={{
-                  readOnly: true,
-                }}
-                id="host"
-                onChange={(e) => changeEventData(e)}
-              />
-              <TextField
-                className="add-event-input-field"
-                variant="standard"
-                label="Type Of Sport"
-                id="type"
-                onChange={(e) => changeEventData(e)}
-                required
-              />
-              <TextField
-                id="date"
-                label="Date Of Gathering"
-                type="date"
-                variant="standard"
-                className="add-event-input-field"
-                onChange={(e) => changeEventData(e)}
-                InputLabelProps={{
-                  shrink: true,
-                }}
-                required
-              />
-              <TextField
-                label="Maximum Players (optional)"
-                type="number"
-                InputProps={{ inputProps: { min: 2 } }}
-                variant="standard"
-                className="add-event-input-field"
-                id="max_players"
-                onChange={(e) => changeEventData(e)}
-              />
-              <TextField
-                label="Minimum Age (optional)"
-                type="number"
-                InputProps={{ inputProps: { min: 1 } }}
-                variant="standard"
-                className="add-event-input-field"
-                id="min_age"
-                onChange={(e) => changeEventData(e)}
-              />
-              <TextField
-                label="Location"
-                type="text"
-                variant="standard"
-                className="add-event-input-field"
-                placeholder="Select from map"
-                value={
-                  eventDetails?.location && eventDetails?.location?.location
-                }
-                id="location_name"
-                onChange={(e) => (e.target.value = "")}
-                required
-              />
+              <div className="add-event-form-fields">
+                <h3 className="add-event-form-heading">Add Event Details</h3>
+                <TextField
+                  label="Host Name"
+                  value={userData?.name}
+                  variant="filled"
+                  className="add-event-input-field"
+                  InputProps={{
+                    readOnly: true,
+                  }}
+                  id="host"
+                  onChange={(e) => changeEventData(e)}
+                />
+                <TextField
+                  className="add-event-input-field"
+                  variant="standard"
+                  label="Type Of Sport"
+                  id="type"
+                  onChange={(e) => changeEventData(e)}
+                  required
+                />
+                <TextField
+                  className="add-event-input-field"
+                  variant="standard"
+                  label="Description"
+                  id="description"
+                  onChange={(e) => changeEventData(e)}
+                  multiline
+                  required
+                />
+                <TextField
+                  id="date"
+                  label="Date"
+                  type="date"
+                  variant="standard"
+                  className="add-event-input-field"
+                  onChange={(e) => changeEventData(e)}
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  required
+                />
+                <TextField
+                  label="Maximum Players (optional)"
+                  type="number"
+                  InputProps={{ inputProps: { min: 2 } }}
+                  variant="standard"
+                  className="add-event-input-field"
+                  id="max_players"
+                  onChange={(e) => changeEventData(e)}
+                />
+                <TextField
+                  label="Minimum Age (optional)"
+                  type="number"
+                  InputProps={{ inputProps: { min: 1 } }}
+                  variant="standard"
+                  className="add-event-input-field"
+                  id="min_age"
+                  onChange={(e) => changeEventData(e)}
+                />
+                <TextField
+                  label="Location"
+                  type="text"
+                  variant="standard"
+                  className="add-event-input-field"
+                  placeholder="Select from map"
+                  value={
+                    eventDetails?.location && eventDetails?.location?.location
+                  }
+                  id="location_name"
+                  onChange={(e) => (e.target.value = "")}
+                  required
+                />
+              </div>
+
               <Button
                 type="submit"
                 variant="contained"

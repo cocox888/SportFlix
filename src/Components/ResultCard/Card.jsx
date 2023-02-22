@@ -10,10 +10,13 @@ import "./card.css";
 import notFound from "./img.jpg";
 import { useNavigate } from "react-router-dom";
 import img1 from "../../Common resources/img1.jpg";
+import { useDataLayerValue } from "../../Datalayer/DataLayer";
 
 function Card({ event }) {
   const navigate = useNavigate();
+  const [{ hello }, dispatch] = useDataLayerValue();
   const selectEvent = () => {
+    dispatch({ type: "FLY_TO_LOCATION", id: event._id });
     navigate(`/event/${event._id}`);
   };
   const changeDateFormat = (rawDate) => {
@@ -36,11 +39,6 @@ function Card({ event }) {
     const date = d.getDate();
     return `${month} ${date}`;
   };
-
-  useEffect(() => {
-    console.log(event);
-    console.log("first");
-  }, []);
 
   return (
     <div className="Card" onClick={() => selectEvent()}>

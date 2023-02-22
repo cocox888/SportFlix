@@ -75,21 +75,12 @@ function MapWrapper({ eventList }) {
     }
   }, [userLocation, focusMapToCenter]);
 
-  // Looking for selected event
-
   useEffect(() => {
-    const { id } = urlParams;
-    if (id) {
-      const targetEvent = eventList.filter((event) => event._id === id);
-      const targetCoordinates = [
-        targetEvent[0].latitude,
-        targetEvent[0].longitude,
-      ];
-      console.log(targetCoordinates);
-
-      focusMapToLocation(targetCoordinates, false);
-    }
-  }, [urlParams]);
+    dispatch({
+      type: "SET_FOCUS_MAP_TO_LOCATION_FUNCTION",
+      focusMapToLocation: focusMapToLocation,
+    });
+  }, []);
 
   return (
     <MapContainer center={userLocation} zoom={zoom} ref={mapRef}>
@@ -105,6 +96,7 @@ function MapWrapper({ eventList }) {
           eventHandlers={{
             click: () => {
               navigate(`/event/${event?._id}`);
+              dispatch({ type: "FLY_TO_LOCATION", id: event?._id });
             },
           }}
           key={event?._id}
