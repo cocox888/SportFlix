@@ -6,7 +6,7 @@ import { CheckBox } from "@mui/icons-material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDataLayerValue } from "../../Datalayer/DataLayer";
-import { Api } from "../../Api/Axios";
+import { Api, resetApiHeaders } from "../../Api/Axios";
 function Signup() {
   const navigate = useNavigate();
   const [signupData, setSignupData] = useState({});
@@ -21,12 +21,14 @@ function Signup() {
       const credentials = {
         name: signupData.name,
         email: signupData.email,
+        dob: signupData.dob,
         password: signupData.password,
       };
+      console.log(credentials);
       await Api.post("/auth/signup", credentials)
         .then((res) => {
-          // console.log(res.data);
           localStorage.setItem("AUTH_TOKEN", res.data?.token);
+          resetApiHeaders(res.data?.token);
           dispatch({ type: "SET_LOGIN_STATUS", loggedIn: true });
           dispatch({
             type: "SET_RESPONSE_DATA",
@@ -37,6 +39,7 @@ function Signup() {
         })
         .catch((err) => {
           localStorage.removeItem("AUTH_TOKEN");
+          resetApiHeaders("");
           dispatch({ type: "SET_LOGIN_STATUS", loggedIn: false });
           dispatch({
             type: "SET_RESPONSE_DATA",
@@ -90,6 +93,20 @@ function Signup() {
               onChange={(e) => {
                 changeCredentials(e.target);
               }}
+            />
+            <TextField
+              id="dob"
+              label="Date of birth"
+              type="date"
+              variant="standard"
+              className="auth-input"
+              onChange={(e) => {
+                changeCredentials(e.target);
+              }}
+              InputLabelProps={{
+                shrink: true,
+              }}
+              required
             />
             <TextField
               className="auth-input"

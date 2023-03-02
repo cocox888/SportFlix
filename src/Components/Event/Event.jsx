@@ -6,6 +6,7 @@ import "./Event.css";
 import img1 from "../../Common resources/img1.jpg";
 import img2 from "../../Common resources/img2.png";
 import { Button } from "@mui/material";
+import { Api } from "../../Api/Axios";
 
 function Event({ eventList }) {
   const urlParams = useParams();
@@ -43,9 +44,30 @@ function Event({ eventList }) {
     setEventInfo(selectedEvent[0]);
   };
 
-  useEffect(() => {
-    console.log(eventInfo);
-  }, [eventInfo]);
+  // Function to join event
+  const joinEvent = async () => {
+    dispatch({ type: "SET_LOADING", loading: true });
+    const eventId = eventInfo?._id;
+    await Api.post("/events/join-event", { eventId: eventId })
+      .then((res) => {
+        dispatch({
+          type: "SET_RESPONSE_DATA",
+          responseData: { message: res.data?.message, type: "success" },
+        });
+        navigate("/");
+      })
+      .catch((err) => {
+        console.log(err);
+        dispatch({
+          type: "SET_RESPONSE_DATA",
+          responseData: {
+            message: err?.response?.data?.message,
+            type: "error",
+          },
+        });
+      });
+    dispatch({ type: "SET_LOADING", loading: false });
+  };
 
   useEffect(() => {
     const eventId = urlParams.id;
@@ -109,7 +131,11 @@ function Event({ eventList }) {
               </div>
             )}
 
-            <Button variant="contained" className="event-join-btn">
+            <Button
+              variant="contained"
+              className="event-join-btn"
+              onClick={() => joinEvent()}
+            >
               Participate
             </Button>
           </div>

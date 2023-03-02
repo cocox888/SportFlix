@@ -5,6 +5,7 @@ import {
 } from "@mui/icons-material";
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { resetApiHeaders } from "../../Api/Axios";
 import { useDataLayerValue } from "../../Datalayer/DataLayer";
 import "./Profile.css";
 
@@ -12,12 +13,27 @@ function Profile() {
   const [{ loading, loggedIn, userData }, dispatch] = useDataLayerValue();
   const navigate = useNavigate();
 
+  const changeDateFormat = (__date) => {
+    const d = new Date(__date);
+    let date = d.getDate();
+    let month = d.getMonth() + 1;
+    let year = d.getFullYear();
+    if (date < 10) {
+      date = `0${date}`;
+    }
+    if (month < 10) {
+      month = `0${month}`;
+    }
+    return `${date}-${month}-${year}`;
+  };
+
   const logoutFunc = () => {
     dispatch({
       type: "SET_LOADING",
       loading: true,
     });
     localStorage.removeItem("AUTH_TOKEN");
+    resetApiHeaders("");
     dispatch({
       type: "SET_LOGIN_STATUS",
       loggedIn: false,
@@ -37,7 +53,7 @@ function Profile() {
     <div className="profile">
       <div className="profile-container">
         <div className="profile-header-container">
-          <div className="profile-back-container">
+          <div className="profile-back-container" onClick={() => navigate("/")}>
             <KeyboardArrowLeftOutlined />
           </div>
           <span>My Profile</span>
@@ -56,8 +72,8 @@ function Profile() {
               />
             </div>
             <div className="profile-top-info">
-              <span>Ayanabha Misra</span>
-              <span>20</span>
+              <span>{userData?.name}</span>
+              <span>{userData?.age}</span>
             </div>
           </div>
 
@@ -67,21 +83,21 @@ function Profile() {
                 <div className="profile-mid-info">
                   <div className="profile-field-name">Display Name</div>
                   <div className="profile-field-value">
-                    <span>Ayanabha Misra</span>
+                    <span>{userData?.name}</span>
                     <button>Edit</button>
                   </div>
                 </div>
                 <div className="profile-mid-info">
                   <div className="profile-field-name">Date of birth</div>
                   <div className="profile-field-value">
-                    <span>01/07/2002</span>
+                    <span>{changeDateFormat(userData?.dob)}</span>
                     <button>Edit</button>
                   </div>
                 </div>
                 <div className="profile-mid-info">
                   <div className="profile-field-name">Email</div>
                   <div className="profile-field-value">
-                    <span>misrarimbo@gmail.com</span>
+                    <span>{userData?.email}</span>
                     <button>Edit</button>
                   </div>
                 </div>
@@ -92,9 +108,14 @@ function Profile() {
           <div className="profile-bottom">
             <div className="profile-bottom-main-container">
               <div className="profile-field-name">Registered events</div>
-              <div className="profile-field-value">10</div>
+              <div className="profile-field-value">
+                {userData?.events ? userData?.events?.length : 0}
+              </div>
             </div>
-            <div className="profile-bottom-more">
+            <div
+              className="profile-bottom-more"
+              onClick={() => navigate("/registered-events")}
+            >
               <span>See All Participated Events</span>
               <ArrowForwardRounded sx={{ fontSize: "17px" }} />
             </div>

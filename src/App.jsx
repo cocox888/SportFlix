@@ -37,10 +37,10 @@ function App() {
     if (token) {
       await Api.get("/auth/getUser")
         .then((res) => {
-          console.log(res.data.data);
+          console.log(res.data);
           dispatch({
             type: "SET_USER_DATA",
-            userData: res.data.data,
+            userData: res.data,
           });
           dispatch({
             type: "SET_LOGIN_STATUS",

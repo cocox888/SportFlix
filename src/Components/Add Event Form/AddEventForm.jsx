@@ -112,13 +112,14 @@ function AddEventForm() {
                   required
                 />
                 <TextField
-                  label="Maximum Players (optional)"
+                  label="Maximum Players"
                   type="number"
                   InputProps={{ inputProps: { min: 2 } }}
                   variant="standard"
                   className="add-event-input-field"
                   id="max_players"
                   onChange={(e) => changeEventData(e)}
+                  required
                 />
                 <TextField
                   label="Minimum Age (optional)"

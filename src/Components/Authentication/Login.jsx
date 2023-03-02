@@ -4,7 +4,7 @@ import Google from "../../Common resources/google.png";
 import { Button, FormControlLabel, FormGroup, TextField } from "@mui/material";
 import { CheckBox } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
-import { Api } from "../../Api/Axios";
+import { Api, resetApiHeaders } from "../../Api/Axios";
 import { useDataLayerValue } from "../../Datalayer/DataLayer";
 function Login() {
   const navigate = useNavigate();
@@ -21,8 +21,9 @@ function Login() {
     dispatch({ type: "SET_LOADING", loading: true });
     await Api.post("/auth/login", loginCredentials)
       .then((res) => {
-        // console.log(res.data);
+        console.log(res.data);
         localStorage.setItem("AUTH_TOKEN", res.data?.token);
+        resetApiHeaders(res.data?.token);
         dispatch({ type: "SET_LOGIN_STATUS", loggedIn: true });
         dispatch({
           type: "SET_RESPONSE_DATA",
@@ -33,6 +34,7 @@ function Login() {
       })
       .catch((err) => {
         localStorage.removeItem("AUTH_TOKEN");
+        resetApiHeaders("");
         dispatch({ type: "SET_LOGIN_STATUS", loggedIn: false });
         dispatch({
           type: "SET_RESPONSE_DATA",
