@@ -12,6 +12,7 @@ import "./Profile.css";
 function Profile() {
   const [{ loading, loggedIn, userData }, dispatch] = useDataLayerValue();
   const navigate = useNavigate();
+  const history = useNavigate();
 
   const changeDateFormat = (__date) => {
     const d = new Date(__date);
@@ -53,7 +54,7 @@ function Profile() {
     <div className="profile">
       <div className="profile-container">
         <div className="profile-header-container">
-          <div className="profile-back-container" onClick={() => navigate("/")}>
+          <div className="profile-back-container" onClick={() => history(-1)}>
             <KeyboardArrowLeftOutlined />
           </div>
           <span>My Profile</span>
@@ -107,9 +108,19 @@ function Profile() {
 
           <div className="profile-bottom">
             <div className="profile-bottom-main-container">
-              <div className="profile-field-name">Registered events</div>
-              <div className="profile-field-value">
-                {userData?.events ? userData?.events?.length : 0}
+              <div className="profile-field">
+                <div className="profile-field-name">Events registered</div>
+                <div className="profile-field-value">
+                  {userData?.events ? userData?.events?.length : 0}
+                </div>
+              </div>
+              <div className="profile-field">
+                <div className="profile-field-name">Events hosted</div>
+                <div className="profile-field-value">
+                  {userData?.events_hosted
+                    ? userData?.events_hosted?.length
+                    : 0}
+                </div>
               </div>
             </div>
             <div

@@ -19,6 +19,7 @@
     left: 50%;
     transform: translateX(-50%);
     background-color: rgba(57, 175, 114, 0.85);
+    box-shadow: 1px 1px 30px rgba(57, 175, 114, 0.32);
     backdrop-filter: blur(2px);
     padding: 10px 30px;
     z-index: 500000000;

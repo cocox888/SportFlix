@@ -9,6 +9,7 @@ import { useDataLayerValue } from "../../Datalayer/DataLayer";
 import { Api, resetApiHeaders } from "../../Api/Axios";
 function Signup() {
   const navigate = useNavigate();
+  const history = useNavigate();
   const [signupData, setSignupData] = useState({});
   const [{ loggedIn }, dispatch] = useDataLayerValue();
 
@@ -31,11 +32,15 @@ function Signup() {
           resetApiHeaders(res.data?.token);
           dispatch({ type: "SET_LOGIN_STATUS", loggedIn: true });
           dispatch({
+            type: "SET_USER_DATA",
+            userData: res.data?.user,
+          });
+          dispatch({
             type: "SET_RESPONSE_DATA",
             responseData: { message: res.data?.message, type: "success" },
           });
 
-          navigate("/");
+          history(-1);
         })
         .catch((err) => {
           localStorage.removeItem("AUTH_TOKEN");

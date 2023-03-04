@@ -20,6 +20,7 @@
     top: 50%;
     transform: translateY(-50%);
     z-index: 400000000;
+    overflow: hidden;
 }
 
 

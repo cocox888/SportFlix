@@ -20,6 +20,7 @@ import { Api } from "./Api/Axios";
 import ProtectedRoute from "./Utils/ProtectedRoute";
 import AddEventForm from "./Components/Add Event Form/AddEventForm";
 import axios from "axios";
+import RegisteredEvents from "./Components/RegisteredEvents/RegisteredEvents";
 
 function App() {
   const [eventList, setEventList] = useState([]);
@@ -148,9 +149,13 @@ function App() {
               />
               <Route path="login" element={<Login />} />
               <Route path="signup" element={<Signup />} />
-              <Route path="add-event" element={<AddEventForm />} />
               <Route element={<ProtectedRoute />}>
                 <Route path="profile" element={<Profile />} />
+                <Route path="add-event" element={<AddEventForm />} />
+                <Route
+                  path="registered-events"
+                  element={<RegisteredEvents />}
+                />
               </Route>
               <Route
                 path="*"
@@ -161,7 +166,6 @@ function App() {
         </Router>
       </div>
       <Backdrop sx={{ color: "#fff", zIndex: "5000000000" }} open={loading}>
-        {/* <CircularProgress color="inherit" /> */}
         <Loader />
       </Backdrop>
 

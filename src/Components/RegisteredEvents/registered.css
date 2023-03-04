@@ -1,0 +1,56 @@
+.RegEvents {
+    width: 100%;
+    text-align: left;
+    height: 87%;
+}
+
+.reg-head {
+    position: relative;
+    color: rgb(162 161 161);
+    display: flex;
+    align-items: center;
+}
+
+.reg-back-container {
+    width: fit-content;
+    display: flex;
+    margin-bottom: 7px;
+    background-color: rgb(242, 242, 242);
+    box-shadow: 2px 2px 5px rgb(30 30 30 / 10%);
+    padding: 7px 10px;
+    border-radius: 13px;
+    font-size: 13px;
+    align-items: center;
+    color: rgb(162 161 161);
+    cursor: pointer;
+    transition: all 250ms;
+    margin-right: 20px;
+}
+
+.reg-back-container:hover {
+    background-color: rgb(222, 222, 222);
+}
+
+
+.reg-head::after {
+    content: "";
+    position: absolute;
+    bottom: -10px;
+    left: 0px;
+    width: 100%;
+    height: 1px;
+    background-color: rgb(185, 185, 185);
+}
+
+.reg-events-container {
+    width: 100%;
+    height: 100%;
+    padding-top: 10px;
+    padding-right: 19px;
+    display: flex;
+    gap: 20px;
+    margin-top: 50px;
+    flex-wrap: wrap;
+    overflow: scroll;
+    justify-content: space-between;
+}

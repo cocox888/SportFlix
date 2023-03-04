@@ -1,13 +1,11 @@
-.profile
-{
+.profile {
     display: flex;
     width: 100%;
     justify-content: center;
     color: rgb(162 161 161);
 }
 
-.profile-container
-{
+.profile-container {
     width: 60%;
     display: flex;
     flex-direction: column;
@@ -15,8 +13,7 @@
     margin-bottom: 20px;
 }
 
-.profile-main-container
-{
+.profile-main-container {
     width: 100%;
     padding: 20px;
     overflow-y: scroll;
@@ -26,22 +23,20 @@
     align-items: center;
 }
 
-.profile-header-container
-{
+.profile-header-container {
     display: flex;
     align-items: center;
     width: 100%;
     margin-bottom: 70px;
 }
-.profile-header-container span
-{
+
+.profile-header-container span {
     font-weight: 600;
     font-size: 1.1rem;
     margin-left: 10px;
 }
 
-.profile-back-container
-{
+.profile-back-container {
     width: fit-content;
     display: flex;
     margin-bottom: 7px;
@@ -55,20 +50,19 @@
     cursor: pointer;
     transition: all 250ms;
 }
-.profile-back-container:hover
-{
+
+.profile-back-container:hover {
     background-color: rgb(222, 222, 222);
 }
 
-.profile-top
-{
+.profile-top {
     display: flex;
     align-items: center;
     margin-bottom: 30px;
     width: 100%;
 }
-.profile-picture-container
-{
+
+.profile-picture-container {
     height: 100px;
     width: 100px;
     background-color: grey;
@@ -76,16 +70,15 @@
     position: relative;
 }
 
-.profile-picture-edit-btn
-{
+.profile-picture-edit-btn {
     position: absolute;
     right: 10px;
     top: 0;
     color: black;
     cursor: pointer;
 }
-.profile-top-info
-{
+
+.profile-top-info {
     display: flex;
     flex-direction: column;
     text-align: left;
@@ -95,46 +88,40 @@
 }
 
 
-.profile-box
-{
+.profile-box {
     box-shadow: 7px 4px 20px rgb(30 30 30 / 18%);
     border-radius: 8px;
     text-align: left;
     width: 100%;
 }
 
-.profile-box:not(:first-child)
-{
+.profile-box:not(:first-child) {
     margin-bottom: 20px;
 }
 
-.profile-mid-container
-{
+.profile-mid-container {
     display: flex;
     flex-direction: column;
     padding: 25px;
 }
 
-.profile-mid-info:not(:first-child)
-{
+.profile-mid-info:not(:first-child) {
     margin-top: 15px;
 }
 
-.profile-field-name
-{
+.profile-field-name {
     font-weight: 600;
     color: rgba(0, 0, 0, 0.76);
 }
-.profile-field-value
-{
+
+.profile-field-value {
     display: flex;
     width: 100%;
     color: rgba(0, 0, 0, 0.76);
     justify-content: space-between;
 }
 
-.profile-field-value button
-{
+.profile-field-value button {
     padding: 3px 10px;
     border: none;
     width: fit-content;
@@ -148,22 +135,35 @@
     cursor: pointer;
 }
 
-.profile-bottom
-{
+.profile-bottom {
     box-shadow: 7px 4px 20px rgb(30 30 30 / 18%);
     border-radius: 8px;
     width: 100%;
     margin-bottom: 10px;
 }
-.profile-bottom-main-container
-{
+
+.profile-bottom-main-container {
     width: 100%;
     text-align: left;
     margin: 25px;
 }
 
-.profile-bottom-more
-{
+.profile-field {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.profile-field-name {
+    flex: 0.4;
+}
+
+.profile-field-value {
+    flex: 0.8;
+}
+
+
+
+.profile-bottom-more {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -173,19 +173,18 @@
     transition: all 250ms;
     cursor: pointer;
 }
-.profile-bottom-more span
-{
+
+.profile-bottom-more span {
     margin-right: 5px;
 }
-.profile-bottom-more:hover
-{
+
+.profile-bottom-more:hover {
     background: rgba(0, 0, 0, 0.35);
     color: white;
 }
 
 
-.profile-logout
-{
+.profile-logout {
     background-color: rgb(242, 242, 242);
     box-shadow: 2px 2px 5px rgb(30 30 30 / 10%);
     padding: 7px 10px;
@@ -200,9 +199,6 @@
     transition: all 250ms;
 }
 
-.profile-logout:hover
-{
+.profile-logout:hover {
     background-color: rgb(222, 222, 222);
 }
-
-

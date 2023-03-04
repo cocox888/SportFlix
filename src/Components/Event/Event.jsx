@@ -8,9 +8,10 @@ import img2 from "../../Common resources/img2.png";
 import { Button } from "@mui/material";
 import { Api } from "../../Api/Axios";
 
-function Event({ eventList }) {
+function Event() {
   const urlParams = useParams();
   const navigate = useNavigate();
+  const history = useNavigate();
   const [imageSelected, setImageSelected] = useState(0);
   const [{ focusMapToCenter }, dispatch] = useDataLayerValue();
   const [eventInfo, setEventInfo] = useState({});
@@ -39,9 +40,23 @@ function Event({ eventList }) {
   };
 
   // Function to get target event details
-  const getEventDetails = (eventId) => {
-    const selectedEvent = eventList.filter((event) => event._id === eventId);
-    setEventInfo(selectedEvent[0]);
+  const getEventDetails = async (eventId) => {
+    dispatch({ type: "SET_LOADING", loading: true });
+
+    await Api.get("/events/get-event-by-id", { params: { eventId: eventId } })
+      .then((res) => {
+        setEventInfo(res.data?.event);
+      })
+      .catch((err) => {
+        dispatch({
+          type: "SET_RESPONSE_DATA",
+          responseData: {
+            message: err?.response?.data?.message,
+            type: "error",
+          },
+        });
+      });
+    dispatch({ type: "SET_LOADING", loading: false });
   };
 
   // Function to join event
@@ -78,7 +93,7 @@ function Event({ eventList }) {
       <div
         className="event-back"
         onClick={() => {
-          navigate("/");
+          history(-1);
           // dispatch({ type: "SET_FOCUS_MAP_TO_CENTER", focusMapToCenter: true });
         }}
       >

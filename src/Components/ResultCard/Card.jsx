@@ -14,7 +14,7 @@ import { useDataLayerValue } from "../../Datalayer/DataLayer";
 
 function Card({ event }) {
   const navigate = useNavigate();
-  const [{ hello }, dispatch] = useDataLayerValue();
+  const [{ userData }, dispatch] = useDataLayerValue();
   const selectEvent = () => {
     dispatch({ type: "FLY_TO_LOCATION", id: event._id });
     navigate(`/event/${event._id}`);
@@ -46,6 +46,9 @@ function Card({ event }) {
         <div className="card-container-main">
           <div className="card-top">
             <div className="card-img">
+              {userData?._id === event.host_id && (
+                <div className="host-sticker">Hosted by you</div>
+              )}
               <img src={img1} alt="" />
             </div>
             <div className="card-details">

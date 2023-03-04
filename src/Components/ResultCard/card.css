@@ -48,6 +48,20 @@
     box-shadow: 3px 1px 15px rgba(0, 0, 0, 0.2);
     border-radius: 8px;
     overflow: hidden;
+    position: relative;
+    z-index: 50;
+}
+
+.host-sticker {
+    position: absolute;
+    color: white;
+    top: 10px;
+    right: 10px;
+    background-color: rgb(0 177 85);
+    box-shadow: 1px 1px 16px rgb(17 201 106 / 73%);
+    padding: 1px 7px;
+    border-radius: 8px;
+    z-index: 50000;
 }
 
 .card-img img {
