@@ -1,0 +1,81 @@
+.chatPortal {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    border-left: 1px solid rgba(162, 162, 162, 0.1);
+}
+
+.cp-top {
+    flex: 0.1;
+    background-color: white;
+    width: 100%;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.05);
+    z-index: 5;
+}
+
+.cp-mid {
+    flex: 0.8;
+    width: 100%;
+    padding: 20px 10px;
+    overflow: scroll;
+}
+
+.cp-btm {
+    flex: 0.1;
+    width: 100%;
+    background-color: white;
+    box-shadow: 0px -2px 40px rgba(0, 0, 0, 0.05);
+    z-index: 5;
+}
+
+.cp-mid-others {
+    margin-bottom: 30px;
+    display: flex;
+}
+
+.cp-mid-you {
+    margin-bottom: 30px;
+    display: flex;
+}
+
+
+.cp-mid-img {
+    background-color: grey;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+.cp-mid-right {
+    display: flex;
+    flex-direction: column;
+    margin-left: 15px;
+}
+
+.cp-mid-info {
+    display: flex;
+    color: rgba(162, 162, 162);
+}
+
+.cp-mid-info span:first-child {
+    margin-right: 20px;
+    font-weight: 600;
+    color: black !important;
+}
+
+
+.cp-mid-message {
+    background-color: #fff;
+    width: 50%;
+    text-align: left;
+    padding: 10px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.05);
+    margin-top: 15px;
+}
+
+.cp-mid-message-other {
+    border-top-right-radius: 13px;
+    border-bottom-right-radius: 13px;
+    border-bottom-left-radius: 13px;
+}

@@ -21,6 +21,7 @@ import ProtectedRoute from "./Utils/ProtectedRoute";
 import AddEventForm from "./Components/Add Event Form/AddEventForm";
 import axios from "axios";
 import RegisteredEvents from "./Components/RegisteredEvents/RegisteredEvents";
+import Chat from "./Components/Chat/Chat";
 
 function App() {
   const [eventList, setEventList] = useState([]);
@@ -152,6 +153,7 @@ function App() {
               <Route element={<ProtectedRoute />}>
                 <Route path="profile" element={<Profile />} />
                 <Route path="add-event" element={<AddEventForm />} />
+                <Route path="chat/*" element={<Chat />} />
                 <Route
                   path="registered-events"
                   element={<RegisteredEvents />}
