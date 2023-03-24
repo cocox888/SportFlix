@@ -4,14 +4,33 @@
     height: 100%;
     width: 100%;
     border-left: 1px solid rgba(162, 162, 162, 0.1);
+    border-right: 1px solid rgba(162, 162, 162, 0.1);
 }
 
 .cp-top {
     flex: 0.1;
     background-color: white;
     width: 100%;
-    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.05);
+    box-shadow: 0px 15px 20px -15px rgba(0, 0, 0, 0.25);
     z-index: 5;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+}
+
+.cp-top-logo {
+    width: 40px;
+    height: 40px;
+    background-color: grey;
+    border-radius: 50%;
+}
+
+.cp-top-info {
+    margin-left: 20px;
+}
+
+.cp-top-name {
+    font-weight: 600;
 }
 
 .cp-mid {
@@ -25,16 +44,42 @@
     flex: 0.1;
     width: 100%;
     background-color: white;
-    box-shadow: 0px -2px 40px rgba(0, 0, 0, 0.05);
+    box-shadow: 0px -15px 20px -15px rgba(0, 0, 0, 0.25);
     z-index: 5;
+    display: flex;
+    align-items: center;
 }
+
+.cp-btm-inp-container {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cp-btm-inp {
+    padding: 5px 10px;
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+    border: 1px solid rgb(162, 162, 162);
+    background-color: #F6F8FC;
+    flex: 0.7;
+}
+
+.cp-btm-inp-btn {
+    flex: 0.2;
+}
+
+
 
 .cp-mid-others {
     margin-bottom: 30px;
     display: flex;
+    width: 90%;
 }
 
 .cp-mid-you {
+    width: 95%;
     margin-bottom: 30px;
     display: flex;
 }
@@ -45,6 +90,11 @@
     width: 40px;
     height: 40px;
     border-radius: 50%;
+}
+
+.cp-mid-left {
+    display: flex;
+    flex-direction: column;
 }
 
 .cp-mid-right {
@@ -58,12 +108,21 @@
     color: rgba(162, 162, 162);
 }
 
-.cp-mid-info span:first-child {
+.cp-mid-you .cp-mid-left {
+    align-items: end;
+}
+
+.cp-mid-info-name {
     margin-right: 20px;
     font-weight: 600;
     color: black !important;
 }
 
+.cp-mid-you .cp-mid-info-name {
+    margin-left: 20px;
+    font-weight: 600;
+    color: black !important;
+}
 
 .cp-mid-message {
     background-color: #fff;
@@ -78,4 +137,12 @@
     border-top-right-radius: 13px;
     border-bottom-right-radius: 13px;
     border-bottom-left-radius: 13px;
+}
+
+.cp-mid-message-you {
+    border-top-left-radius: 13px;
+    border-bottom-left-radius: 13px;
+    border-bottom-right-radius: 13px;
+    background-color: rgba(69, 106, 242);
+    color: white;
 }

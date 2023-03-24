@@ -6,6 +6,9 @@
     display: flex;
     height: 100%;
     width: 100%;
+    border: 1px solid rgba(162, 162, 162, 0.1);
+    border-radius: 13px;
+    overflow: hidden;
 }
 
 .chat-container .chat-left {
@@ -68,6 +71,25 @@
     width: 90%;
     cursor: pointer;
     /* border-top: 1px solid rgba(162, 162, 162, 0.5); */
+    position: relative;
+    padding: 8px 10px;
+    border-radius: 8px;
+}
+
+.chat-selector:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+    box-shadow: 2px 2px 7px rgba(0, 0, 0, 0.2);
+}
+
+.chat-selector::after {
+    content: "";
+    position: absolute;
+    width: 75%;
+    height: 1px;
+    left: 50%;
+    bottom: -3px;
+    transform: translateX(-50%);
+    background-color: rgba(162, 162, 162, 0.35);
 }
 
 .chat-selector:last-child {

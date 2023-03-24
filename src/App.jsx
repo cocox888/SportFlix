@@ -150,10 +150,10 @@ function App() {
               />
               <Route path="login" element={<Login />} />
               <Route path="signup" element={<Signup />} />
+              <Route path="chat/*" element={<Chat />} />
               <Route element={<ProtectedRoute />}>
                 <Route path="profile" element={<Profile />} />
                 <Route path="add-event" element={<AddEventForm />} />
-                <Route path="chat/*" element={<Chat />} />
                 <Route
                   path="registered-events"
                   element={<RegisteredEvents />}

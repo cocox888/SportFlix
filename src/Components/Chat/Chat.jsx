@@ -1,15 +1,15 @@
 import { KeyboardArrowLeftOutlined } from "@mui/icons-material";
 import React from "react";
-import { useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./chat.css";
 import ChatPortal from "./ChatPortal";
 
 function Chat() {
-  const history = useLocation();
+  const history = useNavigate();
   return (
     <div className="chat">
       <div className="chat-container">
-        <div className="chat-left">
+        <div className="chat-left" onClick={history(-1)}>
           <div className="chat-header-container">
             <div className="chat-back-container" onClick={() => history(-1)}>
               <KeyboardArrowLeftOutlined />
