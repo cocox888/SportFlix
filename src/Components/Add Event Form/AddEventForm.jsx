@@ -12,6 +12,7 @@ function AddEventForm() {
   const [{ userData }, dispatch] = useDataLayerValue();
   const [eventDetails, setEventDetails] = useState({});
   const navigate = useNavigate();
+  const history = useNavigate();
 
   const setEventLocationData = (data) => {
     setEventDetails((prevState) => ({ ...prevState, location: data }));
@@ -57,7 +58,7 @@ function AddEventForm() {
     <div className="add-event-form">
       <div className="add-event-form-container">
         <div className="add-event-back">
-          <button>
+          <button onClick={() => history(-1)}>
             <KeyboardArrowLeftRounded /> Back
           </button>
         </div>

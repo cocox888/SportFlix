@@ -142,7 +142,12 @@ function App() {
             <Route path="/" element={<Home eventList={eventList?.allEvents} />}>
               <Route
                 index
-                element={<EventListing eventList={eventList?.nearestEvents} />}
+                element={
+                  <EventListing
+                    nearbyEvents={eventList?.nearestEvents}
+                    allEvents={eventList?.allEvents}
+                  />
+                }
               />
               <Route
                 path="event/:id"
@@ -150,7 +155,6 @@ function App() {
               />
               <Route path="login" element={<Login />} />
               <Route path="signup" element={<Signup />} />
-              <Route path="chat/*" element={<Chat />} />
               <Route element={<ProtectedRoute />}>
                 <Route path="profile" element={<Profile />} />
                 <Route path="add-event" element={<AddEventForm />} />
@@ -158,10 +162,16 @@ function App() {
                   path="registered-events"
                   element={<RegisteredEvents />}
                 />
+                <Route path="chat/*" element={<Chat />} />
               </Route>
               <Route
                 path="*"
-                element={<EventListing eventList={eventList?.nearestEvents} />}
+                element={
+                  <EventListing
+                    eventList={eventList?.nearestEvents}
+                    allEvents={eventList?.allEvents}
+                  />
+                }
               />
             </Route>
           </Routes>

@@ -16,7 +16,8 @@ function Signup() {
   const changeCredentials = ({ id, value }) => {
     setSignupData((prevState) => ({ ...prevState, [id]: value }));
   };
-  const signupFunction = async () => {
+  const signupFunction = async (e) => {
+    e.preventDefault();
     if (signupData?.password === signupData?.confirmPassword) {
       dispatch({ type: "SET_LOADING", loading: true });
       const credentials = {
@@ -77,7 +78,10 @@ function Signup() {
             <span>Please enter your details</span>
           </div>
 
-          <div className="login-credential-container">
+          <form
+            className="login-credential-container"
+            onSubmit={(e) => signupFunction(e)}
+          >
             <TextField
               className="auth-input"
               label="Name"
@@ -87,6 +91,7 @@ function Signup() {
               onChange={(e) => {
                 changeCredentials(e.target);
               }}
+              required
             />
 
             <TextField
@@ -98,6 +103,7 @@ function Signup() {
               onChange={(e) => {
                 changeCredentials(e.target);
               }}
+              required
             />
             <TextField
               id="dob"
@@ -122,6 +128,7 @@ function Signup() {
               onChange={(e) => {
                 changeCredentials(e.target);
               }}
+              required
             />
             <TextField
               className="auth-input"
@@ -132,13 +139,10 @@ function Signup() {
               onChange={(e) => {
                 changeCredentials(e.target);
               }}
+              required
             />
 
-            <Button
-              className="signup-button"
-              variant="contained"
-              onClick={() => signupFunction()}
-            >
+            <Button className="signup-button" variant="contained" type="submit">
               Signup
             </Button>
             <span
@@ -153,7 +157,7 @@ function Signup() {
                 Login
               </span>
             </span>
-          </div>
+          </form>
         </div>
       </div>
     </div>

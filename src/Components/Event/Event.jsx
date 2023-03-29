@@ -13,8 +13,14 @@ function Event() {
   const navigate = useNavigate();
   const history = useNavigate();
   const [imageSelected, setImageSelected] = useState(0);
-  const [{ focusMapToCenter }, dispatch] = useDataLayerValue();
+  const [{ loggedIn, userData, focusMapToCenter }, dispatch] =
+    useDataLayerValue();
   const [eventInfo, setEventInfo] = useState({});
+
+  // Location event on map
+  const locateEvent = () => {
+    dispatch({ type: "FLY_TO_LOCATION", id: eventInfo._id });
+  };
 
   // Function to change date format
   const changeDateFormat = (rawDate) => {
@@ -84,6 +90,11 @@ function Event() {
     dispatch({ type: "SET_LOADING", loading: false });
   };
 
+  const userAlreadyRegistered = () => {
+    const userId = userData?._id;
+    return eventInfo?.participants?.includes(userId);
+  };
+
   useEffect(() => {
     const eventId = urlParams.id;
     getEventDetails(eventId);
@@ -145,14 +156,32 @@ function Event() {
                 {eventInfo?.description}
               </div>
             )}
-
-            <Button
-              variant="contained"
-              className="event-join-btn"
-              onClick={() => joinEvent()}
-            >
-              Participate
-            </Button>
+            <div className="event-interaction-btns">
+              {loggedIn && userAlreadyRegistered() ? (
+                <Button
+                  variant="contained"
+                  className="event-join-btn"
+                  onClick={() => navigate("/chat")}
+                >
+                  Go to chat
+                </Button>
+              ) : (
+                <Button
+                  variant="contained"
+                  className="event-join-btn"
+                  onClick={() => joinEvent()}
+                >
+                  Participate
+                </Button>
+              )}
+              <Button
+                variant="contained"
+                className="event-join-btn"
+                onClick={() => locateEvent()}
+              >
+                Go to location
+              </Button>
+            </div>
           </div>
         </div>
       </div>

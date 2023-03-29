@@ -17,7 +17,7 @@
     display: flex;
     flex-direction: column;
     box-shadow: 2px 0px 10px rgba(0, 0, 0, 0.05);
-    padding: 20px;
+    /* padding: 20px; */
     z-index: 5;
 }
 
@@ -84,7 +84,7 @@
 .chat-selector::after {
     content: "";
     position: absolute;
-    width: 75%;
+    width: 88%;
     height: 1px;
     left: 50%;
     bottom: -3px;
@@ -104,6 +104,37 @@
     margin-right: 10px;
 }
 
+.chat-op-info
+{
+    display: flex;
+    flex-direction: column;
+    font-size: 0.7rem;
+    width: 75%;
+    text-align: left;
+}
+
+.chat-op-info-btm
+{
+    display: flex;
+    justify-content: space-between;
+    color: rgb(72 72 72);
+
+}
+
 .chat-op-name {
     font-weight: 600;
+    font-size: 0.85rem;
+}
+
+.chat-event-timeline
+{
+    /* text-align: left; */
+    color: rgb(162, 162, 162);
+    /* margin-bottom: 5px; */
+    margin-top: 10px;
+    font-size: 0.75rem;
+}
+.chat-event-timeline:nth-child(2)
+{
+    margin-top: 0px !important;
 }

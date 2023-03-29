@@ -5,7 +5,7 @@ import {
   SportsCricket,
   SportsCricketRounded,
 } from "@mui/icons-material";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./card.css";
 import notFound from "./img.jpg";
 import { useNavigate } from "react-router-dom";
@@ -14,7 +14,7 @@ import { useDataLayerValue } from "../../Datalayer/DataLayer";
 
 function Card({ event }) {
   const navigate = useNavigate();
-  const [{ userData }, dispatch] = useDataLayerValue();
+  const [{ loggedIn, userData }, dispatch] = useDataLayerValue();
   const selectEvent = () => {
     dispatch({ type: "FLY_TO_LOCATION", id: event._id });
     navigate(`/event/${event._id}`);
@@ -22,22 +22,33 @@ function Card({ event }) {
   const changeDateFormat = (rawDate) => {
     const d = new Date(rawDate);
     const months = [
-      "January",
-      "February",
-      "March",
-      "April",
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
       "May",
-      "June",
-      "July",
-      "August",
-      "September",
-      "October",
-      "November",
-      "December",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec",
     ];
     const month = months[d.getMonth()];
     const date = d.getDate();
-    return `${month} ${date}`;
+    const year = d.getFullYear();
+    return `${month} ${date}, ${year}`;
+  };
+
+  const isHost = () => {
+    return userData?._id === event?.host_id;
+  };
+  const isParticipant = () => {
+    return event?.participants?.includes(userData?._id);
+  };
+  const isOver = () => {
+    return new Date() > new Date(event?.date);
   };
 
   return (
@@ -46,19 +57,29 @@ function Card({ event }) {
         <div className="card-container-main">
           <div className="card-top">
             <div className="card-img">
-              {userData?._id === event.host_id && (
-                <div className="host-sticker">Hosted by you</div>
-              )}
+              <div className="card-sticker-container">
+                {loggedIn && isHost() && (
+                  <div className="card-sticker host-sticker">Hosted by you</div>
+                )}
+                {loggedIn && isParticipant() && (
+                  <div className="card-sticker participant-sticker">
+                    Participant
+                  </div>
+                )}
+                {isOver() && (
+                  <div className="card-sticker past-sticker">Closed</div>
+                )}
+              </div>
               <img src={img1} alt="" />
             </div>
             <div className="card-details">
               <div className="card-main-details">
                 <div className="card-location">
-                  <LocationOn />
+                  <LocationOn sx={{ fontSize: "1rem" }} />
                   <h4>{event?.location}</h4>
                 </div>
                 <div className="card-type">
-                  <SportsCricketRounded />
+                  <SportsCricketRounded sx={{ fontSize: "1rem" }} />
                 </div>
               </div>
             </div>
@@ -67,7 +88,11 @@ function Card({ event }) {
             <span>{changeDateFormat(event?.date)}</span>
             <span>{event?.type}</span>
             <span>
-              {<PeopleAltRounded sx={{ marginRight: "10px" }} />}{" "}
+              {
+                <PeopleAltRounded
+                  sx={{ marginRight: "3px", fontSize: "0.8rem" }}
+                />
+              }{" "}
               {event?.participants?.length}
             </span>
           </div>

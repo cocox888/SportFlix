@@ -14,11 +14,16 @@ function RegisteredEvents() {
   const [events, setEvents] = useState([]);
   const getRegisteredEvents = async () => {
     dispatch({ type: "SET_LOADING", loading: true });
+    let upcoming, past;
+    const today = new Date();
 
     await Api.get("/events/get-registered-events")
       .then((res) => {
-        setEvents(res.data.events);
-        console.log(res.data.events);
+        upcoming = res.data.events?.filter(
+          (event) => new Date(event.date) >= today
+        );
+        past = res.data.events?.filter((event) => new Date(event.date) < today);
+        setEvents({ upcoming: upcoming, past: past });
       })
       .catch((err) => {
         dispatch({
@@ -31,6 +36,24 @@ function RegisteredEvents() {
           },
         });
       });
+
+    await Api.get("/events/get-hosted-events")
+      .then((res) => {
+        setEvents((prevState) => ({
+          ...prevState,
+          hosted: res?.data?.hostedEvents,
+        }));
+      })
+      .catch((err) => {
+        dispatch({
+          type: "SET_RESPONSE_DATA",
+          responseData: {
+            message: err?.response?.data?.message || "No event hosted by you",
+            type: "error",
+          },
+        });
+      });
+
     dispatch({ type: "SET_LOADING", loading: false });
   };
   useEffect(() => {
@@ -46,11 +69,43 @@ function RegisteredEvents() {
         <span>Registered Events</span>
       </h2>
       <div className="reg-events-container">
-        {events?.map((event, i) => (
-          <>
-            <Card event={event} />
-          </>
-        ))}
+        {events?.hosted?.length !== 0 && (
+          <div className="reg-events-inner-container">
+            <span>Hosted events</span>
+            <div className="reg-events-container-main">
+              {events?.hosted?.map((event, i) => (
+                <>
+                  <Card event={event} />
+                </>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {events?.upcoming?.length !== 0 && (
+          <div className="reg-events-inner-container">
+            <span>Upcoming events</span>
+            <div className="reg-events-container-main">
+              {events?.upcoming?.map((event, i) => (
+                <>
+                  <Card event={event} />
+                </>
+              ))}
+            </div>
+          </div>
+        )}
+        {events?.past?.length !== 0 && (
+          <div className="reg-events-inner-container">
+            <span>Past events</span>
+            <div className="reg-events-container-main">
+              {events?.past?.map((event, i) => (
+                <>
+                  <Card event={event} />
+                </>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

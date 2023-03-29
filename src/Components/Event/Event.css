@@ -161,3 +161,10 @@
     width: fit-content;
     margin-top: 10px;
 }
+
+.event-interaction-btns
+{
+    display: flex;
+    gap: 20px;
+    margin-bottom: 10px;
+}

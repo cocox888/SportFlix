@@ -10,8 +10,9 @@ import {
   SportsVolleyballRounded,
 } from "@mui/icons-material";
 import React from "react";
+import { useEffect } from "react";
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDataLayerValue } from "../../Datalayer/DataLayer";
 import "./sidebar.css";
 // import { BsChat, BsChatDots, BsHouse } from "react-icons/bs";
@@ -44,6 +45,20 @@ function Sidebar() {
   ];
   const navigate = useNavigate();
   const [dispatch] = useDataLayerValue();
+  const location = useLocation();
+  useEffect(() => {
+    const path = location?.pathname;
+    if (path?.includes("/chat")) {
+      setSelectedOption(2);
+    } else if (path?.includes("/profile")) {
+      setSelectedOption(3);
+    } else if (path?.includes("/registered-events")) {
+      setSelectedOption(1);
+    } else {
+      setSelectedOption(0);
+    }
+  }, [location]);
+
   return (
     <div className="sidebar">
       <div className="sidebar-container">
@@ -58,7 +73,6 @@ function Sidebar() {
                 selectedOption === i && "sidebar-selected"
               }`}
               onClick={() => {
-                setSelectedOption(i);
                 navigate(op.path);
               }}
             >

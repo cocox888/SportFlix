@@ -71,6 +71,10 @@
 }
 
 
+.cp-mid
+{
+    font-size: 0.75rem;
+}
 
 .cp-mid-others {
     margin-bottom: 30px;
@@ -82,6 +86,7 @@
     width: 95%;
     margin-bottom: 30px;
     display: flex;
+    justify-content: end;
 }
 
 
@@ -122,6 +127,7 @@
     margin-left: 20px;
     font-weight: 600;
     color: black !important;
+    margin-right: 0px;
 }
 
 .cp-mid-message {
@@ -130,7 +136,7 @@
     text-align: left;
     padding: 10px;
     box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.05);
-    margin-top: 15px;
+    margin-top: 8px;
 }
 
 .cp-mid-message-other {
