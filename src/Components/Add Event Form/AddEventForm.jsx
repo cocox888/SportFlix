@@ -7,17 +7,24 @@ import { Api } from "../../Api/Axios";
 import { useDataLayerValue } from "../../Datalayer/DataLayer";
 import "./addEvent.css";
 import AddEventMap from "./AddEventMap";
+import { LocationIQProvider } from "leaflet-geosearch";
+import L from "leaflet";
+import axios from "axios";
 
 function AddEventForm() {
   const [{ userData }, dispatch] = useDataLayerValue();
+  const [searchKey, setSearchKey] = useState("");
   const [eventDetails, setEventDetails] = useState({});
+  const [searchResults, setSearchResults] = useState([]);
+  const [selectedLocation, setSelectedLocation] = useState();
   const navigate = useNavigate();
   const history = useNavigate();
-
-  const setEventLocationData = (data) => {
-    setEventDetails((prevState) => ({ ...prevState, location: data }));
-    console.log(data);
-  };
+  const location_iq_api_key = "pk.a42110b5c004d27c9e2d214f36d0c698";
+  const provider = new LocationIQProvider({
+    params: {
+      key: location_iq_api_key,
+    },
+  });
 
   const changeEventData = (e) => {
     const { id, value } = e.target;
@@ -26,12 +33,21 @@ function AddEventForm() {
 
   const addEventDataFunc = async (e) => {
     e.preventDefault();
+    const target_loc = {
+      longitude: selectedLocation?.raw?.lon,
+      latitude: selectedLocation?.raw?.lat,
+      location: selectedLocation?.raw?.display_name?.split(",")[0],
+      city: selectedLocation?.city,
+      state: selectedLocation?.state,
+      country: selectedLocation?.country,
+    };
     const eventDataToPush = {
       host: userData?.name,
       participants: [userData?._id],
       ...eventDetails,
-      ...eventDetails.location,
+      ...target_loc,
     };
+    console.log(eventDataToPush);
     dispatch({ type: "SET_LOADING", loading: true });
     await Api.post("/events/add-event", eventDataToPush)
       .then((res) => {
@@ -51,6 +67,48 @@ function AddEventForm() {
           },
         });
       });
+    dispatch({ type: "SET_LOADING", loading: false });
+  };
+
+  const searchLocation = async (e) => {
+    const key = e.target.value;
+    setSearchKey(key);
+    try {
+      const res = await provider?.search({ query: key });
+      // console.log(res);
+      setSearchResults(res);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const handleLocationSelect = async (loc) => {
+    dispatch({ type: "SET_LOADING", loading: true });
+    const lat = loc.raw.lat;
+    const lon = loc.raw.lon;
+    await axios
+      .get(
+        `https://us1.locationiq.com/v1/reverse?key=${location_iq_api_key}&lat=${lat}&lon=${lon}&format=json`
+      )
+      .then((res) => {
+        loc.city = res.data.address.city;
+        loc.state = res.data.address.state;
+        loc.country = res.data.address.country;
+        console.log(loc);
+        setSearchResults([]);
+        setSelectedLocation(loc);
+        setSearchKey(loc?.raw?.display_name);
+      })
+      .catch((err) => {
+        dispatch({
+          type: "SET_RESPONSE_DATA",
+          responseData: {
+            message: "Something went wrong with the selected location",
+            type: "error",
+          },
+        });
+      });
+
     dispatch({ type: "SET_LOADING", loading: false });
   };
 
@@ -83,6 +141,34 @@ function AddEventForm() {
                   id="host"
                   onChange={(e) => changeEventData(e)}
                 />
+                <div className="add-event-location-inp-container">
+                  <TextField
+                    label="Location"
+                    type="text"
+                    variant="standard"
+                    className="add-event-input-field"
+                    placeholder="Select from map"
+                    id="location_name"
+                    value={searchKey}
+                    onChange={(e) => {
+                      searchLocation(e);
+                    }}
+                    required
+                  />
+                  {(!selectedLocation || searchResults?.length !== 0) && (
+                    <div className="add-event-location-results-container">
+                      {searchResults?.map((res, i) => (
+                        <p
+                          key={i}
+                          className="aelr-search-card"
+                          onClick={() => handleLocationSelect(res)}
+                        >
+                          {res?.raw?.display_name}
+                        </p>
+                      ))}
+                    </div>
+                  )}
+                </div>
                 <TextField
                   className="add-event-input-field"
                   variant="standard"
@@ -131,19 +217,6 @@ function AddEventForm() {
                   id="min_age"
                   onChange={(e) => changeEventData(e)}
                 />
-                <TextField
-                  label="Location"
-                  type="text"
-                  variant="standard"
-                  className="add-event-input-field"
-                  placeholder="Select from map"
-                  value={
-                    eventDetails?.location && eventDetails?.location?.location
-                  }
-                  id="location_name"
-                  onChange={(e) => (e.target.value = "")}
-                  required
-                />
               </div>
 
               <Button
@@ -156,7 +229,7 @@ function AddEventForm() {
             </form>
           </div>
           <div className="add-event-form-right">
-            <AddEventMap setEventLocationData={setEventLocationData} />
+            <AddEventMap />
           </div>
         </div>
       </div>

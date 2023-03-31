@@ -70,6 +70,7 @@
 
 .add-event-input-field {
     margin: 10px 0 !important;
+    width: 100%;
 }
 
 .add-event-form-btn {
@@ -81,4 +82,38 @@
     display: flex;
     width: 55%;
     height: 100%;
+}
+
+.add-event-location-inp-container
+{
+    position: relative;
+}
+.add-event-location-results-container
+{
+    content: "";
+    position: absolute;
+    overflow: scroll;
+    max-height: 150px;
+    width: 99%;
+    color: black;
+    background-color: white;
+    top: 67px;
+    left: 0;
+    /* box-shadow: 1px 1px 3px rgb(0 0 0); */
+    border: 1px solid rgb(162 161 161);
+    margin-top: -10px;
+    z-index: 50;
+}
+
+.aelr-search-card
+{
+    font-size: 0.8rem;
+    padding: 7px;
+    border-bottom: 1px solid rgb(162 161 161);
+    cursor: pointer;
+}
+
+.aelr-search-card:hover
+{
+    background-color: rgb(162 161 161/35%);
 }

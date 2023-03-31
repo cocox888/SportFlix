@@ -54,12 +54,12 @@ function EventListing({ nearbyEvents, allEvents }) {
     setSearchKey(key);
     let result = allEvents?.filter(
       (ev) =>
-        ev.city.toLowerCase().includes(key) ||
-        ev.country.toLowerCase().includes(key) ||
-        ev.description.toLowerCase().includes(key) ||
-        ev.state.toLowerCase().includes(key) ||
-        ev.location.toLowerCase().includes(key) ||
-        ev.type.toLowerCase().includes(key)
+        ev?.city?.toLowerCase().includes(key) ||
+        ev?.country?.toLowerCase().includes(key) ||
+        ev?.description?.toLowerCase().includes(key) ||
+        ev?.state?.toLowerCase().includes(key) ||
+        ev?.location?.toLowerCase().includes(key) ||
+        ev?.type?.toLowerCase().includes(key)
     );
     console.log(result);
     setSearchResult(result);
