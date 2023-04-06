@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const Api = axios.create({
-  baseURL: "http://localhost:8000/api/v1",
+  baseURL: "http://172.31.13.95:3001/api/v1",
   headers: { Authorization: `Bearer ${localStorage.getItem("AUTH_TOKEN")}` },
 });
 

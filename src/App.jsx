@@ -76,14 +76,28 @@ function App() {
 
   // Functions to get event list
   const getCoords = async () => {
-    const pos = await new Promise((resolve, reject) => {
-      navigator.geolocation.getCurrentPosition(resolve, reject);
-    });
+    try {
+      const pos = await new Promise((resolve, reject) => {
+        navigator.geolocation.getCurrentPosition(resolve, reject);
+      });
 
-    return {
-      lng: pos.coords.longitude,
-      lat: pos.coords.latitude,
-    };
+      return {
+        lng: pos.coords.longitude,
+        lat: pos.coords.latitude,
+      };
+    } catch (err) {
+      dispatch({
+        type: "SET_RESPONSE_DATA",
+        responseData: {
+          message: "Location service is not allowed in http ... https required",
+          type: "error",
+        },
+      });
+      return {
+        lng: 0,
+        lat: 0,
+      };
+    }
   };
 
   const getEventList = async () => {
