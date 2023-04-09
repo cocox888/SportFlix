@@ -7,8 +7,6 @@ import { useNavigate } from "react-router-dom";
 import { Api, resetApiHeaders } from "../../Api/Axios";
 import { useDataLayerValue } from "../../Datalayer/DataLayer";
 
-function LoginFunc() {}
-
 function Login() {
   const navigate = useNavigate();
   const history = useNavigate();
@@ -25,9 +23,9 @@ function Login() {
     dispatch({ type: "SET_LOADING", loading: true });
     await Api.post("/auth/login", loginCredentials)
       .then((res) => {
-        console.log(res.data);
-        localStorage.setItem("AUTH_TOKEN", res.data?.token);
+        //console.log(res.data);
         resetApiHeaders(res.data?.token);
+        localStorage.setItem("AUTH_TOKEN", res.data?.token);
         dispatch({ type: "SET_LOGIN_STATUS", loggedIn: true });
         dispatch({
           type: "SET_USER_DATA",
@@ -44,6 +42,10 @@ function Login() {
         localStorage.removeItem("AUTH_TOKEN");
         resetApiHeaders("");
         dispatch({ type: "SET_LOGIN_STATUS", loggedIn: false });
+        dispatch({
+          type: "SET_USER_DATA",
+          userData: {},
+        });
         dispatch({
           type: "SET_RESPONSE_DATA",
           responseData: {

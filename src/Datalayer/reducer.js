@@ -14,7 +14,7 @@ const moveMapToLocation = (id, eventList, focusMapToLocation) => {
       targetEvent[0].latitude,
       targetEvent[0].longitude,
     ];
-    console.log(targetCoordinates);
+    // console.log(targetCoordinates);
     focusMapToLocation(targetCoordinates);
   }
 };

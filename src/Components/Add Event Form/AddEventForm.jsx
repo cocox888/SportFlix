@@ -17,9 +17,11 @@ function AddEventForm() {
   const [eventDetails, setEventDetails] = useState({});
   const [searchResults, setSearchResults] = useState([]);
   const [selectedLocation, setSelectedLocation] = useState();
+  const [markerLocation, setMarkerLocation] = useState([0, 0]);
   const navigate = useNavigate();
   const history = useNavigate();
-  const location_iq_api_key = "pk.a42110b5c004d27c9e2d214f36d0c698";
+  const location_iq_api_key = process.env.REACT_APP_LOCATION_IQ_API_KEY;
+
   const provider = new LocationIQProvider({
     params: {
       key: location_iq_api_key,
@@ -47,7 +49,7 @@ function AddEventForm() {
       ...eventDetails,
       ...target_loc,
     };
-    console.log(eventDataToPush);
+    //console.log(eventDataToPush);
     dispatch({ type: "SET_LOADING", loading: true });
     await Api.post("/events/add-event", eventDataToPush)
       .then((res) => {
@@ -75,17 +77,17 @@ function AddEventForm() {
     setSearchKey(key);
     try {
       const res = await provider?.search({ query: key });
-      // console.log(res);
+      // //console.log(res);
       setSearchResults(res);
     } catch (err) {
-      console.log(err);
+      //console.log(err);
     }
   };
 
   const handleLocationSelect = async (loc) => {
     dispatch({ type: "SET_LOADING", loading: true });
-    const lat = loc.raw.lat;
-    const lon = loc.raw.lon;
+    const lat = loc?.raw?.lat;
+    const lon = loc?.raw?.lon;
     await axios
       .get(
         `https://us1.locationiq.com/v1/reverse?key=${location_iq_api_key}&lat=${lat}&lon=${lon}&format=json`
@@ -94,10 +96,11 @@ function AddEventForm() {
         loc.city = res.data.address.city;
         loc.state = res.data.address.state;
         loc.country = res.data.address.country;
-        console.log(loc);
+        //console.log(loc);
         setSearchResults([]);
         setSelectedLocation(loc);
         setSearchKey(loc?.raw?.display_name);
+        setMarkerLocation([lat, lon]);
       })
       .catch((err) => {
         dispatch({
@@ -153,6 +156,7 @@ function AddEventForm() {
                     onChange={(e) => {
                       searchLocation(e);
                     }}
+                    autoComplete="off"
                     required
                   />
                   {(!selectedLocation || searchResults?.length !== 0) && (
@@ -229,7 +233,7 @@ function AddEventForm() {
             </form>
           </div>
           <div className="add-event-form-right">
-            <AddEventMap />
+            <AddEventMap markerLocation={markerLocation} />
           </div>
         </div>
       </div>

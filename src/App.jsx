@@ -1,13 +1,9 @@
 import logo from "./logo.svg";
 import "./App.css";
 import Home from "./Components/Home/Home";
-import Sidebar from "./Components/Sidebar/Sidebar";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import EventListing from "./Components/EventListing/EventListing";
-import HomeDock from "./Components/Home/HomeDock";
 import Event from "./Components/Event/Event";
-import img1 from "./Common resources/img1.jpg";
-import img2 from "./Common resources/img2.png";
 import Profile from "./Components/Profile/Profile";
 import Login from "./Components/Authentication/Login";
 import Signup from "./Components/Authentication/Signup";
@@ -39,7 +35,7 @@ function App() {
     if (token) {
       await Api.get("/auth/getUser")
         .then((res) => {
-          console.log(res.data);
+          // // // console.log(res.data);
           dispatch({
             type: "SET_USER_DATA",
             userData: res.data,
@@ -106,7 +102,7 @@ function App() {
       loading: true,
     });
     const userCoords = await getCoords();
-    console.log(userCoords);
+    // // // console.log(userCoords);
 
     await Api.get("/events/get-nearest-events", {
       params: { lat: userCoords.lat, lng: userCoords.lng },
@@ -118,7 +114,7 @@ function App() {
           (e1, e2) => new Date(e1.date).getTime() - new Date(e2.date).getTime()
         );
         res.data.nearestEvents = unsortedNearestEvents;
-        console.log(res.data);
+        // // // console.log(res.data);
         setEventList(events);
         dispatch({
           type: "SET_EVENT_LIST",
@@ -145,8 +141,10 @@ function App() {
 
   useEffect(() => {
     loginOnReload();
-    getEventList();
   }, []);
+  useEffect(() => {
+    getEventList();
+  }, [window.location.pathname]);
 
   return (
     <div className="App">

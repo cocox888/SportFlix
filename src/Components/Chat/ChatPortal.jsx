@@ -97,7 +97,7 @@ function ChatPortal({ room }) {
 
   // setup socket
   useEffect(() => {
-    const ENDPOINT = "http://172.31.13.95:3001";
+    const ENDPOINT = "http://localhost:3001";
     socketRef.current = socketIOClient(ENDPOINT);
     joinRoom();
     setMessages([]);

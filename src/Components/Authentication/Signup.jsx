@@ -26,7 +26,7 @@ function Signup() {
         dob: signupData.dob,
         password: signupData.password,
       };
-      console.log(credentials);
+      //console.log(credentials);
       await Api.post("/auth/signup", credentials)
         .then((res) => {
           localStorage.setItem("AUTH_TOKEN", res.data?.token);
@@ -46,6 +46,10 @@ function Signup() {
         .catch((err) => {
           localStorage.removeItem("AUTH_TOKEN");
           resetApiHeaders("");
+          dispatch({
+            type: "SET_USER_DATA",
+            userData: {},
+          });
           dispatch({ type: "SET_LOGIN_STATUS", loggedIn: false });
           dispatch({
             type: "SET_RESPONSE_DATA",

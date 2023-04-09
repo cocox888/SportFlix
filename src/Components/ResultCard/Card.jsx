@@ -9,7 +9,8 @@ import React, { useEffect, useState } from "react";
 import "./card.css";
 import notFound from "./img.jpg";
 import { useNavigate } from "react-router-dom";
-import img1 from "../../Common resources/img1.jpg";
+import img1 from "../../Common resources/img1.jpeg";
+import img2 from "../../Common resources/img2.png";
 import { useDataLayerValue } from "../../Datalayer/DataLayer";
 
 function Card({ event }) {
@@ -70,7 +71,7 @@ function Card({ event }) {
                   <div className="card-sticker past-sticker">Closed</div>
                 )}
               </div>
-              <img src={img1} alt="" />
+              <img src={img2} alt="" />
             </div>
             <div className="card-details">
               <div className="card-main-details">

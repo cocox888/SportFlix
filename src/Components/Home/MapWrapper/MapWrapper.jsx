@@ -17,20 +17,26 @@ function MapWrapper({ eventList }) {
     popupAnchor: [0, -10],
   });
 
-  const defaultSportIcon = new Icon({
-    iconUrl: require("./Resources/default.png"),
-    iconSize: [35, 35],
-  });
   const urlParams = useParams();
   const navigate = useNavigate();
 
   const [{ focusMapToCenter }, dispatch] = useDataLayerValue();
   const mapRef = useRef();
 
+  const getSportIcon = (sportName) => {
+    try {
+      const icon = require(`./Resources/${sportName.toLowerCase()}.png`);
+      return icon;
+    } catch (err) {
+      const icon = require("./Resources/default.png");
+      return icon;
+    }
+  };
+
   // getting user's location
   useEffect(() => {
     navigator.geolocation.getCurrentPosition((pos) => {
-      console.log(pos);
+      // //console.log(pos);
       if (pos) {
         setUserLocation([pos.coords.latitude, pos.coords.longitude]);
       }
@@ -103,7 +109,7 @@ function MapWrapper({ eventList }) {
           position={[event?.latitude, event?.longitude]}
           icon={
             new Icon({
-              iconUrl: require(`./Resources/${event?.type.toLowerCase()}.png`),
+              iconUrl: getSportIcon(event?.type),
               iconSize: [35, 35],
             })
           }

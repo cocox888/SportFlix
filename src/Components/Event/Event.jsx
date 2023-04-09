@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDataLayerValue } from "../../Datalayer/DataLayer";
 import "./Event.css";
-import img1 from "../../Common resources/img1.jpg";
+import img1 from "../../Common resources/img1.jpeg";
 import img2 from "../../Common resources/img2.png";
 import { Button } from "@mui/material";
 import { Api } from "../../Api/Axios";
@@ -78,7 +78,7 @@ function Event() {
         navigate("/");
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
         dispatch({
           type: "SET_RESPONSE_DATA",
           responseData: {
@@ -113,14 +113,14 @@ function Event() {
       </div>
       <div className="event-main-container">
         <div className="event-top">
-          <img className="event-main-img" src={img1}></img>
+          <img className="event-main-img" src={img2}></img>
           <div className="event-info event-more-images">
             <div className="event-more-images-container">
+              <img className="event-more-img" src={img2}></img>
               <img
                 className="event-more-img event-more-img-selected"
                 src={img1}
               ></img>
-              <img className="event-more-img" src={img2}></img>
             </div>
           </div>
           <div className="event-info event-host">

@@ -1,42 +1,17 @@
 import React, { useEffect, useState, useRef } from "react";
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "./addEventMap.css";
 import L from "leaflet";
 
-function AddEventMap({ setEventLocationData }) {
+function AddEventMap({ markerLocation }) {
   const [userLocation, setUserLocation] = useState([0, 0]);
   const [zoom, setZoom] = useState(2);
   const mapRef = useRef();
-
-  // getting user's location and setting the map
-  const apiKey =
-    "AAPK4e5268d5d850408b94a64cbe8466bc4dk5R_BZxaWXqoAnelAqQrdktOZli7YGY2HkwsHit-n532mZiJa4U0-7Q4fg4EZom-";
-  const locationiq_api_key = "pk.a42110b5c004d27c9e2d214f36d0c698";
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition((pos) => {
       if (pos) {
         setUserLocation([pos.coords.latitude, pos.coords.longitude]);
-        try {
-          // Initialize invisible map
-
-          var map = L.map("map", {
-            center: [pos.coords.latitude, pos.coords.longitude], // Map loads with this location as center
-            zoom: 14,
-            scrollWheelZoom: true,
-            zoomControl: false,
-            attributionControl: false,
-          });
-
-          L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
-            maxZoom: 19,
-            attribution:
-              '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-          }).addTo(map);
-
-          //Initialize the geocoder
-        } catch (error) {
-          console.log(error);
-        }
       }
     });
   }, []);
@@ -58,10 +33,22 @@ function AddEventMap({ setEventLocationData }) {
     }
   }, [userLocation]);
 
+  useEffect(() => {
+    if (markerLocation[0] !== 0 && markerLocation[1] !== 0) {
+      focusMapToUserLocation(markerLocation);
+    }
+  }, [markerLocation]);
+
   return (
-    <div className="add-event-map-container">
-      <div id="map"></div>
-    </div>
+    <MapContainer center={userLocation} zoom={zoom} ref={mapRef}>
+      <TileLayer
+        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        attribution="Map data © <a href='https://openstreetmap.org'>OpenStreetMap</a> contributors"
+      />
+      {markerLocation[0] !== 0 && markerLocation[1] !== 0 && (
+        <Marker position={markerLocation}></Marker>
+      )}
+    </MapContainer>
   );
 }
 

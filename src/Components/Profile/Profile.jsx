@@ -3,9 +3,9 @@ import {
   KeyboardArrowLeftOutlined,
   ModeEditRounded,
 } from "@mui/icons-material";
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { resetApiHeaders } from "../../Api/Axios";
+import { Api, resetApiHeaders } from "../../Api/Axios";
 import { useDataLayerValue } from "../../Datalayer/DataLayer";
 import "./Profile.css";
 
@@ -34,21 +34,71 @@ function Profile() {
       loading: true,
     });
     localStorage.removeItem("AUTH_TOKEN");
-    resetApiHeaders("");
     dispatch({
       type: "SET_LOGIN_STATUS",
       loggedIn: false,
     });
     dispatch({
       type: "SET_USER_DATA",
-      loggedIn: {},
+      userData: {},
     });
     dispatch({
       type: "SET_LOADING",
       loading: false,
     });
+    resetApiHeaders("");
     navigate("/");
   };
+
+  const loadUserData = async () => {
+    dispatch({
+      type: "SET_LOADING",
+      loading: true,
+    });
+    const token = localStorage.getItem("AUTH_TOKEN");
+    // console.log(token);
+    if (token) {
+      await Api.get("/auth/getUser")
+        .then((res) => {
+          dispatch({
+            type: "SET_USER_DATA",
+            userData: res.data,
+          });
+          dispatch({
+            type: "SET_LOGIN_STATUS",
+            loggedIn: true,
+          });
+        })
+        .catch((err) => {
+          localStorage.removeItem("AUTH_TOKEN");
+          dispatch({
+            type: "SET_LOGIN_STATUS",
+            loggedIn: false,
+          });
+          dispatch({
+            type: "SET_USER_DATA",
+            userData: {},
+          });
+        });
+    } else {
+      dispatch({
+        type: "SET_LOGIN_STATUS",
+        loggedIn: false,
+      });
+    }
+    dispatch({
+      type: "SET_LOADING",
+      loading: false,
+    });
+  };
+
+  useEffect(() => {
+    if (loggedIn) {
+      loadUserData();
+    } else {
+      navigate("/");
+    }
+  }, [loggedIn]);
 
   return (
     <div className="profile">

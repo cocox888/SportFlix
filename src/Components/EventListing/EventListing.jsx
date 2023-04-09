@@ -61,12 +61,12 @@ function EventListing({ nearbyEvents, allEvents }) {
         ev?.location?.toLowerCase().includes(key) ||
         ev?.type?.toLowerCase().includes(key)
     );
-    console.log(result);
+    //console.log(result);
     setSearchResult(result);
   };
 
   useEffect(() => {
-    console.log(allEvents);
+    //console.log(allEvents);
     setEventsToShow(allEvents);
   }, [allEvents]);
 
