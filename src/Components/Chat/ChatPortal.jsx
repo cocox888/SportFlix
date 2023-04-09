@@ -17,6 +17,7 @@ function ChatPortal({ room }) {
     setMessage(e.target.value);
   };
   const [{ loading }, dispatch] = useDataLayerValue();
+  const baseURL = process.env.REACT_APP_BASEURL;
 
   const changeDateFormat = () => {
     const d = new Date();
@@ -97,7 +98,7 @@ function ChatPortal({ room }) {
 
   // setup socket
   useEffect(() => {
-    const ENDPOINT = "http://localhost:3001";
+    const ENDPOINT = baseURL;
     socketRef.current = socketIOClient(ENDPOINT);
     joinRoom();
     setMessages([]);
