@@ -4,7 +4,7 @@
     flex-direction: column;
     width: 100%;
     overflow: hidden;
-    position: relative;    
+    position: relative;
     padding: 0 10px;
 }
 
@@ -21,17 +21,19 @@
     gap: 10px;
     /* height: 40px; */
 }
+
 .filter-box button {
     padding: 2px 10px;
     font-size: 0.75rem;
     background-color: rgba(255, 255, 255, 0.75);
-    border: 1px solid rgba(162, 162, 162,0.55);
+    border: 1px solid rgba(162, 162, 162, 0.55);
     border-radius: 4px;
-    box-shadow: 1px 1px 10px rgba(162, 162, 162,0.35);
+    box-shadow: 1px 1px 10px rgba(162, 162, 162, 0.35);
     cursor: pointer;
 }
+
 .filter-box button:active {
-    box-shadow: inset 1px 1px 10px rgba(162, 162, 162,0.35);
+    box-shadow: inset 1px 1px 10px rgba(162, 162, 162, 0.35);
 }
 
 .event-listing-mid {
@@ -79,8 +81,7 @@
     padding-left: 10px;
 }
 
-.searchbar
-{
+.searchbar {
     position: relative;
 }
 
@@ -91,8 +92,7 @@
     border: 1px solid #C4C4C4;
 }
 
-.search-result-container
-{
+.search-result-container {
     content: "";
     position: absolute;
     left: 0;
@@ -102,38 +102,36 @@
     max-height: 55vh;
     background-color: rgba(255, 255, 255, 0.75);
     backdrop-filter: blur(3px);
-    border: 1px solid rgba(162, 162, 162,0.35);
+    border: 1px solid rgba(162, 162, 162, 0.35);
     border-radius: 8px;
     z-index: 200;
     box-shadow: 1px 3px 10px rgba(0, 0, 0, 0.25);
     overflow: scroll;
 }
 
-.search-result-container-main
-{
-}
-.search-key
-{
+.search-result-container-main {}
+
+.search-key {
     display: flex;
     align-items: center;
     font-size: 0.85rem;
     padding: 10px 20px;
     cursor: pointer;
 }
-.search-key:hover
-{
-    background-color: rgba(162, 162, 162,0.35);
+
+.search-key:hover {
+    background-color: rgba(162, 162, 162, 0.35);
 }
-.search-result-img
-{
+
+.search-result-img {
     height: 30px;
     width: 30px;
     background-color: grey;
     border-radius: 3px;
 }
-.search-result-line
-{
-    padding: 10px 20px;   
+
+.search-result-line {
+    padding: 10px 20px;
     text-align: left;
     align-items: center;
     display: flex;
@@ -141,15 +139,15 @@
     cursor: pointer;
     font-size: 0.8rem;
 }
-.search-result-info
-{
+
+.search-result-info {
     display: flex;
     gap: 15px;
     flex-wrap: wrap;
 }
-.search-result-line:hover
-{
-    background-color: rgba(162, 162, 162,0.35);
+
+.search-result-line:hover {
+    background-color: rgba(162, 162, 162, 0.35);
 
 }
 
@@ -158,6 +156,7 @@
     position: absolute;
     bottom: 10px;
     right: 20px;
+    z-index: 500;
 }
 
 .event-add-btn-container button {
@@ -184,4 +183,3 @@
         /* max-width: unset !important; */
     }
 }
-
