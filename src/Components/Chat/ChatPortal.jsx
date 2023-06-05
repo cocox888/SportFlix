@@ -17,7 +17,7 @@ function ChatPortal({ room }) {
     setMessage(e.target.value);
   };
   const [{ loading }, dispatch] = useDataLayerValue();
-  const baseURL = process.env.REACT_APP_BASEURL;
+  const baseURL = process.env.REACT_APP_SOCKET_BASEURL;
 
   const changeDateFormat = () => {
     const d = new Date();
