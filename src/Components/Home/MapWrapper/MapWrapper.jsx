@@ -3,7 +3,6 @@ import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import { Icon } from "leaflet";
 import { useDataLayerValue } from "../../../Datalayer/DataLayer";
 import { useNavigate, useParams } from "react-router-dom";
-import EsriLeafletGeoSearch from "react-esri-leaflet/plugins/EsriLeafletGeoSearch";
 import "./mapwrapper.css";
 
 function MapWrapper({ eventList }) {

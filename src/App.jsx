@@ -1,23 +1,30 @@
-import logo from "./logo.svg";
+import { lazy } from "react";
 import "./App.css";
-import Home from "./Components/Home/Home";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import EventListing from "./Components/EventListing/EventListing";
-import Event from "./Components/Event/Event";
-import Profile from "./Components/Profile/Profile";
-import Login from "./Components/Authentication/Login";
-import Signup from "./Components/Authentication/Signup";
-import { Backdrop, CircularProgress } from "@mui/material";
+import { Backdrop } from "@mui/material";
 import Loader from "./Components/Loader/Loader";
 import { useDataLayerValue } from "./Datalayer/DataLayer";
-import Response from "./Response/Response";
 import { useEffect, useState } from "react";
 import { Api } from "./Api/Axios";
 import ProtectedRoute from "./Utils/ProtectedRoute";
-import AddEventForm from "./Components/Add Event Form/AddEventForm";
-import axios from "axios";
-import RegisteredEvents from "./Components/RegisteredEvents/RegisteredEvents";
-import Chat from "./Components/Chat/Chat";
+import Response from "./Response/Response";
+import Home from "./Components/Home/Home";
+import { Suspense } from "react";
+import { ErrorBoundary } from "react-error-boundary";
+import ErrorFallback from "./Components/Helpers/ErrorBoundary";
+
+const Profile = lazy(() => import("./Components/Profile/Profile"));
+const Event = lazy(() => import("./Components/Event/Event"));
+const Login = lazy(() => import("./Components/Authentication/Login"));
+const Signup = lazy(() => import("./Components/Authentication/Signup"));
+const AddEventForm = lazy(() =>
+  import("./Components/Add Event Form/AddEventForm")
+);
+const RegisteredEvents = lazy(() =>
+  import("./Components/RegisteredEvents/RegisteredEvents")
+);
+const Chat = lazy(() => import("./Components/Chat/Chat"));
 
 function App() {
   const [eventList, setEventList] = useState([]);

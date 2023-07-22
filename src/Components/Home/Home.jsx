@@ -1,26 +1,15 @@
-import React from "react";
+import React, { lazy } from "react";
 import "./home.css";
-import IconButton from "@mui/material/IconButton";
-import SearchIcon from "@mui/icons-material/Search";
-import TextField from "@mui/material/TextField";
-import { FormControl, MenuItem, Select, InputLabel } from "@mui/material";
 import MyLocationRoundedIcon from "@mui/icons-material/MyLocationRounded";
-import { Cancel, PowerSettingsNewRounded } from "@mui/icons-material";
-import Card from "../ResultCard/Card";
-import MapWrapper from "./MapWrapper/MapWrapper";
 import { useDataLayerValue } from "../../Datalayer/DataLayer";
-import EventListing from "../EventListing/EventListing";
 import Sidebar from "../Sidebar/Sidebar";
-import {
-  Outlet,
-  Route,
-  Routes,
-  useLocation,
-  useNavigate,
-} from "react-router-dom";
-import Event from "../Event/Event";
-import { useEffect } from "react";
-import { useState } from "react";
+import { Outlet, useNavigate } from "react-router-dom";
+import { Suspense } from "react";
+import { ErrorBoundary } from "react-error-boundary";
+import ErrorFallback from "../Helpers/ErrorBoundary";
+
+const MapWrapper = lazy(() => import("./MapWrapper/MapWrapper"));
+
 function Home({ eventList }) {
   const [{ focusMapToCenter, loggedIn }, dispatch] = useDataLayerValue();
   const navigate = useNavigate();
@@ -61,10 +50,18 @@ function Home({ eventList }) {
       </div>
       <div className="Home">
         <div className="home-map">
-          <MapWrapper eventList={eventList} />
+          <ErrorBoundary FallbackComponent={ErrorFallback} onReset={() => {}}>
+            <Suspense fallback={<div>Loading...</div>}>
+              <MapWrapper eventList={eventList} />
+            </Suspense>
+          </ErrorBoundary>
         </div>
         <div className={`home-container`}>
-          <Outlet />
+          <ErrorBoundary FallbackComponent={ErrorFallback} onReset={() => {}}>
+            <Suspense fallback={<div>Loading...</div>}>
+              <Outlet />
+            </Suspense>
+          </ErrorBoundary>
         </div>
       </div>
     </>
