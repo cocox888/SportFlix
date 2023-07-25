@@ -1,14 +1,5 @@
 import React, { useEffect } from "react";
-import IconButton from "@mui/material/IconButton";
-import SearchIcon from "@mui/icons-material/Search";
-import TextField from "@mui/material/TextField";
-import {
-  FormControl,
-  MenuItem,
-  Select,
-  InputLabel,
-  Button,
-} from "@mui/material";
+import { Button } from "@mui/material";
 import { Add, Cancel, SearchRounded } from "@mui/icons-material";
 import Card from "../ResultCard/Card";
 import "./EventListing.css";
@@ -16,14 +7,15 @@ import { useDataLayerValue } from "../../Datalayer/DataLayer";
 import { useNavigate } from "react-router-dom";
 import L from "leaflet";
 import { useState } from "react";
+import img1 from "../../Common resources/img1.jpeg";
 
 function EventListing({ nearbyEvents, allEvents }) {
-  const [{ loading }, dispatch] = useDataLayerValue();
-  const [userCoordinates, setUserCoordinates] = useState([0, 0]);
-  const [userLocation, setUserLocation] = useState();
+  const [{ loading, loggedIn, userData }, dispatch] = useDataLayerValue();
   const [eventsType, setEventsType] = useState("all");
   const [eventsToShow, setEventsToShow] = useState(nearbyEvents);
+  const [hostedEvents, setHostedEvents] = useState([]);
   const [searchResult, setSearchResult] = useState([]);
+  const [totalEvents, setTotalEvents] = useState(0);
   const [searchKey, setSearchKey] = useState("");
   const navigate = useNavigate();
 
@@ -65,109 +57,118 @@ function EventListing({ nearbyEvents, allEvents }) {
     setSearchResult(result);
   };
 
+  const selectVisibleEvents = (eventsType__) => {
+    let events__, hostedEvents__;
+    if (eventsType__ === "all") {
+      events__ = allEvents;
+    } else {
+      events__ = nearbyEvents;
+    }
+
+    if (loggedIn) {
+      hostedEvents__ = events__?.filter((e) => e.host_id === userData?._id);
+      events__ = events__?.filter((e) => e.host_id !== userData?._id);
+    }
+    setHostedEvents(hostedEvents__);
+    setEventsToShow(events__);
+    setTotalEvents(hostedEvents__?.length + events__?.length);
+  };
+
   useEffect(() => {
-    //console.log(allEvents);
-    setEventsToShow(allEvents);
-  }, [allEvents]);
+    selectVisibleEvents("all");
+  }, [allEvents, loggedIn]);
 
   return (
-    <div className="event-listing">
+    <>
       <div className="event-add-btn-container">
         <Button variant="contained" onClick={() => navigate("add-event")}>
           {<Add sx={{ fontSize: "25px" }} />}
         </Button>
       </div>
-      <div className="event-listing-controller">
-        <div className="event-listing-top">
-          <div className="searchbar">
-            <input
-              type="text"
-              className="searchbar-inp"
-              placeholder="Search for location or sports"
-              onChange={(e) => getSearchResult(e)}
-            />
-            {searchKey !== "" && (
-              <div className="search-result-container">
-                {searchResult.length === 0 ? (
-                  "No result found"
-                ) : (
-                  <div className="search-result-container-main">
-                    <span className="search-key">
-                      {<SearchRounded sx={{ color: "rgba(162,162,162)" }} />}
-                      {searchKey}
-                    </span>
-                    {searchResult?.map((res, i) => (
-                      <div
-                        className="search-result-line"
-                        onClick={() => {
-                          navigate(`/event/${res._id}`);
-                        }}
-                      >
-                        <div className="search-result-img"></div>
-                        <div className="search-result-info">
-                          <span>
-                            {res?.city},{res?.country}
-                          </span>
-                          <span>{res.type}</span>
-                          <span>{changeDateFormat(res?.date)}</span>
+      <div className="event-listing">
+        <div className="event-listing-controller">
+          <div className="event-listing-top">
+            <div className="searchbar">
+              <input
+                type="text"
+                className="searchbar-inp"
+                placeholder="Search for location or sports"
+                onChange={(e) => getSearchResult(e)}
+              />
+              {searchKey !== "" && (
+                <div className="search-result-container">
+                  {searchResult.length === 0 ? (
+                    "No result found"
+                  ) : (
+                    <div className="search-result-container-main">
+                      <span className="search-key">
+                        {<SearchRounded sx={{ color: "rgba(162,162,162)" }} />}
+                        {searchKey}
+                      </span>
+                      {searchResult?.map((res, i) => (
+                        <div
+                          className="search-result-line"
+                          onClick={() => {
+                            navigate(`/event/${res._id}`);
+                          }}
+                        >
+                          <div className="search-result-img">
+                            <img src={img1} alt="" />
+                          </div>
+                          <div className="search-result-info">
+                            <span>
+                              {res?.location}, {res?.city}, {res?.state},
+                              {res?.country}
+                            </span>
+                            <span>{res.type}</span>
+                            <span>{changeDateFormat(res?.date)}</span>
+                          </div>
                         </div>
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
-            )}
-          </div>
-          {/* <div className="filter-box">
-            <div className="filter-box-container">
-              <div className="filter-container"></div>
-
-              <div className="selected-filter">
-                <div className="selected-filter-field">
-                  <span>Patia</span>{" "}
-                  <Cancel className="remove-filter" fontSize="small" />{" "}
+                      ))}
+                    </div>
+                  )}
                 </div>
-              </div>
-              <div className="selected-filter">
-                <div className="selected-filter-field">
-                  <span>Cricket</span>
-                  <Cancel className="remove-filter" fontSize="small" />
-                </div>
-              </div>
+              )}
             </div>
-          </div> */}
+          </div>
+          <div className="event-listing-mid">
+            <div className="result-count">
+              <h2> {totalEvents}</h2>{" "}
+              <span>
+                Reults {eventsType === "nearby" ? "near you" : "worldwide"}
+              </span>
+            </div>
+            <div className="filter-box">
+              <button
+                onClick={() => {
+                  setEventsType("all");
+                  selectVisibleEvents("all");
+                }}
+              >
+                All Events
+              </button>
+              <button
+                onClick={() => {
+                  setEventsType("nearby");
+                  selectVisibleEvents("nearby");
+                }}
+              >
+                Nearby events
+              </button>
+            </div>
+          </div>
         </div>
-        <div className="event-listing-mid">
-          <div className="result-count">
-            <h2> {eventsToShow?.length}</h2>{" "}
-            <span>Reults {eventsType === "nearby" && "near you"}</span>
-          </div>
-          <div className="filter-box">
-            <button
-              onClick={() => {
-                setEventsType("all");
-                setEventsToShow(allEvents);
-              }}
-            >
-              All Events
-            </button>
-            <button
-              onClick={() => {
-                setEventsType("nearby");
-                setEventsToShow(nearbyEvents);
-              }}
-            >
-              Nearby events
-            </button>
-          </div>
+        <div className="event-listing-bottom">
+          {totalEvents === 0 && <p>No Result Found</p>}
+          {hostedEvents?.map((event, i) => (
+            <Card event={event} key={i} />
+          ))}
+          {eventsToShow?.map((event, i) => (
+            <Card event={event} key={i} />
+          ))}
         </div>
       </div>
-      <div className="event-listing-bottom">
-        {eventsToShow?.map((event) => (
-          <Card event={event} />
-        ))}
-      </div>
-    </div>
+    </>
   );
 }
 

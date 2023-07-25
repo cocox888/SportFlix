@@ -3,7 +3,16 @@
   width: 100vw;
 }
 
+html {
+  overflow: hidden;
+
+}
+
 .main-app-dock {
   text-align: center;
   display: flex;
+}
+
+.component-hidden {
+  opacity: 0;
 }

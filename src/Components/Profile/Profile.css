@@ -202,3 +202,31 @@
 .profile-logout:hover {
     background-color: rgb(222, 222, 222);
 }
+
+@media only screen and (max-width: 1231px) {
+    .profile {
+        overflow: hidden;
+    }
+
+    .profile-container {
+        width: 100%;
+        overflow: hidden;
+    }
+
+    .profile-main-container {
+        width: 90%;
+    }
+
+}
+
+/* @media only screen and (max-width: 660px) {
+    .profile {
+        overflow: hidden;
+    }
+
+    .profile-container {
+        width: 100%;
+        overflow: hidden;
+    }
+
+} */

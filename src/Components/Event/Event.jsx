@@ -11,15 +11,14 @@ import { Api } from "../../Api/Axios";
 function Event() {
   const urlParams = useParams();
   const navigate = useNavigate();
-  const history = useNavigate();
   const [imageSelected, setImageSelected] = useState(0);
-  const [{ loggedIn, userData, focusMapToCenter }, dispatch] =
-    useDataLayerValue();
+  const [{ loggedIn, userData, homeHidden }, dispatch] = useDataLayerValue();
   const [eventInfo, setEventInfo] = useState({});
 
   // Location event on map
   const locateEvent = () => {
     dispatch({ type: "FLY_TO_LOCATION", id: eventInfo._id });
+    dispatch({ type: "SET_HOME_HIDDEN", homeHidden: true });
   };
 
   // Function to change date format
@@ -95,16 +94,28 @@ function Event() {
     return eventInfo?.participants?.includes(userId);
   };
 
+  const isHost = () => {
+    return userData?._id === eventInfo?.host_id;
+  };
+
+  const isParticipant = () => {
+    return eventInfo?.participants?.includes(userData?._id);
+  };
+  const isOver = () => {
+    return new Date() > new Date(eventInfo?.date);
+  };
+
   useEffect(() => {
     const eventId = urlParams.id;
     getEventDetails(eventId);
   }, [urlParams?.id]);
+
   return (
     <div className="event-container">
       <div
         className="event-back"
         onClick={() => {
-          history(-1);
+          navigate("/");
           // dispatch({ type: "SET_FOCUS_MAP_TO_CENTER", focusMapToCenter: true });
         }}
       >
@@ -113,36 +124,64 @@ function Event() {
       </div>
       <div className="event-main-container">
         <div className="event-top">
-          <img className="event-main-img" src={img2}></img>
-          <div className="event-info event-more-images">
-            <div className="event-more-images-container">
-              <img className="event-more-img" src={img2}></img>
-              <img
-                className="event-more-img event-more-img-selected"
-                src={img1}
-              ></img>
+          <div className="event-main-img-continer">
+            <div className="event-main-image-container">
+              <img className="event-main-img" src={img2}></img>
+            </div>
+            <div className="event-more-img-container">
+              <img className="event-more-img" src={img2} />
+              <img className="event-more-img" src={img1} />
+            </div>
+          </div>
+          <div className="event-more-images-mobile">
+            <div className="event-more-images-container-mobile">
+              <img className="event-more-img-mobile" src={img2} />
+              <img className="event-more-img-mobile" src={img1} />
             </div>
           </div>
           <div className="event-info event-host">
-            Hosted by {eventInfo?.host}
+            <span>Hosted by {eventInfo?.host} </span>
+          </div>
+          <div className="event-stickers">
+            {loggedIn && isHost() && (
+              <div className="card-sticker host-sticker">Hosted by you</div>
+            )}
+            {loggedIn && isParticipant() && (
+              <div className="card-sticker participant-sticker">
+                Participant
+              </div>
+            )}
+            {isOver() && (
+              <div className="card-sticker past-sticker">Closed</div>
+            )}
           </div>
           <div className="event-top-container">
             <div className="event-info event-location">
-              <h3>{eventInfo?.location}</h3>
+              <h3>
+                {eventInfo?.location} , {eventInfo?.city}, {eventInfo?.state},{" "}
+                {eventInfo?.country}
+              </h3>
             </div>
+
             <div className="event-info-date-participants">
               <div className="event-info event-date">
                 {changeDateFormat(eventInfo?.date)}
               </div>
-              <div className="event-info event-people">
-                <PeopleAltRounded sx={{ marginRight: "3px" }} />
-                <span>{eventInfo?.participants?.length}</span>
-              </div>
-              {eventInfo?.max_players && (
+              <div className="event-people-info">
                 <div className="event-info event-people">
-                  <span>Maximum players : {eventInfo?.max_players}</span>
+                  <PeopleAltRounded
+                    className="event-people-icon"
+                    sx={{ marginRight: "3px" }}
+                  />
+                  <span>{eventInfo?.participants?.length}</span>
                 </div>
-              )}
+                {eventInfo?.max_players && (
+                  <div className="event-info event-people">
+                    <span>Max players: {eventInfo?.max_players}</span>
+                  </div>
+                )}
+              </div>
+
               {eventInfo?.min_age && (
                 <div className="event-info event-people">
                   <span>Minimum age : {eventInfo?.min_age}</span>
@@ -163,7 +202,7 @@ function Event() {
                   className="event-join-btn"
                   onClick={() => navigate("/chat")}
                 >
-                  Go to chat
+                  Chat
                 </Button>
               ) : (
                 <Button
@@ -179,7 +218,7 @@ function Event() {
                 className="event-join-btn"
                 onClick={() => locateEvent()}
               >
-                Go to location
+                Location
               </Button>
             </div>
           </div>

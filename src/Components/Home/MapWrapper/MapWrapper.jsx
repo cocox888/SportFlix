@@ -16,10 +16,15 @@ function MapWrapper({ eventList }) {
     popupAnchor: [0, -10],
   });
 
+  const maxBounds = [
+    [-90, -180],
+    [90, 180],
+  ];
+
   const urlParams = useParams();
   const navigate = useNavigate();
 
-  const [{ focusMapToCenter }, dispatch] = useDataLayerValue();
+  const [{ focusMapToCenter, homeHidden }, dispatch] = useDataLayerValue();
   const mapRef = useRef();
 
   const getSportIcon = (sportName) => {
@@ -49,8 +54,8 @@ function MapWrapper({ eventList }) {
     if (center) {
       zoom = 14;
       shiftedLocationToFocus = [
-        locationToFocus[0] + 0.001,
-        locationToFocus[1] - 0.025,
+        locationToFocus[0] + (homeHidden === false ? 0.001 : 0),
+        locationToFocus[1] - (homeHidden === false ? 0.025 : 0),
       ];
     }
 
@@ -59,7 +64,7 @@ function MapWrapper({ eventList }) {
       zoom = 18;
       shiftedLocationToFocus = [
         locationToFocus[0],
-        locationToFocus[1] - 0.0015,
+        locationToFocus[1] - (homeHidden === false ? 0.0015 : 0),
       ];
     }
     mapRef.current?.flyTo(shiftedLocationToFocus, zoom, {
@@ -88,7 +93,13 @@ function MapWrapper({ eventList }) {
   }, []);
 
   return (
-    <MapContainer center={userLocation} zoom={zoom} ref={mapRef}>
+    <MapContainer
+      center={userLocation}
+      zoom={zoom}
+      ref={mapRef}
+      maxBounds={maxBounds}
+      minZoom={2}
+    >
       <TileLayer
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright" target="__blank">OpenStreetMap</a> contributors'
@@ -102,6 +113,7 @@ function MapWrapper({ eventList }) {
             click: () => {
               navigate(`/event/${event?._id}`);
               dispatch({ type: "FLY_TO_LOCATION", id: event?._id });
+              dispatch({ type: "SET_HOME_HIDDEN", homeHidden: false });
             },
           }}
           key={event?._id}

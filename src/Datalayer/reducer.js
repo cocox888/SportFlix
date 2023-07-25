@@ -4,6 +4,7 @@ export const initialState = {
   loggedIn: false,
   loading: false,
   responseData: null,
+  homeHidden: false,
   eventList: [],
 };
 
@@ -14,7 +15,6 @@ const moveMapToLocation = (id, eventList, focusMapToLocation) => {
       targetEvent[0].latitude,
       targetEvent[0].longitude,
     ];
-    // console.log(targetCoordinates);
     focusMapToLocation(targetCoordinates);
   }
 };
@@ -30,6 +30,11 @@ const reducer = (state, action) => {
       return {
         ...state,
         loggedIn: action.loggedIn,
+      };
+    case "SET_HOME_HIDDEN":
+      return {
+        ...state,
+        homeHidden: action.homeHidden,
       };
     case "SET_USER_DATA":
       return {

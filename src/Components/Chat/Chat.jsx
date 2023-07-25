@@ -12,6 +12,8 @@ function Chat() {
   const [selectedRoom, setSelectedRoom] = useState();
   const [{ userData, loading }, dispatch] = useDataLayerValue();
   const [chatRooms, setChatRooms] = useState([]);
+  const [screenWidth, setScreenWidth] = useState(null);
+  const [showMobileChat, setShowMobileChat] = useState(false);
 
   const changeDateFormat = (rawDate) => {
     const d = new Date(rawDate);
@@ -72,81 +74,119 @@ function Chat() {
     });
   };
 
+  const removeChatRoom = () => {
+    setSelectedRoom(null);
+  };
+
+  const handleWindowResize = () => {
+    if (window.innerWidth <= 1000) {
+      setShowMobileChat(true);
+    } else {
+      setShowMobileChat(false);
+    }
+  };
+
   useEffect(() => {
     getChatRooms();
+  }, []);
+
+  useEffect(() => {
+    if (window.innerWidth <= 1000) {
+      setShowMobileChat(true);
+    } else {
+      setShowMobileChat(false);
+    }
+    window.addEventListener("resize", handleWindowResize);
   }, []);
 
   return (
     <div className="chat">
       <div className="chat-container">
         <div className="chat-left">
-          <div className="chat-header-container">
-            <div className="chat-back-container" onClick={() => history(-1)}>
-              <KeyboardArrowLeftOutlined />
-            </div>
-            <span>Messages</span>
+          {showMobileChat && selectedRoom ? (
+            <ChatPortal
+              room={selectedRoom}
+              showMobileChat={showMobileChat}
+              removeChatRoom={removeChatRoom}
+            />
+          ) : (
+            <>
+              <div className="chat-header-container">
+                <div
+                  className="chat-back-container"
+                  onClick={() => history(-1)}
+                >
+                  <KeyboardArrowLeftOutlined />
+                </div>
+                <span>Messages</span>
+              </div>
+              <div className="chat-left-container">
+                <div className="chat-left-main-container">
+                  {" "}
+                  {chatRooms?.hosted?.length !== 0 && (
+                    <span className="chat-event-timeline">Hosted events</span>
+                  )}
+                  {chatRooms?.hosted?.map((room) => (
+                    <div
+                      className="chat-selector"
+                      key={room?._id}
+                      onClick={() => setSelectedRoom(room)}
+                    >
+                      <div className="chat-op-info">
+                        <span className="chat-op-name">{room?.name}</span>
+                        <div className="chat-op-info-btm">
+                          <span>{changeDateFormat(room?.date)}</span>
+                          <span>{room?.type}</span>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                  {chatRooms?.upcoming?.length !== 0 && (
+                    <span className="chat-event-timeline">Upcoming events</span>
+                  )}
+                  {chatRooms?.upcoming?.map((room) => (
+                    <div
+                      className="chat-selector"
+                      key={room?._id}
+                      onClick={() => setSelectedRoom(room)}
+                    >
+                      <div className="chat-op-info">
+                        <span className="chat-op-name">{room?.name}</span>
+                        <div className="chat-op-info-btm">
+                          <span>{changeDateFormat(room?.date)}</span>
+                          <span>{room?.type}</span>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                  {chatRooms?.past?.length !== 0 && (
+                    <span className="chat-event-timeline">Past events</span>
+                  )}
+                  {chatRooms?.past?.map((room) => (
+                    <div
+                      className="chat-selector"
+                      key={room?._id}
+                      onClick={() => setSelectedRoom(room)}
+                    >
+                      <div className="chat-op-info">
+                        <span className="chat-op-name">{room?.name}</span>
+                        <div className="chat-op-info-btm">
+                          <span>{changeDateFormat(room?.date)}</span>
+                          <span>{room?.type}</span>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </>
+          )}
+        </div>
+        {!showMobileChat && (
+          <div className="chat-right">
+            {selectedRoom && <ChatPortal room={selectedRoom} />}
           </div>
-          {chatRooms?.hosted?.length !== 0 && (
-            <span className="chat-event-timeline">Hosted events</span>
-          )}
-          {chatRooms?.hosted?.map((room) => (
-            <div
-              className="chat-selector"
-              key={room?._id}
-              onClick={() => setSelectedRoom(room)}
-            >
-              <div className="chat-op-img"></div>
-              <div className="chat-op-info">
-                <span className="chat-op-name">{room?.name}</span>
-                <div className="chat-op-info-btm">
-                  <span>{changeDateFormat(room?.date)}</span>
-                  <span>{room?.type}</span>
-                </div>
-              </div>
-            </div>
-          ))}
-          {chatRooms?.upcoming?.length !== 0 && (
-            <span className="chat-event-timeline">Upcoming events</span>
-          )}
-          {chatRooms?.upcoming?.map((room) => (
-            <div
-              className="chat-selector"
-              key={room?._id}
-              onClick={() => setSelectedRoom(room)}
-            >
-              <div className="chat-op-img"></div>
-              <div className="chat-op-info">
-                <span className="chat-op-name">{room?.name}</span>
-                <div className="chat-op-info-btm">
-                  <span>{changeDateFormat(room?.date)}</span>
-                  <span>{room?.type}</span>
-                </div>
-              </div>
-            </div>
-          ))}
-          {chatRooms?.past?.length !== 0 && (
-            <span className="chat-event-timeline">Past events</span>
-          )}
-          {chatRooms?.past?.map((room) => (
-            <div
-              className="chat-selector"
-              key={room?._id}
-              onClick={() => setSelectedRoom(room)}
-            >
-              <div className="chat-op-img"></div>
-              <div className="chat-op-info">
-                <span className="chat-op-name">{room?.name}</span>
-                <div className="chat-op-info-btm">
-                  <span>{changeDateFormat(room?.date)}</span>
-                  <span>{room?.type}</span>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-        <div className="chat-right">
-          {selectedRoom && <ChatPortal room={selectedRoom} />}
-        </div>
+        )}
       </div>
     </div>
   );

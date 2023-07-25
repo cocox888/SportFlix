@@ -3,6 +3,7 @@ import {
   ContrastRounded,
   DarkModeRounded,
   HomeRounded,
+  Menu,
   NightsStay,
   NightsStayRounded,
   PersonRounded,
@@ -21,6 +22,7 @@ import "./sidebar.css";
 
 function Sidebar() {
   const [selectedOption, setSelectedOption] = useState(0);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const sidebarOptions = [
     {
       name: "Home",
@@ -28,7 +30,7 @@ function Sidebar() {
       path: "/",
     },
     {
-      name: "Registered sports",
+      name: "Registered Events",
       logo: <SportsTennis sx={{ fontSize: "30px" }} />,
       path: "/registered-events",
     },
@@ -44,8 +46,18 @@ function Sidebar() {
     },
   ];
   const navigate = useNavigate();
-  const [dispatch] = useDataLayerValue();
+  const [{ homeHidden }, dispatch] = useDataLayerValue();
   const location = useLocation();
+
+  const handleLinkClick = (path) => {
+    navigate(path);
+    setSidebarOpen(false);
+    dispatch({
+      type: "SET_HOME_HIDDEN",
+      homeHidden: false,
+    });
+  };
+
   useEffect(() => {
     const path = location?.pathname;
     if (path?.includes("/chat")) {
@@ -60,31 +72,66 @@ function Sidebar() {
   }, [location]);
 
   return (
-    <div className="sidebar">
-      <div className="sidebar-container">
-        <div className="logo" onClick={() => navigate("/")}>
-          <SportsVolleyballRounded id="logo-pic" sx={{ fontSize: "30px" }} />
+    <>
+      <div className="sidebar">
+        <div className="sidebar-container">
+          <div className="logo" onClick={() => navigate("/")}>
+            <SportsVolleyballRounded id="logo-pic" sx={{ fontSize: "30px" }} />
+          </div>
+          <div className="sidebar-options">
+            {sidebarOptions?.map((op, i) => (
+              <div
+                key={i}
+                className={`sidebar-op ${
+                  selectedOption === i && "sidebar-selected"
+                }`}
+                onClick={() => {
+                  handleLinkClick(op?.path);
+                }}
+              >
+                {op?.logo}
+              </div>
+            ))}
+          </div>
+          <div className="sidebar-dark">
+            <ContrastRounded size={26} />
+          </div>
         </div>
-        <div className="sidebar-options">
+      </div>
+
+      <div className={`sidebar-mobile ${sidebarOpen && "sidebar-mobile-open"}`}>
+        <div className="sidebar-mobile-container">
+          <h3 onClick={() => navigate("/")}>
+            Sport<span className="sidebar-mobile-head">Flix</span>
+          </h3>
+          <div
+            onClick={() => setSidebarOpen((prev) => !prev)}
+            style={{ display: "flex" }}
+          >
+            <Menu sx={{ fontSize: "24px" }} />
+          </div>
+        </div>
+      </div>
+      <div
+        className={`sidebar-menu-container ${
+          sidebarOpen && "sidebar-menu-container-open"
+        }`}
+      >
+        <div className="sidemar-menu-container-options">
           {sidebarOptions?.map((op, i) => (
             <div
+              className="sidemar-menu-container-option"
               key={i}
-              className={`sidebar-op ${
-                selectedOption === i && "sidebar-selected"
-              }`}
               onClick={() => {
-                navigate(op.path);
+                handleLinkClick(op?.path);
               }}
             >
-              {op?.logo}
+              {op?.name}
             </div>
           ))}
         </div>
-        <div className="sidebar-dark">
-          <ContrastRounded size={26} />
-        </div>
       </div>
-    </div>
+    </>
   );
 }
 

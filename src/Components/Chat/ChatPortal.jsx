@@ -1,4 +1,8 @@
-import { Send, SendRounded } from "@mui/icons-material";
+import {
+  KeyboardArrowLeftOutlined,
+  Send,
+  SendRounded,
+} from "@mui/icons-material";
 import { Button } from "@mui/material";
 import React, { useEffect, useRef } from "react";
 import "./chatPortal.css";
@@ -8,7 +12,7 @@ import socketIOClient from "socket.io-client";
 import { useState } from "react";
 import { useDataLayerValue } from "../../Datalayer/DataLayer";
 
-function ChatPortal({ room }) {
+function ChatPortal({ room, showMobileChat, removeChatRoom }) {
   const socketRef = useRef();
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
@@ -108,9 +112,9 @@ function ChatPortal({ room }) {
   return (
     <div className="chatPortal">
       <div className="cp-top">
-        <div className="cp-top-logo"></div>
+        {showMobileChat && <span onClick={() => removeChatRoom()}>Back</span>}
         <div className="cp-top-info">
-          <span className="cp-top-name">{room?.name}</span>
+          <span className="cp-top-name">{room?.name} Chatroom</span>
         </div>
       </div>
       <div className="cp-mid">

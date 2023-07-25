@@ -86,3 +86,9 @@
     margin-top: 40px;
     margin-bottom: 20px;
 }
+
+@media only screen and (max-width: 1024px) {
+    .login-container {
+        width: 100%;
+    }
+}

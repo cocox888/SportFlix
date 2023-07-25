@@ -47,3 +47,15 @@
         content: "Loading...";
     }
 }
+
+@media only screen and (max-width: 660px) {
+    .loader {
+        height: 100px;
+        width: 110px;
+    }
+
+    .loader::after {
+        bottom: 22px;
+        transform: translateX(-30%);
+    }
+}

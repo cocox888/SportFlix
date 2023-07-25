@@ -5,6 +5,8 @@
     width: 100%;
     border-left: 1px solid rgba(162, 162, 162, 0.1);
     border-right: 1px solid rgba(162, 162, 162, 0.1);
+    background-color: #F6F8FC;
+
 }
 
 .cp-top {
@@ -26,7 +28,7 @@
 }
 
 .cp-top-info {
-    margin-left: 20px;
+    margin-left: 10px;
 }
 
 .cp-top-name {
@@ -71,8 +73,7 @@
 }
 
 
-.cp-mid
-{
+.cp-mid {
     font-size: 0.75rem;
 }
 

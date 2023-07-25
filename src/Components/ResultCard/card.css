@@ -133,3 +133,11 @@
     align-items: center;
     font-size: 0.75rem;
 }
+
+
+@media only screen and (max-width: 660px) {
+    .Card {
+        width: 80%;
+        height: 75vw;
+    }
+}

@@ -11,6 +11,7 @@
     color: white;
     border-radius: 13px;
     transition: all 250ms;
+    font-size: 14px;
 }
 
 .success {
@@ -27,6 +28,8 @@
     border-radius: 13px;
     transition: all 300ms;
     animation: appear_prompt 300ms;
+    font-size: 14px;
+
 }
 
 @keyframes appear_prompt {
@@ -54,4 +57,18 @@
         opacity: 0;
     }
 
+}
+
+@media only screen and (max-width: 660px) {
+    .error {
+        width: 90%;
+        bottom: 0;
+        border-radius: 0;
+    }
+
+    .success {
+        width: 90%;
+        bottom: 0;
+        border-radius: 0;
+    }
 }

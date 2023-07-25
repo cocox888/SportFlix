@@ -7,22 +7,27 @@ import { Outlet, useNavigate } from "react-router-dom";
 import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import ErrorFallback from "../Helpers/ErrorBoundary";
+import { KeyboardArrowDownRounded } from "@mui/icons-material";
+import { useState } from "react";
 
 const MapWrapper = lazy(() => import("./MapWrapper/MapWrapper"));
 
 function Home({ eventList }) {
-  const [{ focusMapToCenter, loggedIn }, dispatch] = useDataLayerValue();
+  const [{ loggedIn, homeHidden }, dispatch] = useDataLayerValue();
   const navigate = useNavigate();
   // Function to handle login
   const login = () => {
     navigate("login");
-    // dispatch({
-    //   type: "SET_LOGIN_STATUS",
-    //   loggedIn: true,
-    // });
   };
   const signup = () => {
     navigate("signup");
+  };
+
+  const toggleHomeHidden = () => {
+    dispatch({
+      type: "SET_HOME_HIDDEN",
+      homeHidden: !homeHidden,
+    });
   };
 
   return (
@@ -56,13 +61,33 @@ function Home({ eventList }) {
             </Suspense>
           </ErrorBoundary>
         </div>
-        <div className={`home-container`}>
-          <ErrorBoundary FallbackComponent={ErrorFallback} onReset={() => {}}>
-            <Suspense fallback={<div>Loading...</div>}>
-              <Outlet />
-            </Suspense>
-          </ErrorBoundary>
+      </div>
+      <div
+        className={` home-container ${homeHidden && "home-container-hidden"}`}
+      >
+        <div className="home-container-toggler">
+          <button
+            className={`home-container-toggler-container ${
+              homeHidden && "home-container-toggler-container-up"
+            }`}
+            onClick={() => toggleHomeHidden()}
+          >
+            <KeyboardArrowDownRounded
+              sx={
+                homeHidden
+                  ? { transform: "rotate(180deg)", transition: "all 250ms" }
+                  : { transition: "all 250ms" }
+              }
+            />
+          </button>
         </div>
+        <ErrorBoundary FallbackComponent={ErrorFallback} onReset={() => {}}>
+          <Suspense fallback={<div>Loading...</div>}>
+            <div className={`home-dock ${homeHidden && "home-blurred"}`}>
+              <Outlet />
+            </div>
+          </Suspense>
+        </ErrorBoundary>
       </div>
     </>
   );

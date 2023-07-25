@@ -19,6 +19,7 @@ function Card({ event }) {
   const selectEvent = () => {
     dispatch({ type: "FLY_TO_LOCATION", id: event._id });
     navigate(`/event/${event._id}`);
+    dispatch({ type: "SET_HOME_HIDDEN", homeHidden: false });
   };
   const changeDateFormat = (rawDate) => {
     const d = new Date(rawDate);
