@@ -112,9 +112,6 @@ function EventListing({ nearbyEvents, allEvents }) {
                             navigate(`/event/${res._id}`);
                           }}
                         >
-                          <div className="search-result-img">
-                            <img src={img1} alt="" />
-                          </div>
                           <div className="search-result-info">
                             <span>
                               {res?.location}, {res?.city}, {res?.state},

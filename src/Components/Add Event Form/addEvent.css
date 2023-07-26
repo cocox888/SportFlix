@@ -84,12 +84,11 @@
     height: 100%;
 }
 
-.add-event-location-inp-container
-{
+.add-event-location-inp-container {
     position: relative;
 }
-.add-event-location-results-container
-{
+
+.add-event-location-results-container {
     content: "";
     position: absolute;
     overflow: scroll;
@@ -105,15 +104,32 @@
     z-index: 50;
 }
 
-.aelr-search-card
-{
+.aelr-search-card {
     font-size: 0.8rem;
     padding: 7px;
     border-bottom: 1px solid rgb(162 161 161);
     cursor: pointer;
 }
 
-.aelr-search-card:hover
-{
+.aelr-search-card:hover {
     background-color: rgb(162 161 161/35%);
+}
+
+.mobile-event-map {
+    height: 200px;
+    overflow: hidden;
+    border-radius: 8px;
+}
+
+@media only screen and (max-width: 1000px) {
+    .add-event-form-main-container {
+        flex-direction: column;
+        overflow: scroll;
+    }
+
+    .add-event-form-left {
+        width: 100%;
+        flex: unset;
+    }
+
 }

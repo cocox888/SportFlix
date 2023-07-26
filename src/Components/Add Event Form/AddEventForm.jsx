@@ -20,6 +20,7 @@ function AddEventForm() {
   const [markerLocation, setMarkerLocation] = useState([0, 0]);
   const navigate = useNavigate();
   const history = useNavigate();
+  const [screenWidth, setScreenWidth] = useState(null);
   const location_iq_api_key = process.env.REACT_APP_LOCATION_IQ_API_KEY;
 
   const provider = new LocationIQProvider({
@@ -114,6 +115,15 @@ function AddEventForm() {
 
     dispatch({ type: "SET_LOADING", loading: false });
   };
+
+  const changeScreenWidth = () => {
+    setScreenWidth(window.innerWidth);
+  };
+
+  useEffect(() => {
+    setScreenWidth(window.innerWidth);
+    window.addEventListener("resize", changeScreenWidth);
+  }, []);
 
   return (
     <div className="add-event-form">
@@ -221,6 +231,11 @@ function AddEventForm() {
                   id="min_age"
                   onChange={(e) => changeEventData(e)}
                 />
+                {screenWidth < 1000 && (
+                  <div className="mobile-event-map">
+                    <AddEventMap markerLocation={markerLocation} />
+                  </div>
+                )}
               </div>
 
               <Button
@@ -232,9 +247,11 @@ function AddEventForm() {
               </Button>
             </form>
           </div>
-          <div className="add-event-form-right">
-            <AddEventMap markerLocation={markerLocation} />
-          </div>
+          {screenWidth >= 1000 && (
+            <div className="add-event-form-right">
+              <AddEventMap markerLocation={markerLocation} />
+            </div>
+          )}
         </div>
       </div>
     </div>

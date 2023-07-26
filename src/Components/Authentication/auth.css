@@ -92,3 +92,59 @@
         width: 100%;
     }
 }
+
+
+
+@media only screen and (max-width: 660px) {
+    .login-heading {
+        margin-bottom: 10px;
+        font-size: 13px;
+    }
+
+
+    .google-login-container {
+        font-size: 12px;
+        margin-bottom: 10px;
+    }
+
+    .google-login-container img {
+        width: 15px;
+    }
+
+    .login-credential-more {
+        font-size: 12px;
+    }
+
+
+    .login-credential-more label span {
+        font-size: 12px !important;
+    }
+
+    .login-credential-more label svg {
+        /* font-size: 12px !important; */
+        /* display: none; */
+        width: 15px;
+
+    }
+
+    .login-main-container .login-button {
+        margin-top: 20px;
+        font-size: 12px;
+    }
+
+    .login-main-container .signup-button {
+        margin-top: 20px;
+        font-size: 12px;
+    }
+
+    .signup-route {
+        font-size: 12px;
+    }
+
+    .login-route {
+        font-size: 13px;
+    }
+
+
+
+}

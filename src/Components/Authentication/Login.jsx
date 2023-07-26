@@ -69,7 +69,7 @@ function Login() {
                 Welcome to{" "}
                 <span style={{ color: "rgb(69,106,242)" }}>SportFlix</span>
               </h2>
-              <span>Continue with Google or enter your details</span>
+              <span>Please enter your details</span>
             </div>
             <div className="google-login-container">
               <img src={Google} alt="" srcset="" />

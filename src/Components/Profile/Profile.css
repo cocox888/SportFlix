@@ -119,6 +119,7 @@
     width: 100%;
     color: rgba(0, 0, 0, 0.76);
     justify-content: space-between;
+    align-items: center;
 }
 
 .profile-field-value button {
@@ -215,6 +216,24 @@
 
     .profile-main-container {
         width: 90%;
+        font-size: 13px;
+    }
+
+    .profile-field {
+        justify-content: space-between;
+    }
+
+    .profile-field-name {
+        flex: unset;
+    }
+
+    .profile-field-value {
+        flex: unset;
+        width: unset;
+    }
+
+    .profile-bottom-main-container {
+        width: unset;
     }
 
 }
