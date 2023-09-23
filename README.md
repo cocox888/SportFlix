@@ -8,4 +8,4 @@ https://github.com/Ayanabha1/Sportflix-backend.git
 
 ## Demo
 
-https://proj-sportflix.onrender.com/
+https://sportflix.ayanabha.xyz
