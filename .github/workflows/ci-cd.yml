@@ -16,6 +16,8 @@ jobs:
         run: npm install
       - name: Create production build
         run: npm run build
+        env:
+          CI: ""
       # Share artifact inside workflow
       - name: Share artifact inside workflow
         uses: actions/upload-artifact@v3
