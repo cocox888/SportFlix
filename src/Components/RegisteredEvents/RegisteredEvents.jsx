@@ -14,16 +14,19 @@ function RegisteredEvents() {
   const [events, setEvents] = useState([]);
   const getRegisteredEvents = async () => {
     dispatch({ type: "SET_LOADING", loading: true });
-    let upcoming, past;
     const today = new Date();
 
     await Api.get("/events/get-registered-events")
       .then((res) => {
-        upcoming = res.data.events?.filter(
+        let upcoming = res.data.events?.filter(
           (event) => new Date(event.date) >= today
         );
-        past = res.data.events?.filter((event) => new Date(event.date) < today);
-        setEvents({ upcoming: upcoming, past: past });
+        let past = res.data.events?.filter(
+          (event) => new Date(event.date) < today
+        );
+        let hosted = res?.data?.hostedEvents;
+
+        setEvents({ upcoming: upcoming, past: past, hosted: hosted });
       })
       .catch((err) => {
         dispatch({
@@ -32,23 +35,6 @@ function RegisteredEvents() {
             message:
               err?.response?.data?.message ||
               "Something went wrong ... please try again",
-            type: "error",
-          },
-        });
-      });
-
-    await Api.get("/events/get-hosted-events")
-      .then((res) => {
-        setEvents((prevState) => ({
-          ...prevState,
-          hosted: res?.data?.hostedEvents,
-        }));
-      })
-      .catch((err) => {
-        dispatch({
-          type: "SET_RESPONSE_DATA",
-          responseData: {
-            message: err?.response?.data?.message || "No event hosted by you",
             type: "error",
           },
         });

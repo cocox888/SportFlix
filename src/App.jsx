@@ -45,7 +45,7 @@ function App() {
           // // // console.log(res.data);
           dispatch({
             type: "SET_USER_DATA",
-            userData: res.data,
+            userData: res.data.user,
           });
           dispatch({
             type: "SET_LOGIN_STATUS",
@@ -90,9 +90,13 @@ function App() {
       };
     } catch (err) {
       dispatch({
+        type: "SET_LOADING",
+        loading: false,
+      });
+      dispatch({
         type: "SET_RESPONSE_DATA",
         responseData: {
-          message: "Location service is not allowed in http ... https required",
+          message: "Please enable location service",
           type: "error",
         },
       });
@@ -109,7 +113,6 @@ function App() {
       loading: true,
     });
     const userCoords = await getCoords();
-    // // // console.log(userCoords);
 
     await Api.get("/events/get-nearest-events", {
       params: { lat: userCoords.lat, lng: userCoords.lng },
@@ -121,7 +124,6 @@ function App() {
           (e1, e2) => new Date(e1.date).getTime() - new Date(e2.date).getTime()
         );
         res.data.nearestEvents = unsortedNearestEvents;
-        // // // console.log(res.data);
         setEventList(events);
         dispatch({
           type: "SET_EVENT_LIST",
@@ -150,7 +152,9 @@ function App() {
     loginOnReload();
   }, []);
   useEffect(() => {
-    getEventList();
+    if (eventList === null || window.location.pathname === "/") {
+      getEventList();
+    }
   }, [window.location.pathname]);
 
   return (
@@ -181,7 +185,8 @@ function App() {
                   path="registered-events"
                   element={<RegisteredEvents />}
                 />
-                <Route path="chat/*" element={<Chat />} />
+                <Route path="chat/:roomId" element={<Chat />} />
+                <Route path="chat/" element={<Chat />} />
               </Route>
               <Route
                 path="*"

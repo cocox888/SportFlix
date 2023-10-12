@@ -109,6 +109,17 @@
 .card-location {
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
+}
+
+.card-location-more {
+    display: flex;
+    margin-left: 13px;
+}
+
+.card-location span {
+    font-size: 0.8rem;
+    /* color: #444444; */
 }
 
 .card-location h4 {

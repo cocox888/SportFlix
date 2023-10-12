@@ -1,6 +1,6 @@
 import { KeyboardArrowLeftOutlined } from "@mui/icons-material";
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import "./chat.css";
 import ChatPortal from "./ChatPortal";
 import { useDataLayerValue } from "../../Datalayer/DataLayer";
@@ -12,9 +12,11 @@ function Chat() {
   const [selectedRoom, setSelectedRoom] = useState();
   const [{ userData, loading }, dispatch] = useDataLayerValue();
   const [chatRooms, setChatRooms] = useState([]);
+  const [allChatRooms, setAllChatRooms] = useState([]);
   const [screenWidth, setScreenWidth] = useState(null);
   const [showMobileChat, setShowMobileChat] = useState(false);
-
+  const urlParams = useParams();
+  const navigate = useNavigate();
   const changeDateFormat = (rawDate) => {
     const d = new Date(rawDate);
     const months = [
@@ -48,10 +50,15 @@ function Chat() {
 
     await Api.get("/events/get-user-rooms")
       .then((res) => {
+        setAllChatRooms(res.data.rooms);
         upcoming = res.data.rooms?.filter(
-          (room) => new Date(room.date) >= today
+          (room) =>
+            new Date(room.date) >= today && room?.host_id !== userData?._id
         );
-        past = res.data.rooms?.filter((room) => new Date(room.date) < today);
+        past = res.data.rooms?.filter(
+          (room) =>
+            new Date(room.date) < today && room?.host_id !== userData?._id
+        );
         hosted = res.data.rooms?.filter(
           (room) => room?.host_id === userData?._id
         );
@@ -72,6 +79,11 @@ function Chat() {
       type: "SET_LOADING",
       loading: false,
     });
+  };
+
+  const selectChatRoom = (room) => {
+    window.history.pushState(null, null, `/chat/${room?.room_id}`);
+    setSelectedRoom(room);
   };
 
   const removeChatRoom = () => {
@@ -98,6 +110,18 @@ function Chat() {
     }
     window.addEventListener("resize", handleWindowResize);
   }, []);
+
+  useEffect(() => {
+    const roomId = urlParams?.roomId;
+    console.log(roomId);
+    if (roomId && roomId !== "") {
+      const targetRoom = allChatRooms?.filter(
+        (room) => room?.room_id === roomId
+      )[0];
+      console.log(targetRoom);
+      setSelectedRoom(targetRoom);
+    }
+  }, [allChatRooms]);
 
   return (
     <div className="chat">
@@ -130,7 +154,7 @@ function Chat() {
                     <div
                       className="chat-selector"
                       key={room?._id}
-                      onClick={() => setSelectedRoom(room)}
+                      onClick={() => selectChatRoom(room)}
                     >
                       <div className="chat-op-info">
                         <span className="chat-op-name">{room?.name}</span>
@@ -148,7 +172,7 @@ function Chat() {
                     <div
                       className="chat-selector"
                       key={room?._id}
-                      onClick={() => setSelectedRoom(room)}
+                      onClick={() => selectChatRoom(room)}
                     >
                       <div className="chat-op-info">
                         <span className="chat-op-name">{room?.name}</span>
@@ -166,7 +190,7 @@ function Chat() {
                     <div
                       className="chat-selector"
                       key={room?._id}
-                      onClick={() => setSelectedRoom(room)}
+                      onClick={() => selectChatRoom(room)}
                     >
                       <div className="chat-op-info">
                         <span className="chat-op-name">{room?.name}</span>

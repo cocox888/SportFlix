@@ -13,10 +13,12 @@ function EventListing({ nearbyEvents, allEvents }) {
   const [{ loading, loggedIn, userData }, dispatch] = useDataLayerValue();
   const [eventsType, setEventsType] = useState("all");
   const [eventsToShow, setEventsToShow] = useState(nearbyEvents);
-  const [hostedEvents, setHostedEvents] = useState([]);
   const [searchResult, setSearchResult] = useState([]);
   const [totalEvents, setTotalEvents] = useState(0);
   const [searchKey, setSearchKey] = useState("");
+  const [participatedEvents, setParticipatedEvents] = useState([]);
+  const [hostedEvents, setHostedEvents] = useState([]);
+
   const navigate = useNavigate();
 
   const changeDateFormat = (rawDate) => {
@@ -58,20 +60,36 @@ function EventListing({ nearbyEvents, allEvents }) {
   };
 
   const selectVisibleEvents = (eventsType__) => {
-    let events__, hostedEvents__;
+    let events__ = [],
+      hostedEvents__ = [],
+      participatedEvents__ = [];
     if (eventsType__ === "all") {
       events__ = allEvents;
     } else {
       events__ = nearbyEvents;
     }
-
     if (loggedIn) {
-      hostedEvents__ = events__?.filter((e) => e.host_id === userData?._id);
-      events__ = events__?.filter((e) => e.host_id !== userData?._id);
+      hostedEvents__ = events__?.filter((ev) => ev.host_id === userData?._id);
+      participatedEvents__ = events__?.filter(
+        (ev) =>
+          ev.participants.includes(userData?._id) &&
+          ev.host_id !== userData?._id
+      );
+      events__ = events__?.filter(
+        (ev) =>
+          ev.host_id !== userData?._id &&
+          !ev.participants.includes(userData?._id)
+      );
     }
     setHostedEvents(hostedEvents__);
+    setParticipatedEvents(participatedEvents__);
     setEventsToShow(events__);
-    setTotalEvents(hostedEvents__?.length + events__?.length);
+    // console.log(events__);
+    // console.log(hostedEvents__);
+    // console.log(participatedEvents__);
+    setTotalEvents(
+      hostedEvents__?.length + participatedEvents__?.length + events__?.length
+    );
   };
 
   useEffect(() => {
@@ -97,7 +115,7 @@ function EventListing({ nearbyEvents, allEvents }) {
               />
               {searchKey !== "" && (
                 <div className="search-result-container">
-                  {searchResult.length === 0 ? (
+                  {searchResult?.length === 0 ? (
                     "No result found"
                   ) : (
                     <div className="search-result-container-main">
@@ -130,7 +148,7 @@ function EventListing({ nearbyEvents, allEvents }) {
           </div>
           <div className="event-listing-mid">
             <div className="result-count">
-              <h2> {totalEvents}</h2>{" "}
+              <h2> {totalEvents ? totalEvents : 0}</h2>{" "}
               <span>
                 Reults {eventsType === "nearby" ? "near you" : "worldwide"}
               </span>
@@ -156,10 +174,26 @@ function EventListing({ nearbyEvents, allEvents }) {
           </div>
         </div>
         <div className="event-listing-bottom">
-          {totalEvents === 0 && <p>No Result Found</p>}
+          {totalEvents === 0 && (
+            <p className="event-listing-bottom-heading">No Result Found</p>
+          )}
+          {hostedEvents?.length > 0 && (
+            <p className="event-listing-bottom-heading">Hosted events</p>
+          )}
           {hostedEvents?.map((event, i) => (
             <Card event={event} key={i} />
           ))}
+          {participatedEvents?.length > 0 && (
+            <p className="event-listing-bottom-heading">Participated events</p>
+          )}
+          {participatedEvents?.map((event, i) => (
+            <Card event={event} key={i} />
+          ))}
+          {eventsToShow?.length > 0 && (
+            <p className="event-listing-bottom-heading">
+              Not participated events
+            </p>
+          )}
           {eventsToShow?.map((event, i) => (
             <Card event={event} key={i} />
           ))}

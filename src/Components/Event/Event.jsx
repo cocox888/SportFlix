@@ -140,7 +140,7 @@ function Event() {
             </div>
           </div>
           <div className="event-info event-host">
-            <span>Hosted by {eventInfo?.host} </span>
+            <span>Hosted by {eventInfo?.host} </span>{" "}
           </div>
           <div className="event-stickers">
             {loggedIn && isHost() && (
@@ -168,6 +168,9 @@ function Event() {
                 {changeDateFormat(eventInfo?.date)}
               </div>
               <div className="event-people-info">
+                <div className="event-info event-type">
+                  <span>{eventInfo?.type}</span>
+                </div>
                 <div className="event-info event-people">
                   <PeopleAltRounded
                     className="event-people-icon"
@@ -200,7 +203,7 @@ function Event() {
                 <Button
                   variant="contained"
                   className="event-join-btn"
-                  onClick={() => navigate("/chat")}
+                  onClick={() => navigate(`/chat/${eventInfo?._id}`)}
                 >
                   Chat
                 </Button>

@@ -17,11 +17,13 @@ function ChatPortal({ room, showMobileChat, removeChatRoom }) {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const [{ userData }] = useDataLayerValue();
+  const [connectionEstablished, setConnectionEstablished] = useState(false);
   const changeMessage = (e) => {
     setMessage(e.target.value);
   };
   const [{ loading }, dispatch] = useDataLayerValue();
   const baseURL = process.env.REACT_APP_SOCKET_BASEURL;
+  const messageListRef = useRef();
 
   const changeDateFormat = () => {
     const d = new Date();
@@ -56,38 +58,60 @@ function ChatPortal({ room, showMobileChat, removeChatRoom }) {
     return strTime;
   };
 
+  const scrollToBottomOfMessageList = () => {
+    if (messageListRef.current) {
+      messageListRef.current.scrollTop = messageListRef.current.scrollHeight;
+    }
+  };
+
   const joinRoom = () => {
     dispatch({
       type: "SET_LOADING",
       loading: true,
     });
-    socketRef.current.emit("join-room", room?.room_id, (res) => {
-      setMessages(res.roomInfo.messages);
-    });
-    socketRef.current.on("receive-message", (data) =>
-      setMessages((prevState) => [...prevState, data])
-    );
-    dispatch({
-      type: "SET_LOADING",
-      loading: false,
-    });
+
+    const payload = { action: "join-room", roomId: room?.room_id };
+    socketRef.current.send(JSON.stringify(payload));
+
+    setTimeout(() => {
+      dispatch({
+        type: "SET_LOADING",
+        loading: false,
+      });
+      if (!connectionEstablished) {
+        dispatch({
+          type: "SET_RESPONSE_DATA",
+          responseData: {
+            message: "Error in connecting to room",
+            type: "error",
+          },
+        });
+      }
+    }, 10000);
   };
 
   const sendMessage = (e) => {
     e.preventDefault();
     let trimmedMessage = message.replace(/\s+/g, " ").trim();
+    if (trimmedMessage === "") {
+      setMessage("");
+      return;
+    }
     setMessage("");
     const messageData = {
-      sender: {
-        name: userData?.name,
-        userId: userData?._id,
-      },
+      sender_name: userData?.name,
+      sender_id: userData?._id,
       date: changeDateFormat(),
       time: getTime(),
       message: trimmedMessage,
       room: room?.room_id,
     };
-    socketRef.current?.emit("send-message", messageData);
+    const payload = {
+      action: "send-message",
+      roomId: room?.room_id,
+      data: messageData,
+    };
+    socketRef.current.send(JSON.stringify(payload));
     setMessages((prevState) => [
       ...prevState,
       {
@@ -101,13 +125,59 @@ function ChatPortal({ room, showMobileChat, removeChatRoom }) {
   };
 
   // setup socket
+
+  const initRoom = (roomInfo) => {
+    setConnectionEstablished(true);
+    setMessages(roomInfo.messages);
+
+    dispatch({
+      type: "SET_LOADING",
+      loading: false,
+    });
+  };
+  const receiveMessage = (payload) => {
+    // setMessages(roomInfo.messages);
+    const { data } = payload;
+    // console.log(data);
+    setMessages((prevState) => [...prevState, data]);
+  };
+
   useEffect(() => {
     const ENDPOINT = baseURL;
-    socketRef.current = socketIOClient(ENDPOINT);
-    joinRoom();
+    socketRef.current = new WebSocket(ENDPOINT);
+    socketRef.current.onopen = () => {
+      joinRoom();
+    };
+    socketRef.current.onmessage = (res) => {
+      const payload = JSON.parse(res.data);
+      const route = payload.action;
+      switch (route) {
+        case "init-room":
+          initRoom(payload.roomInfo);
+          break;
+        case "receive-message":
+          receiveMessage(payload);
+          break;
+
+        default:
+          break;
+      }
+    };
+
     setMessages([]);
     setMessage("");
+
+    return () => {
+      socketRef.current.close();
+    };
   }, [room]);
+
+  useEffect(() => {
+    if (messageListRef.current) {
+      scrollToBottomOfMessageList();
+    }
+    // console.log(messageListRef.current);
+  }, [messages]);
 
   return (
     <div className="chatPortal">
@@ -117,7 +187,7 @@ function ChatPortal({ room, showMobileChat, removeChatRoom }) {
           <span className="cp-top-name">{room?.name} Chatroom</span>
         </div>
       </div>
-      <div className="cp-mid">
+      <div className="cp-mid" ref={messageListRef}>
         {messages?.map((message) =>
           message.sender_id === userData?._id ? (
             <UserMessage message={message} />

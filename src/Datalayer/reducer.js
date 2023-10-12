@@ -5,7 +5,7 @@ export const initialState = {
   loading: false,
   responseData: null,
   homeHidden: false,
-  eventList: [],
+  eventList: {},
 };
 
 const moveMapToLocation = (id, eventList, focusMapToLocation) => {

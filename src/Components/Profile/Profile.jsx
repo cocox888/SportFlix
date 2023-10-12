@@ -62,7 +62,7 @@ function Profile() {
         .then((res) => {
           dispatch({
             type: "SET_USER_DATA",
-            userData: res.data,
+            userData: res?.data?.user,
           });
           dispatch({
             type: "SET_LOGIN_STATUS",

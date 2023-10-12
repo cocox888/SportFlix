@@ -79,6 +79,10 @@ function Card({ event }) {
                 <div className="card-location">
                   <LocationOn sx={{ fontSize: "1rem" }} />
                   <h4>{event?.location}</h4>
+                  <div className="card-location-more">
+                    <span>{event?.city}</span>
+                    <span>, {event?.state}</span>
+                  </div>
                 </div>
                 <div className="card-type">
                   <SportsCricketRounded sx={{ fontSize: "1rem" }} />

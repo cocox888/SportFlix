@@ -83,6 +83,14 @@
     padding-left: 10px;
 }
 
+.event-listing-bottom-heading {
+    margin: auto;
+    text-align: center;
+    /* display: flex; */
+    width: 100%;
+
+}
+
 .searchbar {
     position: relative;
 }
