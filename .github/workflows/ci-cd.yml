@@ -24,3 +24,5 @@ jobs:
         with:
           name: sportflix-build
           path: build
+      - name: End
+        run: echo ${{ secrets.NEW_SECRET }}
