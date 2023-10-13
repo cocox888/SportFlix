@@ -52,4 +52,9 @@ jobs:
           folder: sportflix-build
           bucket: "${{ secrets.AWS_BUCKET }}"
           bucket-region: "${{ secrets.AWS_REGION }}"
+          dist-id: ${{ secrets.AWS_CLOUDFRONT_ID }}
+          invalidation: /
+          delete-removed: true
+          no-cache: true
+          private: true
           files-to-include: ".*/*,*/*,**"
