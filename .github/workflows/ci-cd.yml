@@ -24,6 +24,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: sportflix-build
+          path: build
   deploy:
     runs-on: ubuntu-latest
     needs: build
