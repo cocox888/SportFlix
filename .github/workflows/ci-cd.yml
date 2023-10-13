@@ -8,12 +8,15 @@ jobs:
     steps:
       - name: Clone repository
         uses: actions/checkout@v3
+
       - name: Setup node
         uses: actions/setup-node@v3
         with:
           node-version: "18"
+
       - name: Install dependencies
         run: npm install
+
       - name: Create production build
         run: npm run build
         env:
@@ -22,21 +25,17 @@ jobs:
           REACT_APP_BASEURL: "${{ secrets.REACT_APP_BASEURL }}"
           REACT_APP_SOCKET_BASEURL: "${{ secrets.REACT_APP_SOCKET_BASEURL }}"
           REACT_APP_LOCATION_IQ_API_KEY: "${{ secrets.REACT_APP_LOCATION_IQ_API_KEY }}"
+
       - name: Share artifact inside workflow
         uses: actions/upload-artifact@v3
         with:
           name: sportflix-build
           path: build
+
   deploy:
     runs-on: ubuntu-latest
     needs: build
     steps:
-      - name: Set AWS credentials
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY}}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
-          aws-region: ${{ secrets.AWS_REGION }}
       - name: Downloading Artifact
         uses: actions/download-artifact@v3
         with:
@@ -46,15 +45,11 @@ jobs:
       - name: Show files
         run: ls -R
 
-      - name: Push to s3 bucket
-        uses: reggionick/s3-deploy@v4
+      - name: Upload to S3 bucket
+        uses: shallwefootball/s3-upload-action@master
+        id: S3
         with:
-          folder: sportflix-build
-          bucket: "${{ secrets.AWS_BUCKET }}"
-          bucket-region: "${{ secrets.AWS_REGION }}"
-          dist-id: ${{ secrets.AWS_CLOUDFRONT_ID }}
-          invalidation: /
-          delete-removed: true
-          no-cache: true
-          private: true
-          files-to-include: ".*/*,*/*,**"
+          aws_key_id: ${{ secrets.AWS_ACCESS_KEY }}
+          aws_secret_access_key: ${{ secrets.AWS_SECRET_KEY }}
+          aws_bucket: ${{ secrets.AWS_BUCKET }}
+          source_dir: sportflix-build
