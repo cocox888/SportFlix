@@ -38,11 +38,14 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: sportflix-build
-          path: path/to/artifact
+
+      - name: Show files
+        run: ls -R
+
       - name: Push to s3 bucket
         uses: reggionick/s3-deploy@v4
         with:
-          folder: path/to/artifact
+          folder: .
           bucket: "${{ secrets.AWS_BUCKET }}"
           bucket-region: "${{ secrets.AWS_REGION }}"
           files-to-include: ".*/*,*/*,**"
