@@ -18,11 +18,21 @@ jobs:
         run: npm run build
         env:
           CI: ""
+          LEAFLET_API_KEY:
       # Share artifact inside workflow
       - name: Share artifact inside workflow
         uses: actions/upload-artifact@v3
         with:
           name: sportflix-build
           path: build
-      - name: End
-        run: echo ${{ secrets.NEW_SECRET }}
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      # Download the shared artifact
+      - name: Downloading Artifact
+        uses: actions/download-artifact
+        with:
+          name: sportflix-build
+      - name: Display the downloaded files
+        run: ls -R
