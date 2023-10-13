@@ -45,5 +45,4 @@ jobs:
           folder: path/to/artifact
           bucket: "${{ secrets.AWS_BUCKET }}"
           bucket-region: "${{ secrets.AWS_REGION }}"
-          delete-removed: true
           files-to-include: ".*/*,*/*,**"
