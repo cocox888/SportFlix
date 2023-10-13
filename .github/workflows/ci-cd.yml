@@ -31,8 +31,9 @@ jobs:
     steps:
       # Download the shared artifact
       - name: Downloading Artifact
-        uses: actions/download-artifact
+        uses: actions/download-artifact@v3
         with:
           name: sportflix-build
       - name: Display the downloaded files
         run: ls -R
+        working-directory: build
