@@ -42,8 +42,8 @@ jobs:
           name: sportflix-build
           path: sportflix_build
 
-      - name: Show files
-        run: ls -R
+      # - name: Show files
+      #   run: ls -R
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
@@ -54,3 +54,6 @@ jobs:
 
       - name: Deploy static site to S3 bucket
         run: aws s3 sync ./sportflix_build/ s3://${{ secrets.AWS_BUCKET }} --delete
+
+      - name: Invalidate cloudfront cache
+        run: aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_CLOUDFRONT_ID }} --paths "/*"
