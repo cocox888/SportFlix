@@ -43,6 +43,7 @@ function RegisteredEvents() {
     dispatch({ type: "SET_LOADING", loading: false });
   };
   useEffect(() => {
+    document.title = "Registered Events - SportFlix";
     getRegisteredEvents();
   }, []);
 

@@ -143,6 +143,10 @@ function ChatPortal({ room, showMobileChat, removeChatRoom }) {
   };
 
   useEffect(() => {
+    dispatch({
+      type: "SET_LOADING",
+      loading: true,
+    });
     const ENDPOINT = baseURL;
     socketRef.current = new WebSocket(ENDPOINT);
     socketRef.current.onopen = () => {
@@ -167,8 +171,16 @@ function ChatPortal({ room, showMobileChat, removeChatRoom }) {
     setMessages([]);
     setMessage("");
 
+    dispatch({
+      type: "SET_LOADING",
+      loading: false,
+    });
     return () => {
       socketRef.current.close();
+      dispatch({
+        type: "SET_LOADING",
+        loading: false,
+      });
     };
   }, [room]);
 

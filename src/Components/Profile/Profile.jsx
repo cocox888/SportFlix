@@ -100,6 +100,9 @@ function Profile() {
     }
   }, [loggedIn]);
 
+  useEffect(() => {
+    document.title = "Profile - SportFlix";
+  }, []);
   return (
     <div className="profile">
       <div className="profile-container">
@@ -112,6 +115,7 @@ function Profile() {
         <div className="profile-main-container">
           <div className="profile-top">
             <div className="profile-picture-container">
+              <img src={userData?.picture} alt="" />
               <ModeEditRounded
                 sx={{
                   fontSize: "15px",

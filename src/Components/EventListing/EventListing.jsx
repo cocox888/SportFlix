@@ -96,6 +96,10 @@ function EventListing({ nearbyEvents, allEvents }) {
     selectVisibleEvents("all");
   }, [allEvents, loggedIn]);
 
+  useEffect(() => {
+    document.title = "SportFlix - We Play Together";
+  }, []);
+
   return (
     <>
       <div className="event-add-btn-container">

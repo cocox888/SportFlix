@@ -1,4 +1,4 @@
-import React, { lazy } from "react";
+import React, { lazy, useEffect } from "react";
 import "./home.css";
 import MyLocationRoundedIcon from "@mui/icons-material/MyLocationRounded";
 import { useDataLayerValue } from "../../Datalayer/DataLayer";

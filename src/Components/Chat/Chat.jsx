@@ -103,6 +103,7 @@ function Chat() {
   }, []);
 
   useEffect(() => {
+    document.title = "Chats - SportFlix";
     if (window.innerWidth <= 1000) {
       setShowMobileChat(true);
     } else {
@@ -113,13 +114,19 @@ function Chat() {
 
   useEffect(() => {
     const roomId = urlParams?.roomId;
-    console.log(roomId);
     if (roomId && roomId !== "") {
+      dispatch({
+        type: "SET_LOADING",
+        loading: true,
+      });
       const targetRoom = allChatRooms?.filter(
         (room) => room?.room_id === roomId
       )[0];
-      console.log(targetRoom);
       setSelectedRoom(targetRoom);
+      dispatch({
+        type: "SET_LOADING",
+        loading: false,
+      });
     }
   }, [allChatRooms]);
 

@@ -68,6 +68,12 @@
     background-color: grey;
     border-radius: 50%;
     position: relative;
+    display: flex;
+}
+
+.profile-picture-container img {
+    border-radius: 50%;
+    object-fit: cover;
 }
 
 .profile-picture-edit-btn {

@@ -51,6 +51,7 @@ function Event() {
     await Api.get("/events/get-event-by-id", { params: { eventId: eventId } })
       .then((res) => {
         setEventInfo(res.data?.event);
+        document.title = `${res.data?.event?.location} ${res.data?.event?.type}  - SportFlix`;
       })
       .catch((err) => {
         dispatch({
@@ -66,6 +67,19 @@ function Event() {
 
   // Function to join event
   const joinEvent = async () => {
+    if (!loggedIn) {
+      dispatch({
+        type: "SET_RESPONSE_DATA",
+        responseData: {
+          message: "Please login to participate",
+          type: "error",
+        },
+      });
+      const eventId = urlParams.id;
+      navigate("/login", { state: { from: `/event/${eventId}` } });
+      return;
+    }
+
     dispatch({ type: "SET_LOADING", loading: true });
     const eventId = eventInfo?._id;
     await Api.post("/events/join-event", { eventId: eventId })
@@ -74,7 +88,6 @@ function Event() {
           type: "SET_RESPONSE_DATA",
           responseData: { message: res.data?.message, type: "success" },
         });
-        navigate("/");
       })
       .catch((err) => {
         //console.log(err);
@@ -106,6 +119,7 @@ function Event() {
   };
 
   useEffect(() => {
+    document.title = "Event - SportFlix";
     const eventId = urlParams.id;
     getEventDetails(eventId);
   }, [urlParams?.id]);
