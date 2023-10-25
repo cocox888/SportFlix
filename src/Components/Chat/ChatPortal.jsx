@@ -22,7 +22,6 @@ function ChatPortal({ room, showMobileChat, removeChatRoom }) {
     setMessage(e.target.value);
   };
   const [{ loading }, dispatch] = useDataLayerValue();
-  const baseURL = process.env.REACT_APP_SOCKET_BASEURL;
   const messageListRef = useRef();
 
   const changeDateFormat = () => {
@@ -69,7 +68,6 @@ function ChatPortal({ room, showMobileChat, removeChatRoom }) {
       type: "SET_LOADING",
       loading: true,
     });
-
     const payload = { action: "join-room", roomId: room?.room_id };
     socketRef.current.send(JSON.stringify(payload));
 
@@ -78,7 +76,7 @@ function ChatPortal({ room, showMobileChat, removeChatRoom }) {
         type: "SET_LOADING",
         loading: false,
       });
-      if (!connectionEstablished) {
+      if (!connectionEstablished && messages.length === 0) {
         dispatch({
           type: "SET_RESPONSE_DATA",
           responseData: {
@@ -147,7 +145,7 @@ function ChatPortal({ room, showMobileChat, removeChatRoom }) {
       type: "SET_LOADING",
       loading: true,
     });
-    const ENDPOINT = baseURL;
+    const ENDPOINT = process.env.REACT_APP_SOCKET_BASEURL;
     socketRef.current = new WebSocket(ENDPOINT);
     socketRef.current.onopen = () => {
       joinRoom();
@@ -171,10 +169,6 @@ function ChatPortal({ room, showMobileChat, removeChatRoom }) {
     setMessages([]);
     setMessage("");
 
-    dispatch({
-      type: "SET_LOADING",
-      loading: false,
-    });
     return () => {
       socketRef.current.close();
       dispatch({

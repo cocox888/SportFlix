@@ -28,21 +28,17 @@ const Chat = lazy(() => import("./Components/Chat/Chat"));
 
 function App() {
   const [eventList, setEventList] = useState([]);
-
-  const [{ loading, responseData, userData }, dispatch] = useDataLayerValue();
+  const [fetchingEvents, setFetchingEvents] = useState(false);
+  const [{ loading, responseData, userData, loggedIn }, dispatch] =
+    useDataLayerValue();
 
   // Function to login on reload
 
   const loginOnReload = async () => {
-    dispatch({
-      type: "SET_LOADING",
-      loading: true,
-    });
     const token = localStorage.getItem("AUTH_TOKEN");
     if (token) {
       await Api.get("/auth/getUser")
         .then((res) => {
-          // // // console.log(res.data);
           dispatch({
             type: "SET_USER_DATA",
             userData: res.data.user,
@@ -69,10 +65,6 @@ function App() {
         loggedIn: false,
       });
     }
-    dispatch({
-      type: "SET_LOADING",
-      loading: false,
-    });
   };
 
   // Function to login on reload ends here
@@ -89,10 +81,6 @@ function App() {
         lat: pos.coords.latitude,
       };
     } catch (err) {
-      dispatch({
-        type: "SET_LOADING",
-        loading: false,
-      });
       dispatch({
         type: "SET_RESPONSE_DATA",
         responseData: {
@@ -149,8 +137,10 @@ function App() {
   // Functions to get event list ends here
 
   useEffect(() => {
-    loginOnReload();
-  }, []);
+    if (!loggedIn) {
+      loginOnReload();
+    }
+  }, [loggedIn]);
   useEffect(() => {
     if (eventList === null || window.location.pathname === "/") {
       getEventList();
