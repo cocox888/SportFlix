@@ -59,6 +59,12 @@ function Profile() {
           type: "SET_RESPONSE_DATA",
           responseData: { message: res.data?.message, type: "success" },
         });
+        userData.name = infoToShow.name;
+        userData.dob = infoToShow.dob;
+        dispatch({
+          type: "SET_USER_DATA",
+          userData: userData,
+        });
         setPreviousInfo(infoToShow);
       })
       .catch((err) => {
