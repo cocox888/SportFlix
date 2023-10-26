@@ -31,10 +31,16 @@ function App() {
   const [fetchingEvents, setFetchingEvents] = useState(false);
   const [{ loading, responseData, userData, loggedIn }, dispatch] =
     useDataLayerValue();
-
+  const [gettingEvents, setGettingEvents] = useState(false);
+  const [loggingIn, setLoggingIn] = useState(false);
   // Function to login on reload
 
   const loginOnReload = async () => {
+    setLoggingIn(true);
+    dispatch({
+      type: "SET_LOADING",
+      loading: true,
+    });
     const token = localStorage.getItem("AUTH_TOKEN");
     if (token) {
       await Api.get("/auth/getUser")
@@ -65,6 +71,13 @@ function App() {
         loggedIn: false,
       });
     }
+    if (!gettingEvents) {
+      dispatch({
+        type: "SET_LOADING",
+        loading: false,
+      });
+    }
+    setLoggingIn(false);
   };
 
   // Function to login on reload ends here
@@ -96,6 +109,7 @@ function App() {
   };
 
   const getEventList = async () => {
+    setGettingEvents(true);
     dispatch({
       type: "SET_LOADING",
       loading: true,
@@ -127,11 +141,13 @@ function App() {
           },
         });
       });
-
-    dispatch({
-      type: "SET_LOADING",
-      loading: false,
-    });
+    if (!loggingIn) {
+      dispatch({
+        type: "SET_LOADING",
+        loading: false,
+      });
+    }
+    setGettingEvents(false);
   };
 
   // Functions to get event list ends here

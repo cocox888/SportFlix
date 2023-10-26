@@ -143,7 +143,7 @@ function Signup() {
     )
   ) : (
     <div className="login">
-      <div className="login-container">
+      <div className="signup-container">
         <div className="login-main-container">
           <div className="login-heading">
             <h2>

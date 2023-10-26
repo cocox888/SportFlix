@@ -84,9 +84,6 @@ function EventListing({ nearbyEvents, allEvents }) {
     setHostedEvents(hostedEvents__);
     setParticipatedEvents(participatedEvents__);
     setEventsToShow(events__);
-    // console.log(events__);
-    // console.log(hostedEvents__);
-    // console.log(participatedEvents__);
     setTotalEvents(
       hostedEvents__?.length + participatedEvents__?.length + events__?.length
     );

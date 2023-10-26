@@ -80,6 +80,17 @@ function Event() {
       return;
     }
 
+    if (!userData?.dob) {
+      dispatch({
+        type: "SET_RESPONSE_DATA",
+        responseData: {
+          message: "Please update your DOB in your profile",
+          type: "error",
+        },
+      });
+      return;
+    }
+
     dispatch({ type: "SET_LOADING", loading: true });
     const eventId = eventInfo?._id;
     await Api.post("/events/join-event", { eventId: eventId })

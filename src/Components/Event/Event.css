@@ -108,10 +108,7 @@
     /* margin-top: 20px !important; */
 }
 
-.event-type
-{
-    
-}
+.event-type {}
 
 .event-stickers {
     display: flex;
@@ -127,7 +124,7 @@
 .event-people {
     background-color: rgb(242, 242, 242);
     width: fit-content;
-    padding: 7px 15px;
+    padding: 7px 12px;
     border-radius: 15px;
     box-shadow: 2px 2px 5px rgb(30 30 30 / 10%);
     display: flex;
@@ -214,7 +211,7 @@
     display: flex;
 }
 
-@media only screen and (max-width: 660px) {
+@media only screen and (max-width: 956px) {
     .event-more-img-container {
         display: none;
     }

@@ -206,7 +206,7 @@
 
     .event-listing-bottom .Card {
         /* width: 80% !important; */
-        /* height: 100%; */
+        height: 100%;
         /* max-width: unset !important; */
     }
 }

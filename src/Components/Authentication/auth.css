@@ -7,6 +7,12 @@
 }
 
 .login-container {
+    /* width: 50%; */
+    height: 70%;
+    padding: 10px;
+}
+
+.signup-container {
     width: 50%;
     height: 70%;
     padding: 10px;
@@ -46,6 +52,7 @@
     align-items: center;
     gap: 5px;
     width: 68%;
+    text-align: center;
 }
 
 .google-login-container-partition-wrapper span {
@@ -116,6 +123,10 @@
 
 @media only screen and (max-width: 1024px) {
     .login-container {
+        width: 100%;
+    }
+
+    .signup-container {
         width: 100%;
     }
 }
