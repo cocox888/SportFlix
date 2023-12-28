@@ -190,7 +190,7 @@ function EventListing({ nearbyEvents, allEvents }) {
           {participatedEvents?.map((event, i) => (
             <Card event={event} key={i} />
           ))}
-          {eventsToShow?.length > 0 && (
+          {participatedEvents?.length > 0 && eventsToShow?.length > 0 && (
             <p className="event-listing-bottom-heading">
               Not participated events
             </p>
