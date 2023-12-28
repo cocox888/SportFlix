@@ -34,7 +34,9 @@ function Home({ eventList }) {
     <>
       <Sidebar />
       <div
-        className="user-location"
+        className={`user-location ${
+          !homeHidden && "user-location-mobile-hidden"
+        }`}
         onClick={() => {
           dispatch({
             type: "SET_FOCUS_MAP_TO_CENTER",

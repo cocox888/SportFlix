@@ -100,9 +100,9 @@ function EventListing({ nearbyEvents, allEvents }) {
   return (
     <>
       <div className="event-add-btn-container">
-        <Button variant="contained" onClick={() => navigate("add-event")}>
+        <button variant="contained" onClick={() => navigate("add-event")}>
           {<Add sx={{ fontSize: "25px" }} />}
-        </Button>
+        </button>
       </div>
       <div className="event-listing">
         <div className="event-listing-controller">

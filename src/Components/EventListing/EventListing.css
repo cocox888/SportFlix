@@ -187,11 +187,13 @@
 }
 
 .event-add-btn-container button {
-    background-color: #456AF2;
+    background-color: #0C7F51;
     border-radius: 10px;
     color: white;
-    box-shadow: 1px 1px 8px #456af2;
-    padding: 10px 0px;
+    /* box-shadow: 1px 1px 3px #0C7F51; */
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
     border: none;
 }
 

@@ -215,7 +215,7 @@ function ChatPortal({ room, showMobileChat, removeChatRoom }) {
             variant="contained"
             className="cp-btm-inp-btn"
             sx={{
-              background: "rgb(69, 106, 242)",
+              background: "#0C7F51",
               borderRadius: "0px",
               borderTopRightRadius: "8px !important",
               borderBottomRightRadius: "8px !important",

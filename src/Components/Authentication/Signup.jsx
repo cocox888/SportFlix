@@ -147,8 +147,7 @@ function Signup() {
         <div className="login-main-container">
           <div className="login-heading">
             <h2>
-              Welcome to{" "}
-              <span style={{ color: "rgb(69,106,242)" }}>SportFlix</span>
+              Welcome to <span style={{ color: "#0C7F51" }}>SportFlix</span>
             </h2>
           </div>
 
@@ -242,7 +241,12 @@ function Signup() {
               required
             />
 
-            <Button className="signup-button" variant="contained" type="submit">
+            <Button
+              className="signup-button"
+              sx={{ bgcolor: "#0C7F51" }}
+              variant="contained"
+              type="submit"
+            >
               Signup
             </Button>
             <span

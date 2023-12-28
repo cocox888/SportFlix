@@ -1,5 +1,6 @@
 import {
   ChatRounded,
+  Close,
   ContrastRounded,
   DarkModeRounded,
   HomeRounded,
@@ -19,6 +20,7 @@ import "./sidebar.css";
 // import { BsChat, BsChatDots, BsHouse } from "react-icons/bs";
 // import { BiUser } from "react-icons/bi";
 // import { MdOutlineDarkMode, MdSportsTennis } from "react-icons/md";
+// import logoImg from "../../../public/logo.jpeg";
 
 function Sidebar() {
   const [selectedOption, setSelectedOption] = useState(0);
@@ -76,7 +78,8 @@ function Sidebar() {
       <div className="sidebar">
         <div className="sidebar-container">
           <div className="logo" onClick={() => navigate("/")}>
-            <SportsVolleyballRounded id="logo-pic" sx={{ fontSize: "30px" }} />
+            {/* <SportsVolleyballRounded id="logo-pic" sx={{ fontSize: "30px" }} /> */}
+            <img src="/logo.png" id="logo-pic" />
           </div>
           <div className="sidebar-options">
             {sidebarOptions?.map((op, i) => (
@@ -101,15 +104,23 @@ function Sidebar() {
 
       <div className={`sidebar-mobile ${sidebarOpen && "sidebar-mobile-open"}`}>
         <div className="sidebar-mobile-container">
-          <h3 onClick={() => navigate("/")}>
-            Sport<span className="sidebar-mobile-head">Flix</span>
-          </h3>
-          <div
+          <img
+            className="sidebar-mobile-icon"
+            src="/logo.png"
+            onClick={() => navigate("/")}
+          />
+
+          <button
             onClick={() => setSidebarOpen((prev) => !prev)}
             style={{ display: "flex" }}
+            className="sidebar-menu-opener-button"
           >
-            <Menu sx={{ fontSize: "24px" }} />
-          </div>
+            {sidebarOpen ? (
+              <Close sx={{ fontSize: "28px" }} />
+            ) : (
+              <Menu sx={{ fontSize: "28px" }} />
+            )}
+          </button>
         </div>
       </div>
       <div

@@ -103,14 +103,14 @@
 }
 
 .home-login-container button:nth-child(1):active {
-    box-shadow: inset 1px 3px 10px rgb(39 42 46 / 15%);
+    box-shadow: inset 1px 3px 5px rgb(39 42 46 / 15%);
 }
 
 .home-login-container button:nth-child(2) {
-    background-color: #456AF2;
+    background-color: #0C7F51;
     border-radius: 10px;
     color: white;
-    box-shadow: 1px 1px 8px #456AF2;
+    /* box-shadow: 1px 1px 5px #0C7F51; */
 }
 
 .home-login-container button:nth-child(2):active {
@@ -121,8 +121,10 @@
 .user-location {
     position: absolute;
     padding: 10px;
-    background-color: #456AF2;
-    box-shadow: 1px 1px 17px #456AF2;
+    background-color: #0C7F51;
+    /* box-shadow: 1px 1px 5px #0C7F51; */
+    box-shadow: 1px 3px 10px rgb(39 42 46 / 15%);
+
     border-radius: 10px;
     z-index: 5;
     bottom: 30px;
@@ -137,7 +139,7 @@
 }
 
 .user-location:hover {
-    background-color: #3a55b9;
+    background-color: #085838;
 }
 
 .user-location span {
@@ -153,13 +155,34 @@
 }
 
 
-@media only screen and (max-width: 660px) {
+@media only screen and (max-width: 950px) {
     .home-container {
         width: 75% !important;
+        left: 52%;
+        transform: translate(-50%, -50%);
+        height: 85vh;
+        top: 50%;
+        margin-left: 20px;
+    }
+
+    .user-location-mobile-hidden {
+        display: none;
+    }
+
+
+    .home-login-container {
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 660px) {
+    .home-container {
+        width: 82% !important;
         left: 50%;
         transform: translate(-50%, -50%);
         height: 80vh;
         top: 53%;
+        margin-left: 0;
     }
 
     .home-container-hidden {
@@ -170,7 +193,4 @@
         bottom: 100px;
     }
 
-    .home-login-container {
-        display: none;
-    }
 }
