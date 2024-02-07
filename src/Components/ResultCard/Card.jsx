@@ -21,6 +21,9 @@ function Card({ event }) {
     navigate(`/event/${event._id}`);
     dispatch({ type: "SET_HOME_HIDDEN", homeHidden: false });
   };
+  const placeholderImage =
+    "https://ik.imagekit.io/Ayanabha1/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg?updatedAt=1707320959624";
+
   const changeDateFormat = (rawDate) => {
     const d = new Date(rawDate);
     const months = [
@@ -72,7 +75,11 @@ function Card({ event }) {
                   <div className="card-sticker past-sticker">Closed</div>
                 )}
               </div>
-              <img src={img2} alt="" />
+              {event?.pictures?.length ? (
+                <img src={event?.pictures[0]} alt="uploaded-image" />
+              ) : (
+                <img src={placeholderImage} alt="placeholder-image" />
+              )}
             </div>
             <div className="card-details">
               <div className="card-main-details">

@@ -76,6 +76,8 @@
 .add-event-form-btn {
     margin-top: 20px !important;
     width: fit-content;
+    background-color: rgb(12, 127, 81);
+    width: 100%;
 }
 
 .add-event-form-right {
@@ -132,4 +134,53 @@
         flex: unset;
     }
 
+}
+
+
+.add-event-drop-file {
+    width: 99%;
+    /* padding: 20px; */
+    text-align: center;
+    border: 2px rgb(12, 127, 81) dashed;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+
+.add-event-drop-file-inp {
+    margin: 20px;
+}
+
+.add-event-image-preview {
+    min-height: 120px;
+    height: 160px;
+    overflow: hidden;
+    overflow-x: scroll;
+    display: flex;
+    gap: 20px;
+    padding-bottom: 10px;
+    transition: all 250ms;
+}
+
+
+.add-event-preview-image-container {
+    position: relative;
+    height: 100%;
+    margin-bottom: 10px;
+}
+
+.add-event-preview-image-container img {
+    height: 100%;
+    border-radius: 8px;
+    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.25);
+    border: 1px solid rgba(0, 0, 0, 0.25);
+    /* margin-bottom: 10px; */
+}
+
+.add-event-remove-image-btn {
+    position: absolute;
+    top: 0px;
+    right: 5px;
+    color: red;
+    cursor: pointer;
 }

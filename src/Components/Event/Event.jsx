@@ -14,6 +14,8 @@ function Event() {
   const [imageSelected, setImageSelected] = useState(0);
   const [{ loggedIn, userData, homeHidden }, dispatch] = useDataLayerValue();
   const [eventInfo, setEventInfo] = useState({});
+  const placeholderImage =
+    "https://ik.imagekit.io/Ayanabha1/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg?updatedAt=1707320959624";
 
   // Location event on map
   const locateEvent = () => {
@@ -151,19 +153,52 @@ function Event() {
         <div className="event-top">
           <div className="event-main-img-continer">
             <div className="event-main-image-container">
-              <img className="event-main-img" src={img2}></img>
+              {eventInfo?.pictures?.length > 0 ? (
+                <img
+                  className="event-main-img"
+                  src={eventInfo?.pictures[0]}
+                  alt="main-image"
+                />
+              ) : (
+                <img
+                  className="event-main-img"
+                  src={placeholderImage}
+                  alt="main-image"
+                />
+              )}
             </div>
-            <div className="event-more-img-container">
-              <img className="event-more-img" src={img2} />
-              <img className="event-more-img" src={img1} />
-            </div>
+            {eventInfo?.pictures?.length > 1 && (
+              <div className="event-more-img-container">
+                {eventInfo?.pictures?.map((img, i) => {
+                  if (i === 0) return null;
+                  return (
+                    <img
+                      className="event-more-img"
+                      key={i}
+                      src={img}
+                      alt="more-images"
+                    />
+                  );
+                })}
+              </div>
+            )}
           </div>
-          <div className="event-more-images-mobile">
-            <div className="event-more-images-container-mobile">
-              <img className="event-more-img-mobile" src={img2} />
-              <img className="event-more-img-mobile" src={img1} />
+          {eventInfo?.pictures?.length > 1 && (
+            <div className="event-more-images-mobile">
+              <div className="event-more-images-container-mobile">
+                <img
+                  className="event-more-img-mobile"
+                  src={img2}
+                  alt="more-images"
+                />
+                <img
+                  className="event-more-img-mobile"
+                  src={img1}
+                  alt="more-images"
+                />
+              </div>
             </div>
-          </div>
+          )}
           <div className="event-info event-host">
             <span>Hosted by {eventInfo?.host} </span>{" "}
           </div>
