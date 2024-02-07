@@ -14,7 +14,7 @@ function UserMessage({ message }) {
           <span className="cp-mid-info-name">You</span>
         </div>
         <div className="cp-mid-message cp-mid-message-you">
-          {message?.message} Helo
+          {message?.message}
         </div>
       </div>
       <div className="cp-mid-right">
