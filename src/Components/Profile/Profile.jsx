@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { Api, resetApiHeaders } from "../../Api/Axios";
 import { useDataLayerValue } from "../../Datalayer/DataLayer";
 import "./Profile.css";
+import axios from "axios";
 
 function Profile() {
   const [{ loading, loggedIn, userData }, dispatch] = useDataLayerValue();
@@ -47,6 +48,87 @@ function Profile() {
     setEditing(false);
     setInfoToShow(previousInfo);
   };
+
+  const uploadPP = async (e) => {
+    dispatch({
+      type: "SET_LOADING",
+      loading: true,
+    });
+    const baseURL = process.env.REACT_APP_BASEURL;
+
+    const file = e.target.files[0];
+    if (!file) {
+      dispatch({
+        type: "SET_RESPONSE_DATA",
+        responseData: {
+          message: "Please select a file",
+          type: "error",
+        },
+      });
+      dispatch({
+        type: "SET_LOADING",
+        loading: false,
+      });
+      return;
+    }
+
+    if (!file.type.startsWith("image/")) {
+      dispatch({
+        type: "SET_RESPONSE_DATA",
+        responseData: {
+          message: "Please select an image file",
+          type: "error",
+        },
+      });
+      dispatch({
+        type: "SET_LOADING",
+        loading: false,
+      });
+      return;
+    }
+
+    const newFD = new FormData();
+    newFD.append("file", file);
+    await axios
+      .post(`${baseURL}/auth/uploadPP`, newFD, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("AUTH_TOKEN")}`,
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((res) => {
+        dispatch({
+          type: "SET_USER_DATA",
+          userData: res.data?.userData,
+        });
+        dispatch({
+          type: "SET_RESPONSE_DATA",
+          responseData: {
+            message: "Image uploaded successfully",
+            type: "success",
+          },
+        });
+        localStorage.setItem("AUTH_TOKEN", res.data?.token);
+      })
+      .catch((err) => {
+        dispatch({
+          type: "SET_RESPONSE_DATA",
+          responseData: {
+            message: "Image upload failed ... please try again",
+            type: "error",
+          },
+        });
+        dispatch({
+          type: "SET_LOADING",
+          loading: false,
+        });
+      });
+    dispatch({
+      type: "SET_LOADING",
+      loading: false,
+    });
+  };
+
   const saveEditing = async () => {
     dispatch({
       type: "SET_LOADING",
@@ -184,15 +266,25 @@ function Profile() {
           <div className="profile-top">
             <div className="profile-picture-container">
               <img src={userData?.picture} alt="" />
-              <ModeEditRounded
-                sx={{
-                  fontSize: "15px",
-                  background: "rgba(0,0,0,0.5)",
-                  padding: "3px",
-                  borderRadius: "50%",
-                }}
-                className="profile-picture-edit-btn"
-              />
+              <label>
+                <ModeEditRounded
+                  sx={{
+                    fontSize: "15px",
+                    background: "rgba(0,0,0,0.5)",
+                    padding: "3px",
+                    borderRadius: "50%",
+                  }}
+                  className="profile-picture-edit-btn"
+                />
+                <input
+                  type="file"
+                  style={{ display: "none" }}
+                  accept=".jpg, .jpeg, .png "
+                  onChange={(e) => {
+                    uploadPP(e);
+                  }}
+                />
+              </label>
             </div>
             <div className="profile-top-info">
               <span>{infoToShow?.name}</span>

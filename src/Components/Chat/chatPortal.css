@@ -136,7 +136,7 @@
     width: 50%;
     text-align: left;
     padding: 10px;
-    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.05);
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, .15);
     margin-top: 8px;
 }
 
@@ -150,6 +150,5 @@
     border-top-left-radius: 13px;
     border-bottom-left-radius: 13px;
     border-bottom-right-radius: 13px;
-    background-color: rgba(69, 106, 242);
-    color: white;
+    background-color: rgb(12, 127, 81);
 }

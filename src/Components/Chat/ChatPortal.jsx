@@ -115,6 +115,7 @@ function ChatPortal({ room, showMobileChat, removeChatRoom }) {
       {
         sender_name: userData?.name,
         sender_id: userData?._id,
+        picture: userData?.picture,
         date: changeDateFormat(),
         time: getTime(),
         message: trimmedMessage,
@@ -188,9 +189,22 @@ function ChatPortal({ room, showMobileChat, removeChatRoom }) {
   return (
     <div className="chatPortal">
       <div className="cp-top">
-        {showMobileChat && <span onClick={() => removeChatRoom()}>Back</span>}
+        {showMobileChat && (
+          <span
+            onClick={() => removeChatRoom()}
+            style={{
+              boxShadow: "1px 1px 3px rgba(0,0,0,0.15)",
+              padding: "2px 8px",
+              border: "1px solid rgba(0,0,0,0.15)",
+              borderRadius: "8px",
+              cursor: "pointer",
+            }}
+          >
+            Back
+          </span>
+        )}
         <div className="cp-top-info">
-          <span className="cp-top-name">{room?.name} Chatroom</span>
+          <span className="cp-top-name">{room?.name}Chatroom</span>
         </div>
       </div>
       <div className="cp-mid" ref={messageListRef}>
