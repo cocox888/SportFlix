@@ -201,7 +201,7 @@
 .event-join-btn {
     width: fit-content;
     margin-top: 10px;
-    background-color: rgb(12, 127, 81);
+    background-color: rgb(12, 127, 81) !important;
 }
 
 .event-interaction-btns {
