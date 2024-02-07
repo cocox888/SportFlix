@@ -103,6 +103,7 @@ function ChatPortal({ room, showMobileChat, removeChatRoom }) {
       time: getTime(),
       message: trimmedMessage,
       room: room?.room_id,
+      picture: userData?.picture,
     };
     const payload = {
       action: "send-message",
